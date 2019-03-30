@@ -1,8 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import {PersonService} from '../shared/person.service';
 import {Person} from '../shared/person.model';
 import {Form, FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Pet} from '../shared/pet.model';
+import {PetCaseService} from '../shared/pet-case.service';
 
 
 
@@ -24,7 +25,6 @@ export class HeaderComponent implements OnInit {
     const dialogRef = this.dialog.open(NewCaseDialog, {
       height: '90%',
       width: '90%',
-      backdropClass: 'test'
     });
   }
 
@@ -39,16 +39,20 @@ export class HeaderComponent implements OnInit {
 })
 export class NewCaseDialog  {
   personForm = new FormGroup({
-    'name': new FormControl('')
+    'name': new FormControl(''),
+    'petname': new FormControl('')
   });
 
   constructor(
-    public personService: PersonService,
+    public petCaseService: PetCaseService,
     public dialogRef: MatDialogRef<NewCaseDialog>) {}
 
   onSubmit() {
-     const newPerson = new Person(this.personForm.get('name').value);
-     this.personService.addPerson(newPerson);
+     this.petCaseService.addCase(
+       new Person(this.personForm.get('name').value),
+       new Pet(this.personForm.get('petname').value)
+     );
+     console.log(this.petCaseService.getCases());
   }
 
 }

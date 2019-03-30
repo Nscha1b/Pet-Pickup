@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {PersonService} from '../shared/person.service';
-import {Person} from '../shared/person.model';
 import {Subscription} from 'rxjs';
+import {PetCaseService} from '../shared/pet-case.service';
+import {PetCase} from '../shared/pet-case.model';
 
 
 
@@ -14,19 +14,19 @@ import {Subscription} from 'rxjs';
 
 export class DashboardComponent implements OnInit {
   subscription: Subscription;
-  columnsToDisplay = ['owner'];
+  columnsToDisplay = ['owner', 'pet'];
   dataSource = [];
 
-  constructor(private personService: PersonService) { }
+  constructor(private petCaseService: PetCaseService) { }
 
   ngOnInit() {
-    this.subscription = this.personService.peopleChanged
+    this.subscription = this.petCaseService.casesChanged
       .subscribe(
-        (people: Person[]) => {
-          this.dataSource = people;
+        (petCases: PetCase[]) => {
+          this.dataSource = petCases;
         }
       );
-    this.dataSource = this.personService.getPeople();
+    this.dataSource = this.petCaseService.getCases();
   }
 
 }

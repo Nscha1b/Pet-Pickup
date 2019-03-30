@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {Person} from './person.model';
-import {Subject} from 'rxjs';
+import { Person } from './person.model';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +23,7 @@ export class PersonService {
   addPerson(person: Person) {
     this.people.push(new Person(person.name));
     this.peopleChanged.next(this.people.slice());
+    console.log('Person Added');
+    console.log(this.getPeople());
   }
 }
