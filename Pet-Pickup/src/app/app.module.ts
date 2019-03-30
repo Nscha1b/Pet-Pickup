@@ -11,7 +11,7 @@ import {
   MatCheckboxModule,
   MatToolbarModule,
   MatMenuModule,
-  MatCardModule, MatDialogModule, MatFormFieldModule
+  MatCardModule, MatDialogModule, MatFormFieldModule, MatInputModule
 } from '@angular/material';
 import {HeaderComponent, NewCaseDialog} from './header/header.component';
 
@@ -34,7 +34,8 @@ import {HeaderComponent, NewCaseDialog} from './header/header.component';
     FlexLayoutModule,
     MatCardModule,
     MatDialogModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatInputModule
   ],
   entryComponents: [
     NewCaseDialog

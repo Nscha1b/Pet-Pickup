@@ -24,6 +24,7 @@ export class HeaderComponent implements OnInit {
     const dialogRef = this.dialog.open(NewCaseDialog, {
       height: '90%',
       width: '90%',
+      backdropClass: 'test',
       data: {name: this.name, animal: this.animal}
     });
   }
@@ -34,6 +35,8 @@ export class HeaderComponent implements OnInit {
 @Component({
   selector: 'app-new-case-dialog',
   templateUrl: './new-case-dialog.html',
+  styles: [
+  ]
 })
 export class NewCaseDialog  {
 

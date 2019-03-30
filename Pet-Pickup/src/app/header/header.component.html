@@ -1,12 +1,11 @@
-<mat-toolbar color="primary">
+<mat-toolbar class="bg-dark">
   <mat-toolbar-row>
     <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px">
-      <span>Pet-Pickup</span>
+      <span class="text-white">Pet-Pickup</span>
       <button
-        class="mat-raised-button"
+        class="mat-raised-button bg-primary text-white"
         ngClass.xs= "mat-small"
-        (click)="openDialog()"
-        color="basic">
+        (click)="openDialog()">
         New Case
       </button>
     </div>
@@ -15,9 +14,9 @@
       mat-button
       [disableRipple]="true"
       [matMenuTriggerFor]="menu">
-      <i class="fa fa-user-circle fa-xs"></i>
-      <span style="padding: 5px;">LoggedInUser</span>
-      <i class="fa fa-angle-down"></i>
+      <i class="fa fa-user-circle fa-xs text-white"></i>
+      <span class="text-white" style="padding: 5px;">LoggedInUser</span>
+      <i class="fa fa-angle-down text-white"></i>
     </button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item>Log Out</button>
