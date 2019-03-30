@@ -1,10 +1,10 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {PersonService} from '../shared/person.service';
+import {Person} from '../shared/person.model';
+import {Form, FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 
-export interface DialogData {
-  animal: string;
-  name: string;
-}
+
 
 @Component({
   selector: 'app-header',
@@ -12,8 +12,8 @@ export interface DialogData {
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  animal: string;
   name: string;
+
 
   constructor(public dialog: MatDialog) { }
 
@@ -24,8 +24,7 @@ export class HeaderComponent implements OnInit {
     const dialogRef = this.dialog.open(NewCaseDialog, {
       height: '90%',
       width: '90%',
-      backdropClass: 'test',
-      data: {name: this.name, animal: this.animal}
+      backdropClass: 'test'
     });
   }
 
@@ -39,13 +38,17 @@ export class HeaderComponent implements OnInit {
   ]
 })
 export class NewCaseDialog  {
+  personForm = new FormGroup({
+    'name': new FormControl('')
+  });
 
   constructor(
-    public dialogRef: MatDialogRef<NewCaseDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    public personService: PersonService,
+    public dialogRef: MatDialogRef<NewCaseDialog>) {}
 
-  onNoClick(): void {
-    this.dialogRef.close();
+  onSubmit() {
+     const newPerson = new Person(this.personForm.get('name').value);
+     this.personService.addPerson(newPerson);
   }
 
 }

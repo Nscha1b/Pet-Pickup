@@ -7,4 +7,7 @@
   font-size: 10px !important;
   line-height: 0px;
 }
+mat-divider.headerSplit {
+  border-top: 3px solid #007BFF;
+}
 

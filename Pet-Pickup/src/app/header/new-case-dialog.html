@@ -1,6 +1,6 @@
 <mat-card>
 <div>
-    <form>
+    <form [formGroup]="personForm" (ngSubmit)="onSubmit()">
       <p>Name</p>
       <div class="row">
         <mat-form-field class="col-md-1">
@@ -12,8 +12,9 @@
         </mat-form-field>
         <mat-form-field class="col-md-3">
           <input
-            id="first"
-            name="first"
+            id="name"
+            name="name"
+            formControlName="name"
             matInput
             placeholder="First Name">
         </mat-form-field>
@@ -39,6 +40,7 @@
             placeholder="Suf">
         </mat-form-field>
       </div>
+      <button type="submit" mat-button>Add</button>
     </form>
   </div>
 </mat-card>
