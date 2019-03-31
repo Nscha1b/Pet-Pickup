@@ -1,7 +1,8 @@
-import {Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {PetCaseService} from '../shared/pet-case.service';
 import {PetCase} from '../shared/pet-case.model';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 
 
 
@@ -12,24 +13,25 @@ import {PetCase} from '../shared/pet-case.model';
 })
 
 
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements AfterViewInit {
   subscription: Subscription;
   columnsToDisplay = [
     'id', 'owner', 'pet', 'sex', 'weight', 'crematory',
     'type', 'clinic', 'status'];
-   dataSource = [];
+   dataSource: MatTableDataSource<PetCase>;
 
-  constructor(private petCaseService: PetCaseService) { }
+   @ViewChild(MatPaginator) paginator: MatPaginator;
+   @ViewChild(MatSort) sort: MatSort;
 
-  ngOnInit() {
-    this.subscription = this.petCaseService.casesChanged
-      .subscribe(
-        (petCases: PetCase[]) => {
-          this.dataSource = petCases;
-        }
-      );
-    this.dataSource = this.petCaseService.getCases();
+  constructor(private petCaseService: PetCaseService) {
+    this.dataSource = new MatTableDataSource(this.petCaseService.getCases());
   }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
 
 }
 
