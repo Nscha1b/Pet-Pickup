@@ -34,13 +34,33 @@ export class HeaderComponent implements OnInit {
 @Component({
   selector: 'app-new-case-dialog',
   templateUrl: './new-case-dialog.html',
-  styles: [
-  ]
+  styleUrls: ['./header.component.css']
 })
 export class NewCaseDialog  {
-  personForm = new FormGroup({
-    'name': new FormControl(''),
-    'petname': new FormControl('')
+  caseForm = new FormGroup({
+    'firstname': new FormControl(''),
+    'pre': new FormControl(''),
+    'mid': new FormControl(''),
+    'last': new FormControl(''),
+    'suf': new FormControl(''),
+    'address': new FormControl(''),
+    'city': new FormControl(''),
+    'state': new FormControl(''),
+    'zip': new FormControl(''),
+    'email': new FormControl(''),
+    'home': new FormControl(''),
+    'work': new FormControl(''),
+    'mobile': new FormControl(''),
+    'petname': new FormControl(''),
+    'sex': new FormControl(''),
+    'pettype': new FormControl(''),
+    'petbreed': new FormControl(''),
+    'petcolor': new FormControl(''),
+    'petweight': new FormControl(''),
+    'petdob': new FormControl(''),
+    'petdod': new FormControl(''),
+    'pettod': new FormControl(''),
+    'petage': new FormControl(''),
   });
 
   constructor(
@@ -49,10 +69,40 @@ export class NewCaseDialog  {
 
   onSubmit() {
      this.petCaseService.addCase(
-       new Person(this.personForm.get('name').value),
-       new Pet(this.personForm.get('petname').value)
+       new Person(
+         1,
+          this.caseForm.get('firstname').value,
+          this.caseForm.get('pre').value,
+          this.caseForm.get('mid').value,
+          this.caseForm.get('last').value,
+          this.caseForm.get('suf').value,
+          this.caseForm.get('address').value,
+          this.caseForm.get('city').value,
+          this.caseForm.get('state').value,
+          this.caseForm.get('zip').value,
+          this.caseForm.get('email').value,
+          this.caseForm.get('home').value,
+          this.caseForm.get('work').value,
+          this.caseForm.get('mobile').value,
+       ),
+       new Pet(
+         1,
+         this.caseForm.get('petname').value,
+         this.caseForm.get('sex').value,
+         this.caseForm.get('pettype').value,
+         this.caseForm.get('petbreed').value,
+         this.caseForm.get('petcolor').value,
+         this.caseForm.get('petweight').value,
+         this.caseForm.get('petdob').value,
+         this.caseForm.get('petdod').value,
+         this.caseForm.get('pettod').value,
+         this.caseForm.get('petage').value
+       )
      );
      console.log(this.petCaseService.getCases());
   }
 
 }
+
+
+

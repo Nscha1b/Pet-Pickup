@@ -9,9 +9,9 @@ export class PersonService {
   peopleChanged = new Subject<Person[]>();
 
   private people: Person[] = [
-    new Person('ben'),
-    new Person('Ron'),
-    new Person('Tom')
+    new Person(1, 'Nelson', 'Mr', 'Paul', 'Jensen',
+      'Sr', '435 Elm Drive', 'Milford', 'PA', 15342,
+      'NelsonJenson@gmail.com', '411-654-3323', '411-656-0098', '345-554-7685')
   ];
 
   constructor() { }
@@ -21,7 +21,10 @@ export class PersonService {
   }
 
   addPerson(person: Person) {
-    this.people.push(new Person(person.name));
+    this.people.push(new Person(person.id, person.firstname, person.pre, person.mid,
+      person.last, person.suf, person.address, person.city, person.state,
+      person.zip, person.email, person.home, person.work, person.mobile
+    ));
     this.peopleChanged.next(this.people.slice());
     console.log('Person Added');
     console.log(this.getPeople());

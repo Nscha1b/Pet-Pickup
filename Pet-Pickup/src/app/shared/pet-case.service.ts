@@ -14,24 +14,12 @@ export class PetCaseService {
 
   private petCases: PetCase[] = [
     new PetCase(
-      new Person('Ben'),
-      new Pet('fluffers')
-    ),
-    new PetCase(
-      new Person('Ralf'),
-      new Pet('Blue')
-    ),
-    new PetCase(
-      new Person('Jen'),
-      new Pet('Princess')
-    ),
-    new PetCase(
-      new Person('Lisa'),
-      new Pet('Elmo')
-    ),
-    new PetCase(
-      new Person('Scotty'),
-      new Pet('Jaws')
+      new Person(1, 'Nelson', 'Mr', 'Paul', 'Jensen',
+        'Sr', '435 Elm Drive', 'Milford', 'PA', 15342,
+        'NelsonJenson@gmail.com', '411-654-3323', '411-656-0098', '345-554-7685'),
+      new Pet(1, 'fluffers', 'Female', 'Dog', 'Pitbull', 'Black',
+        '50', '1/1/1988', '1/22/98', '2:00PM', '10'
+      )
     )
   ];
 
@@ -42,8 +30,12 @@ export class PetCaseService {
   addCase(person: Person, pet: Pet) {
     this.petCases.push(
       new PetCase(
-        new Person(person.name),
-        new Pet(pet.name)
+        new Person(person.id, person.firstname, person.pre, person.mid,
+          person.last, person.suf, person.address, person.city, person.state,
+          person.zip, person.email, person.home, person.work, person.mobile
+        ),
+        new Pet(pet.id, pet.petname, pet.sex, pet.pettype, pet.petbreed, pet.petcolor, pet.petweight,
+          pet.petdob, pet.petdod, pet.pettod, pet.petage)
       )
     );
     this.casesChanged.next(this.petCases.slice());

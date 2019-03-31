@@ -9,8 +9,7 @@ export class PetService {
   petChanged = new Subject<Pet[]>();
 
   private pets: Pet[] = [
-    new Pet('fluffy'),
-    new Pet('Lenny')
+
   ];
 
   getPets() {
@@ -18,7 +17,10 @@ export class PetService {
   }
 
   addPet(pet: Pet) {
-    this.pets.push(new Pet(pet.name));
+    this.pets.push(new Pet(pet.id,
+      pet.petname, pet.sex, pet.pettype, pet.petbreed, pet.petcolor,
+      pet.petweight, pet.petdob, pet.petdod, pet.pettod, pet.petage
+    ));
     this.petChanged.next(this.pets.slice());
     console.log('Pet Added');
     console.log(this.getPets());

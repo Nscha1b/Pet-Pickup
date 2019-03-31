@@ -10,4 +10,10 @@
 mat-divider.headerSplit {
   border-top: 3px solid #007BFF;
 }
-
+.formNav {
+  background-color: #FFFFFF;
+  height: 4%;
+  border-radius: 5px;
+  border-bottom: 2px;
+  margin-bottom: 10px;
+}

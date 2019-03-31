@@ -11,7 +11,15 @@ import {
   MatCheckboxModule,
   MatToolbarModule,
   MatMenuModule,
-  MatCardModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatTableModule
+  MatCardModule,
+  MatDialogModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatDividerModule,
+  MatTableModule,
+  MatStepperModule,
+  MatTabGroup,
+  MatTabsModule
 } from '@angular/material';
 import {HeaderComponent, NewCaseDialog} from './header/header.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -41,7 +49,8 @@ import {ReactiveFormsModule} from '@angular/forms';
     MatInputModule,
     MatDividerModule,
     MatTableModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTabsModule
   ],
   entryComponents: [
     NewCaseDialog

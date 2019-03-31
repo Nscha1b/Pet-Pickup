@@ -12,7 +12,41 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$Pet-Pickup-primary: mat-palette($mat-indigo);
+$my-custom-primary-color: (
+  50 : #e0efff,
+  100 : #b3d7ff,
+  200 : #80bdff,
+  300 : #4da3ff,
+  400 : #268fff,
+  500 : #007bff,
+  600 : #0073ff,
+  700 : #0068ff,
+  800 : #005eff,
+  900 : #004bff,
+  A100 : #ffffff,
+  A200 : #f2f5ff,
+  A400 : #bfceff,
+  A700 : #a6baff,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+
+$Pet-Pickup-primary: mat-palette($my-custom-primary-color);
 $Pet-Pickup-accent: mat-palette($mat-pink, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
@@ -25,4 +59,7 @@ $Pet-Pickup-theme: mat-light-theme($Pet-Pickup-primary, $Pet-Pickup-accent, $Pet
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($Pet-Pickup-theme);
+
+
+
 
