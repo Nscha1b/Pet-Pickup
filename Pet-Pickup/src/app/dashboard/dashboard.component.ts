@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit } from '@angular/core';
 import {Subscription} from 'rxjs';
 import {PetCaseService} from '../shared/pet-case.service';
 import {PetCase} from '../shared/pet-case.model';
@@ -14,8 +14,10 @@ import {PetCase} from '../shared/pet-case.model';
 
 export class DashboardComponent implements OnInit {
   subscription: Subscription;
-  columnsToDisplay = ['owner', 'pet'];
-  dataSource = [];
+  columnsToDisplay = [
+    'id', 'owner', 'pet', 'sex', 'weight', 'crematory',
+    'type', 'clinic', 'status'];
+   dataSource = [];
 
   constructor(private petCaseService: PetCaseService) { }
 

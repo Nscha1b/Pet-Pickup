@@ -2,7 +2,8 @@
 @import '~font-awesome/css/font-awesome.css';
 @import '~bootstrap/dist/css/bootstrap.min.css';
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background: #bee9f7; }
 
 .mat-dialog-container {background: #bee9f7;}
+
 

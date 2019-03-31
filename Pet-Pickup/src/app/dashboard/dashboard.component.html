@@ -1,12 +1,46 @@
-<table mat-table [dataSource]="dataSource">
-  <ng-container matColumnDef="owner">
-  <th mat-header-cell *matHeaderCellDef>Owner</th>
-  <td mat-cell *matCellDef="let owner">{{ owner.person.firstname}}</td>
-</ng-container>
-  <ng-container matColumnDef="pet">
-    <th mat-header-cell *matHeaderCellDef>Pet</th>
-    <td mat-cell *matCellDef="let pet">{{ pet.pet.petname }}</td>
-  </ng-container>
-    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-    <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
-</table>
+<div class="title ml-3 mr-3 mt-2 d-flex justify-content-center">
+  <h3 class="text-dark align-self-center">DASHBOARD</h3>
+</div>
+<mat-card class="ml-3 mr-3">
+  <table class="col-md-12" mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let owner">{{ owner.person.id }}</td>
+    </ng-container>
+    <ng-container matColumnDef="owner">
+      <th mat-header-cell *matHeaderCellDef>Owner</th>
+      <td mat-cell *matCellDef="let owner">{{ owner.person.firstname }}</td>
+    </ng-container>
+    <ng-container matColumnDef="pet">
+      <th mat-header-cell *matHeaderCellDef>Pet</th>
+      <td mat-cell *matCellDef="let pet">{{ pet.pet.petname }}</td>
+    </ng-container>
+    <ng-container matColumnDef="sex">
+      <th mat-header-cell *matHeaderCellDef>Sex</th>
+      <td mat-cell *matCellDef="let pet">{{ pet.pet.sex }}</td>
+    </ng-container>
+    <ng-container matColumnDef="weight">
+      <th mat-header-cell *matHeaderCellDef>Weight</th>
+      <td mat-cell *matCellDef="let pet">{{ pet.pet.petweight }}</td>
+    </ng-container>
+    <ng-container matColumnDef="crematory">
+      <th mat-header-cell *matHeaderCellDef>Crematory</th>
+      <td mat-cell *matCellDef="let pet">{{ pet.pet.petname }}</td>
+    </ng-container>
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef>Type</th>
+      <td mat-cell *matCellDef="let pet">{{ pet.pet.petname }}</td>
+    </ng-container>
+    <ng-container matColumnDef="clinic">
+      <th mat-header-cell *matHeaderCellDef>Clinic</th>
+      <td mat-cell *matCellDef="let pet">{{ pet.pet.petname }}</td>
+    </ng-container>
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let pet">{{ pet.pet.petname }}</td>
+    </ng-container>
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+  </table>
+
+</mat-card>

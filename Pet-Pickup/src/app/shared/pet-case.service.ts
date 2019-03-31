@@ -20,7 +20,71 @@ export class PetCaseService {
       new Pet(1, 'fluffers', 'Female', 'Dog', 'Pitbull', 'Black',
         '50', '1/1/1988', '1/22/98', '2:00PM', '10'
       )
-    )
+    ),
+    new PetCase(
+      new Person(1, 'tim', 'Mr', 'Paul', 'Jensen',
+        'Sr', '435 Elm Drive', 'Milford', 'PA', 15342,
+        'NelsonJenson@gmail.com', '411-654-3323', '411-656-0098', '345-554-7685'),
+      new Pet(1, 'fluffers', 'Female', 'Dog', 'Pitbull', 'Black',
+        '50', '1/1/1988', '1/22/98', '2:00PM', '10'
+      )
+    ),
+    new PetCase(
+      new Person(1, 'bre', 'Mr', 'Paul', 'Jensen',
+        'Sr', '435 Elm Drive', 'Milford', 'PA', 15342,
+        'NelsonJenson@gmail.com', '411-654-3323', '411-656-0098', '345-554-7685'),
+      new Pet(1, 'fluffers', 'Female', 'Dog', 'Pitbull', 'Black',
+        '50', '1/1/1988', '1/22/98', '2:00PM', '10'
+      )
+    ),
+    new PetCase(
+      new Person(1, 'sonny', 'Mr', 'Paul', 'Jensen',
+        'Sr', '435 Elm Drive', 'Milford', 'PA', 15342,
+        'NelsonJenson@gmail.com', '411-654-3323', '411-656-0098', '345-554-7685'),
+      new Pet(1, 'fluffers', 'Female', 'Dog', 'Pitbull', 'Black',
+        '50', '1/1/1988', '1/22/98', '2:00PM', '10'
+      )
+    ),
+    new PetCase(
+      new Person(1, 'taco', 'Mr', 'Paul', 'Jensen',
+        'Sr', '435 Elm Drive', 'Milford', 'PA', 15342,
+        'NelsonJenson@gmail.com', '411-654-3323', '411-656-0098', '345-554-7685'),
+      new Pet(1, 'fluffers', 'Female', 'Dog', 'Pitbull', 'Black',
+        '50', '1/1/1988', '1/22/98', '2:00PM', '10'
+      )
+    ),
+    new PetCase(
+      new Person(1, 'Nelson', 'Mr', 'Paul', 'Jensen',
+        'Sr', '435 Elm Drive', 'Milford', 'PA', 15342,
+        'NelsonJenson@gmail.com', '411-654-3323', '411-656-0098', '345-554-7685'),
+      new Pet(1, 'fluffers', 'Female', 'Dog', 'Pitbull', 'Black',
+        '50', '1/1/1988', '1/22/98', '2:00PM', '10'
+      )
+    ),
+    new PetCase(
+      new Person(1, 'Nelson', 'Mr', 'Paul', 'Jensen',
+        'Sr', '435 Elm Drive', 'Milford', 'PA', 15342,
+        'NelsonJenson@gmail.com', '411-654-3323', '411-656-0098', '345-554-7685'),
+      new Pet(1, 'fluffers', 'Female', 'Dog', 'Pitbull', 'Black',
+        '50', '1/1/1988', '1/22/98', '2:00PM', '10'
+      )
+    ),
+    new PetCase(
+      new Person(1, 'Nelson', 'Mr', 'Paul', 'Jensen',
+        'Sr', '435 Elm Drive', 'Milford', 'PA', 15342,
+        'NelsonJenson@gmail.com', '411-654-3323', '411-656-0098', '345-554-7685'),
+      new Pet(1, 'fluffers', 'Female', 'Dog', 'Pitbull', 'Black',
+        '50', '1/1/1988', '1/22/98', '2:00PM', '10'
+      )
+    ),
+    new PetCase(
+      new Person(1, 'Nelson', 'Mr', 'Paul', 'Jensen',
+        'Sr', '435 Elm Drive', 'Milford', 'PA', 15342,
+        'NelsonJenson@gmail.com', '411-654-3323', '411-656-0098', '345-554-7685'),
+      new Pet(1, 'fluffers', 'Female', 'Dog', 'Pitbull', 'Black',
+        '50', '1/1/1988', '1/22/98', '2:00PM', '10'
+      )
+    ),
   ];
 
   getCases() {
