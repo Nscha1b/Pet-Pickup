@@ -248,6 +248,7 @@
               <input
                 id="crematory"
                 name="crematory"
+                formControlName="crematory"
                 matInput
                 placeholder="Crematory">
             </mat-form-field>
@@ -255,6 +256,7 @@
               <input
                 id="status"
                 name="status"
+                formControlName="status"
                 matInput
                 placeholder="Status">
             </mat-form-field>
@@ -264,6 +266,7 @@
               <input
                 id="cremationtype"
                 name="cremationtype"
+                formControlName="cremationtype"
                 matInput
                 placeholder="Cremation Type">
             </mat-form-field>
@@ -271,18 +274,23 @@
               <input
                 id="vetclinic"
                 name="vetclinic"
+                formControlName="vetclinic"
                 matInput
                 placeholder="Vet Clinic">
             </mat-form-field>
           </div>
           <div class="row">
-            <mat-checkbox class="col-md-3"
+            <mat-checkbox
+              formControlName="print"
+              class="col-md-3"
               id="printrequest"
               name="printrequest"
               matInput>
               Paw print requested
             </mat-checkbox>
-            <mat-checkbox class="col-md-3"
+            <mat-checkbox
+              formControlName="fur"
+              class="col-md-3"
               id="furrequest"
               name="furrequest"
               matInput>
@@ -300,6 +308,7 @@
             <input
               id="returnperson"
               name="returnperson"
+              formControlName="returnperson"
               matInput
               placeholder="Return Person">
           </mat-form-field>
@@ -307,6 +316,7 @@
               <input
                 id="returnplace"
                 name="returnplace"
+                formControlName="returnplace"
                 matInput
                 placeholder="Return Place">
             </mat-form-field>
@@ -315,6 +325,7 @@
             <mat-form-field class="col-md-5">
               <input
                 id="returnphone"
+                formControlName="returnphone"
                 name="returnphone"
                 matInput
                 placeholder="Return Phone">
@@ -322,6 +333,7 @@
             <mat-form-field class="col-md-7">
               <input
                 id="returnaddress"
+                formControlName="returnaddress"
                 name="returnaddress"
                 matInput
                 placeholder="Return Address">
@@ -331,6 +343,7 @@
             <mat-form-field class="col-md-7">
               <input
                 id="returncity"
+                formControlName="returncity"
                 name="returncity"
                 matInput
                 placeholder="Return City">
@@ -339,6 +352,7 @@
               <input
                 id="returnstate"
                 name="returnstate"
+                formControlName="returnstate"
                 matInput
                 placeholder="Return State">
             </mat-form-field>
@@ -346,6 +360,7 @@
               <input
                 id="returnzip"
                 name="returnzip"
+                formControlName="returnzip"
                 matInput
                 placeholder="Return Zip">
             </mat-form-field>
@@ -354,6 +369,7 @@
           <div class="row">
             <mat-form-field class="col-md-12">
               <textarea
+                formControlName="notes"
                 id="notes"
                 name="notes"
                 matInput
@@ -369,11 +385,5 @@
     </mat-card>
   </mat-tab>
 </mat-tab-group>
-<!--
-<div class="formNav d-flex justify-content-md-center">
-  <span style="cursor:pointer; text-align:center" class="col-md-4">OWNER</span>
-  <span style="cursor:pointer; text-align:center" class="col-md-4">PET</span>
-  <span style="cursor:pointer; text-align:center" class="col-md-4">DETAILS</span>
-</div>
--->
+
 

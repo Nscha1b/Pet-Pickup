@@ -4,6 +4,7 @@ import {Person} from '../shared/person.model';
 import {Form, FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Pet} from '../shared/pet.model';
 import {PetCaseService} from '../shared/pet-case.service';
+import {PetCremationDetails} from '../shared/pet-cremation.details';
 
 
 
@@ -13,7 +14,6 @@ import {PetCaseService} from '../shared/pet-case.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  name: string;
 
 
   constructor(public dialog: MatDialog) { }
@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(NewCaseDialog, {
+    const dialogRef = this.dialog.open(NewCaseDialogComponent, {
       height: '90%',
       width: '90%',
     });
@@ -36,8 +36,9 @@ export class HeaderComponent implements OnInit {
   templateUrl: './new-case-dialog.html',
   styleUrls: ['./header.component.css']
 })
-export class NewCaseDialog  {
+export class NewCaseDialogComponent  {
   caseForm = new FormGroup({
+    // owner controls
     'firstname': new FormControl(''),
     'pre': new FormControl(''),
     'mid': new FormControl(''),
@@ -51,6 +52,7 @@ export class NewCaseDialog  {
     'home': new FormControl(''),
     'work': new FormControl(''),
     'mobile': new FormControl(''),
+    // pet controls
     'petname': new FormControl(''),
     'sex': new FormControl(''),
     'pettype': new FormControl(''),
@@ -61,11 +63,26 @@ export class NewCaseDialog  {
     'petdod': new FormControl(''),
     'pettod': new FormControl(''),
     'petage': new FormControl(''),
+    // Cremation Details Controls
+    'crematory': new FormControl(''),
+    'status': new FormControl(''),
+    'cremationtype': new FormControl(''),
+    'vetclinic': new FormControl(''),
+    'print': new FormControl(''),
+    'fur': new FormControl(''),
+    'returnperson': new FormControl(''),
+    'returnplace': new FormControl(''),
+    'returnaddress': new FormControl(''),
+    'returncity': new FormControl(''),
+    'returnstate': new FormControl(''),
+    'returnphone': new FormControl(''),
+    'returnzip': new FormControl(''),
+    'notes': new FormControl('')
   });
 
   constructor(
     public petCaseService: PetCaseService,
-    public dialogRef: MatDialogRef<NewCaseDialog>) {}
+    public dialogRef: MatDialogRef<NewCaseDialogComponent>) {}
 
   onSubmit() {
      this.petCaseService.addCase(
@@ -97,6 +114,24 @@ export class NewCaseDialog  {
          this.caseForm.get('petdod').value,
          this.caseForm.get('pettod').value,
          this.caseForm.get('petage').value
+       ),
+       new PetCremationDetails(
+         this.caseForm.get('crematory').value,
+         this.caseForm.get('status').value,
+         this.caseForm.get('cremationtype').value,
+         this.caseForm.get('vetclinic').value,
+         this.caseForm.get('print').value,
+         this.caseForm.get('fur').value,
+         'Owner',
+         1,
+         this.caseForm.get('returnperson').value,
+         this.caseForm.get('returnplace').value,
+         this.caseForm.get('returnphone').value,
+         this.caseForm.get('returnaddress').value,
+         this.caseForm.get('returncity').value,
+         this.caseForm.get('returnstate').value,
+         this.caseForm.get('returnzip').value,
+         this.caseForm.get('notes').value,
        )
      );
      console.log(this.petCaseService.getCases());
