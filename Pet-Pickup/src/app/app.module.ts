@@ -53,9 +53,10 @@ import {ReactiveFormsModule} from '@angular/forms';
     MatTableModule,
     ReactiveFormsModule,
     MatTabsModule,
-    MatSortModule,
+    MatTableModule,
     MatPaginatorModule,
     MatOptionModule,
+    MatSortModule,
     MatSelectModule
   ],
   entryComponents: [

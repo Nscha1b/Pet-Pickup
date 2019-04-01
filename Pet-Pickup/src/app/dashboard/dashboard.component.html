@@ -2,47 +2,50 @@
   <h3 class="text-dark align-self-center">DASHBOARD</h3>
 </div>
 <mat-card class="ml-3 mr-3">
-  <mat-form-field class="col-4">
-    <mat-select placeholder="All Clinics">
-      <mat-option value="Number one">Number one Vet Clinic</mat-option>
-      <mat-option value="Evergreen">Evergreen Pets</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <table class="col-md-12" mat-table [dataSource]="dataSource" matSort>
+  <form [formGroup]="clinics" class="col-4">
+    <mat-form-field>
+      <mat-select (selectionChange)="filterVetClinic($event.value)" placeholder="Vet Clinic">
+        <mat-option value="">All Clinics</mat-option>
+        <mat-option value="Number one">Number one Vet Clinic</mat-option>
+        <mat-option value="Evergreen">Evergreen Pets</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+  <table class="col-md-12" mat-table matSort [dataSource]="dataSource">
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>ID</th>
       <td mat-cell *matCellDef="let owner">{{ owner.person.id }}</td>
     </ng-container>
-    <ng-container matColumnDef="owner">
-      <th mat-header-cell *matHeaderCellDef>Owner</th>
+    <ng-container id="owner" matColumnDef="firstname">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>owner</th>
       <td mat-cell *matCellDef="let owner">{{ owner.person.firstname }}</td>
     </ng-container>
     <ng-container matColumnDef="pet">
-      <th mat-header-cell *matHeaderCellDef>Pet</th>
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Pet</th>
       <td mat-cell *matCellDef="let pet">{{ pet.pet.petname }}</td>
     </ng-container>
     <ng-container matColumnDef="sex">
-      <th mat-header-cell *matHeaderCellDef>Sex</th>
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Sex</th>
       <td mat-cell *matCellDef="let pet">{{ pet.pet.sex }}</td>
     </ng-container>
     <ng-container matColumnDef="weight">
-      <th mat-header-cell *matHeaderCellDef>Weight</th>
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Weight</th>
       <td mat-cell *matCellDef="let pet">{{ pet.pet.petweight }}</td>
     </ng-container>
     <ng-container matColumnDef="crematory">
-      <th mat-header-cell *matHeaderCellDef>Crematory</th>
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Crematory</th>
       <td mat-cell *matCellDef="let pet">{{ pet.cremationDetails.crematory }}</td>
     </ng-container>
     <ng-container matColumnDef="type">
-      <th mat-header-cell *matHeaderCellDef>Type</th>
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Type</th>
       <td mat-cell *matCellDef="let pet">{{ pet.cremationDetails.type }}</td>
     </ng-container>
     <ng-container matColumnDef="clinic">
-      <th mat-header-cell *matHeaderCellDef>Clinic</th>
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Clinic</th>
       <td mat-cell *matCellDef="let pet">{{ pet.cremationDetails.clinic }}</td>
     </ng-container>
     <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Status</th>
       <td mat-cell *matCellDef="let pet">{{ pet.cremationDetails.status }}</td>
     </ng-container>
       <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
@@ -50,3 +53,5 @@
   </table>
   <mat-paginator [pageSizeOptions]=[5,10]></mat-paginator>
 </mat-card>
+
+
