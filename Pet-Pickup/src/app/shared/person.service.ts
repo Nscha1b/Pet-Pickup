@@ -20,6 +20,10 @@ export class PersonService {
     return this.people.slice();
   }
 
+  getPerson(id) {
+     return this.people.slice().find(x => x.id === id);
+  }
+
   addPerson(person: Person) {
     this.people.push(new Person(person.id, person.firstname, person.pre, person.mid,
       person.last, person.suf, person.address, person.city, person.state,
@@ -27,6 +31,5 @@ export class PersonService {
     ));
     this.peopleChanged.next(this.people.slice());
     console.log('Person Added');
-    console.log(this.getPeople());
   }
 }

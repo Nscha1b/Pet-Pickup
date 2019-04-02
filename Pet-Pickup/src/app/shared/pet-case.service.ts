@@ -52,6 +52,10 @@ export class PetCaseService {
     ),
   ];
 
+  getOwner(id) {
+    return this.personService.getPerson(id);
+  }
+
   getCases() {
     return this.petCases.slice();
   }

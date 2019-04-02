@@ -23,7 +23,6 @@ export class PetService {
     ));
     this.petChanged.next(this.pets.slice());
     console.log('Pet Added');
-    console.log(this.getPets());
   }
 
   constructor() { }

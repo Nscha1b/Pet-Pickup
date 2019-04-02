@@ -134,10 +134,34 @@ export class NewCaseDialogComponent  {
          this.caseForm.get('notes').value,
        )
      );
-     console.log(this.petCaseService.getCases());
+     // console.log(this.petCaseService.getCases());
+     console.log(this.petCaseService.getOwner(0));
+  }
+
+  writeOwnerInfo(id?: number) {
+    if (id) {
+      const owner = this.petCaseService.getOwner(0);
+      this.caseForm.patchValue({
+        returnperson: owner.firstname,
+        returnplace: owner.address,
+        returnaddress: owner.address,
+        returncity: owner.city,
+        returnstate: owner.state,
+        returnphone: owner.home,
+        returnzip: owner.zip
+      });
+    } else {
+      this.caseForm.patchValue({
+        returnperson: this.caseForm.get('firstname').value,
+        returnplace: this.caseForm.get('address').value,
+        returnaddress: this.caseForm.get('address').value,
+        returncity: this.caseForm.get('city').value,
+        returnstate: this.caseForm.get('state').value,
+        returnphone: this.caseForm.get('home').value,
+        returnzip: this.caseForm.get('zip').value
+      });
+    }
+
   }
 
 }
-
-
-
