@@ -245,38 +245,52 @@
           <p class="font-weight-bold">Cremation Details</p>
           <div class="row">
             <mat-form-field class="col-md-6">
-              <input
+              <mat-select
+                placeholder="Crematory"
                 id="crematory"
                 name="crematory"
-                formControlName="crematory"
-                matInput
-                placeholder="Crematory">
+                formControlName="crematory">
+                <mat-option value=""></mat-option>
+                <mat-option value="Thompson Sons">Thompson Sons</mat-option>
+                <mat-option value="SunnySide">SunnySide</mat-option>
+              </mat-select>
             </mat-form-field>
             <mat-form-field class="col-md-6">
-              <input
+              <mat-select
+                placeholder="Status"
                 id="status"
                 name="status"
-                formControlName="status"
-                matInput
-                placeholder="Status">
+                formControlName="status">
+                <mat-option value=""></mat-option>
+                <mat-option value="Pending Cremation">Pending Cremation</mat-option>
+                <mat-option value="In Retort">In Retort</mat-option>
+                <mat-option value="Ready for Pickup">Ready for Pickup</mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field class="col-md-6">
-              <input
+              <mat-select
+                placeholder="Cremation Type"
                 id="cremationtype"
                 name="cremationtype"
-                formControlName="cremationtype"
-                matInput
-                placeholder="Cremation Type">
+                formControlName="cremationtype">
+                <mat-option value=""></mat-option>
+                <mat-option value="Private">Private</mat-option>
+                <mat-option value="Communal">Communal</mat-option>
+                <mat-option value="Segregated">Segregated</mat-option>
+              </mat-select>
             </mat-form-field>
             <mat-form-field class="col-md-6">
-              <input
+              <mat-select
+                placeholder="Vet Clinic"
                 id="vetclinic"
                 name="vetclinic"
-                formControlName="vetclinic"
-                matInput
-                placeholder="Vet Clinic">
+                formControlName="vetclinic">
+                <mat-option value=""></mat-option>
+                <mat-option value="Number One Vet Clinic">Number one Vet Clinic</mat-option>
+                <mat-option value="Evergreen Pets">Evergreen Pets</mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
           <div class="row">
@@ -300,9 +314,9 @@
           <p class="font-weight-bold">Return Information</p>
           <div class="row">
             <div class="col-md-3">
-              <button type="button" class="m-1 col-3 btn btn-sm btn-secondary">Vet</button>
+              <button type="button" (click)="writeVetInfo()" class="m-1 col-3 btn btn-sm btn-secondary">Vet</button>
               <button type="button" (click)="writeOwnerInfo()" class="m-1 col-3 btn btn-sm btn-secondary">Owner</button>
-              <button type="button" class="m-1 col-3 btn btn-sm btn-secondary">None</button>
+              <button type="button" (click)="clearReturnInfo()" class="m-1 col-3 btn btn-sm btn-secondary">None</button>
             </div>
             <mat-form-field class="col-md-4">
             <input

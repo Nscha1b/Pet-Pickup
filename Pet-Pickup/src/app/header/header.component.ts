@@ -1,7 +1,7 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {Component,  OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material';
 import {Person} from '../shared/person.model';
-import {Form, FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
+import { FormControl, FormGroup, Validators} from '@angular/forms';
 import {Pet} from '../shared/pet.model';
 import {PetCaseService} from '../shared/pet-case.service';
 import {PetCremationDetails} from '../shared/pet-cremation.details';
@@ -14,10 +14,7 @@ import {PetCremationDetails} from '../shared/pet-cremation.details';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
-
   constructor(public dialog: MatDialog) { }
-
   ngOnInit() {
   }
 
@@ -81,8 +78,7 @@ export class NewCaseDialogComponent  {
   });
 
   constructor(
-    public petCaseService: PetCaseService,
-    public dialogRef: MatDialogRef<NewCaseDialogComponent>) {}
+    public petCaseService: PetCaseService) {}
 
   onSubmit() {
      this.petCaseService.addCase(
@@ -147,7 +143,7 @@ export class NewCaseDialogComponent  {
         returnaddress: owner.address,
         returncity: owner.city,
         returnstate: owner.state,
-        returnphone: owner.home,
+        returnphone: owner.mobile,
         returnzip: owner.zip
       });
     } else {
@@ -163,5 +159,41 @@ export class NewCaseDialogComponent  {
     }
 
   }
+  writeVetInfo() {
+    if (this.caseForm.get('vetclinic').value === 'Number One Vet Clinic') {
+      this.caseForm.patchValue({
+        returnperson: 'Number One Vet Clinic',
+        returnplace: 'Number One Vet Clinic',
+        returnaddress: '101 Vet Drive',
+        returncity: 'Pittsburgh',
+        returnstate: 'PA',
+        returnphone: '412-444-8765',
+        returnzip: '15122'
+      });
+    } else if (this.caseForm.get('vetclinic').value === 'Evergreen Pets') {
+      this.caseForm.patchValue({
+        returnperson: 'Evergreen Pets',
+        returnplace: 'Evergreen Pets',
+        returnaddress: '433 Green Way',
+        returncity: 'Pittsburgh',
+        returnstate: 'PA',
+        returnphone: '412-999-6537',
+        returnzip: '15327'
+      });
+    }
+  }
+  clearReturnInfo() {
+    this.caseForm.patchValue({
+      returnperson: '',
+      returnplace: '',
+      returnaddress: '',
+      returncity: '',
+      returnstate: '',
+      returnphone: '',
+      returnzip: ''
+    });
+  }
+
+
 
 }
