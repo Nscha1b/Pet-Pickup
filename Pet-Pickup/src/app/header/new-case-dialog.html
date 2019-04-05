@@ -3,126 +3,128 @@
     <mat-card>
       <div>
         <form [formGroup]="caseForm" (ngSubmit)="onSubmit()">
+          <div formGroupName="owner">
           <p class="font-weight-bold">Name</p>
-          <div class="row">
-            <mat-form-field class="col-md-1">
-              <input
-                id="pre"
-                name="pre"
-                matInput
-                formControlName="pre"
-                placeholder="Pre">
-            </mat-form-field>
-            <mat-form-field class="col-md-3">
-              <input
-                id="firstname"
-                name="firstname"
-                formControlName="firstname"
-                matInput
-                placeholder="First Name">
-            </mat-form-field>
-            <mat-form-field class="col-md-3">
-              <input
-                id="mid"
-                name="mid"
-                formControlName="mid"
-                matInput
-                placeholder="Middle Name">
-            </mat-form-field>
-            <mat-form-field class="col-md-3">
-              <input
-                id="last"
-                name="last"
-                formControlName="last"
-                matInput
-                placeholder="Last Name">
-            </mat-form-field>
-            <mat-form-field class="col-md-1">
-              <input
-                id="suf"
-                name="suf"
-                formControlName="suf"
-                matInput
-                placeholder="Suf">
-            </mat-form-field>
-          </div>
-          <p class="font-weight-bold">Address</p>
-          <div class="row">
-            <mat-form-field class="col-md-12">
-              <input
-                id="address"
-                name="address"
-                matInput
-                formControlName="address"
-                placeholder="Address"
-                type="text">
-            </mat-form-field>
-            <mat-form-field class="col-md-8">
-              <input
-                id="city"
-                name="city"
-                matInput
-                formControlName="city"
-                placeholder="City"
-                type="text">
-            </mat-form-field>
-            <mat-form-field class="col-md-2">
-              <input
-                id="state"
-                name="state"
-                matInput
-                formControlName="state"
-                placeholder="State"
-                type="text">
-            </mat-form-field>
-            <mat-form-field class="col-md-2">
-              <input
-                id="zip"
-                name="zip"
-                matInput
-                placeholder="Zip"
-                formControlName="zip"
-                type="text">
-            </mat-form-field>
-          </div>
-          <p class="font-weight-bold">Contact Info</p>
-          <div class="row">
-            <mat-form-field class="col-md-12">
-              <input
-                id="email"
-                name="email"
-                formControlName="email"
-                matInput
-                placeholder="Email"
-                type="email">
-            </mat-form-field>
-            <mat-form-field class="col-md-4">
-              <input
-                id="home"
-                name="home"
-                formControlName="home"
-                matInput
-                placeholder="Home Phone"
-                type="phone">
-            </mat-form-field>
-            <mat-form-field class="col-md-4">
-              <input
-                id="work"
-                name="work"
-                formControlName="work"
-                matInput
-                placeholder="Work Phone"
-                type="phone">
-            </mat-form-field>
-            <mat-form-field class="col-md-4">
-              <input
-                id="mobile"
-                name="mobile"
-                formControlName="mobile"
-                matInput
-                placeholder="Mobile Phone"
-                type="Phone">
-            </mat-form-field>
+            <div class="row">
+              <mat-form-field class="col-md-1">
+                <input
+                  id="pre"
+                  name="pre"
+                  matInput
+                  formControlName="pre"
+                  placeholder="Pre">
+              </mat-form-field>
+              <mat-form-field class="col-md-3">
+                <input
+                  id="firstname"
+                  name="firstname"
+                  formControlName="firstname"
+                  matInput
+                  placeholder="First Name">
+              </mat-form-field>
+              <mat-form-field class="col-md-3">
+                <input
+                  id="mid"
+                  name="mid"
+                  formControlName="mid"
+                  matInput
+                  placeholder="Middle Name">
+              </mat-form-field>
+              <mat-form-field class="col-md-3">
+                <input
+                  id="last"
+                  name="last"
+                  formControlName="last"
+                  matInput
+                  placeholder="Last Name">
+              </mat-form-field>
+              <mat-form-field class="col-md-1">
+                <input
+                  id="suf"
+                  name="suf"
+                  formControlName="suf"
+                  matInput
+                  placeholder="Suf">
+              </mat-form-field>
+            </div>
+            <p class="font-weight-bold">Address</p>
+            <div class="row">
+              <mat-form-field class="col-md-12">
+                <input
+                  id="address"
+                  name="address"
+                  matInput
+                  formControlName="address"
+                  placeholder="Address"
+                  type="text">
+              </mat-form-field>
+              <mat-form-field class="col-md-8">
+                <input
+                  id="city"
+                  name="city"
+                  matInput
+                  formControlName="city"
+                  placeholder="City"
+                  type="text">
+              </mat-form-field>
+              <mat-form-field class="col-md-2">
+                <input
+                  id="state"
+                  name="state"
+                  matInput
+                  formControlName="state"
+                  placeholder="State"
+                  type="text">
+              </mat-form-field>
+              <mat-form-field class="col-md-2">
+                <input
+                  id="zip"
+                  name="zip"
+                  matInput
+                  placeholder="Zip"
+                  formControlName="zip"
+                  type="text">
+              </mat-form-field>
+            </div>
+            <p class="font-weight-bold">Contact Info</p>
+            <div class="row">
+              <mat-form-field class="col-md-12">
+                <input
+                  id="email"
+                  name="email"
+                  formControlName="email"
+                  matInput
+                  placeholder="Email"
+                  type="email">
+              </mat-form-field>
+              <mat-form-field class="col-md-4">
+                <input
+                  id="home"
+                  name="home"
+                  formControlName="home"
+                  matInput
+                  placeholder="Home Phone"
+                  type="phone">
+              </mat-form-field>
+              <mat-form-field class="col-md-4">
+                <input
+                  id="work"
+                  name="work"
+                  formControlName="work"
+                  matInput
+                  placeholder="Work Phone"
+                  type="phone">
+              </mat-form-field>
+              <mat-form-field class="col-md-4">
+                <input
+                  id="mobile"
+                  name="mobile"
+                  formControlName="mobile"
+                  matInput
+                  placeholder="Mobile Phone"
+                  type="Phone">
+              </mat-form-field>
+            </div>
           </div>
         </form>
       </div>
@@ -132,6 +134,7 @@
     <mat-card>
       <div>
         <form [formGroup]="caseForm" (ngSubmit)="onSubmit()">
+          <div formGroupName="pet">
           <p class="font-weight-bold">Name</p>
           <div class="row">
             <mat-form-field class="col-md-9">
@@ -234,6 +237,7 @@
                 type="number">
             </mat-form-field>
           </div>
+          </div>
         </form>
       </div>
     </mat-card>
@@ -242,6 +246,7 @@
     <mat-card>
       <div>
         <form [formGroup]="caseForm" (ngSubmit)="onSubmit()">
+          <div formGroupName="details">
           <p class="font-weight-bold">Cremation Details</p>
           <div class="row">
             <mat-form-field class="col-md-6">
@@ -319,13 +324,13 @@
               <button type="button" (click)="clearReturnInfo()" class="m-1 col-3 btn btn-sm btn-secondary">None</button>
             </div>
             <mat-form-field class="col-md-4">
-            <input
-              id="returnperson"
-              name="returnperson"
-              formControlName="returnperson"
-              matInput
-              placeholder="Return Person">
-          </mat-form-field>
+              <input
+                id="returnperson"
+                name="returnperson"
+                formControlName="returnperson"
+                matInput
+                placeholder="Return Person">
+            </mat-form-field>
             <mat-form-field class="col-md-5">
               <input
                 id="returnplace"
@@ -394,10 +399,9 @@
           <div class="row d-flex justify-content-end">
             <button class="btn btn-primary mr-3" type="submit" mat-button>Save</button>
           </div>
+          </div>
         </form>
       </div>
     </mat-card>
   </mat-tab>
 </mat-tab-group>
-
-
