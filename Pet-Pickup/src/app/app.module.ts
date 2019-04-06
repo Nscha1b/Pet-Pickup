@@ -25,7 +25,7 @@ import {
 } from '@angular/material';
 import {HeaderComponent, NewCaseDialogComponent} from './header/header.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
 
@@ -57,7 +57,8 @@ import {ReactiveFormsModule} from '@angular/forms';
     MatPaginatorModule,
     MatOptionModule,
     MatSortModule,
-    MatSelectModule
+    MatSelectModule,
+    FormsModule
   ],
   entryComponents: [
     NewCaseDialogComponent

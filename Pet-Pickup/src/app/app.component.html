@@ -1,18 +1,62 @@
 <app-header></app-header>
 <app-dashboard></app-dashboard>
 <router-outlet></router-outlet>
-<div class="card col-12 ">
-    <div class=" bg-secondary btn-group btn-group-sm d-flex justify-content-center" role="group" aria-label="Basic example">
-      <button type="button" class="col-2 p-2 btn valid">Left</button>
-      <button type="button" class="col-2 ml-1 mr-1 btn valid">Middle</button>
-      <button type="button" class="col-2 p-2 btn valid">Right</button>
+
+
+<button type="button" class="btn btn-primary" (click)="openModal()">New Case</button>
+
+<div class="backdrop" [ngStyle]="{'display':display}"></div>
+
+
+<div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
+  <div class="modal-dialog modal-xl" role="document">
+
+    <div class="modal-content pt-3">
+      <div class="d-flex justify-content-end">
+        <button
+          type="button"(click)="onCloseHandled()"
+          class="close pr-3" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-10 text-center shadow-sm modal-background d-flex justify-content-center">
+            <a class="col-md-4 valid">Owner</a>
+            <a class="col-md-4 disabledLink">Pet</a>
+            <a class="col-md-4 disabledLink">Details</a>
+          </div>
+          <div class="col-md-1"></div>
+        </div>
+      </div>
+
+      <div class="modal-body">
+
+        <form>
+
+          <div class="group">
+            <input placeholder="Name" type="text" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+          </div>
+
+          <div class="group">
+            <input placeholder="Name" type="text" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+          </div>
+
+        </form>
+
+
+
+      </div>
+
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="onCloseHandled()" >Close</button>
+      </div>
     </div>
-  <div class="card-body">
-    <p class="card-text">
-      example
-    </p>
   </div>
 </div>
-
-
-
