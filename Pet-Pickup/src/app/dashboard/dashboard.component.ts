@@ -28,6 +28,7 @@ export class DashboardComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.getNestedProps();
     this.refresh();
+    this.dataSource.paginator = this.paginator;
   }
 
   filterVetClinic(clinicDD) {
@@ -43,6 +44,7 @@ export class DashboardComponent implements AfterViewInit {
     this.petCaseService.casesChanged.subscribe(() => {
       this.dataSource = new MatTableDataSource(this.petCaseService.getCases());
       this.getNestedProps();
+      this.dataSource.paginator = this.paginator;
     });
   }
 

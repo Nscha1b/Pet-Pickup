@@ -11,3 +11,14 @@ mat-divider.headerSplit {
   border-top: 3px solid #007BFF;
 }
 
+.modal-background {background: #FFFFFF;}
+
+.activeTab {
+  width: 100%;
+  border-bottom: 2px solid #007BFF;
+}
+
+a.disabledLink {
+  color: #c9c9c9;
+  pointer-events: none;
+}

@@ -33,7 +33,7 @@ export class PetCaseService {
       new Pet(1, 'Lilly', 'Female', 'Dog', 'Pitbull', 'Black',
         '12', '1/1/1988', '1/22/98', '2:00PM', '10'
       ),
-      new PetCremationDetails('Red Brick Cremations', 'Pickup', 'Immediate', 'Top Pets',
+      new PetCremationDetails('Red Brick Cremations', 'Pickup', 'Immediate', 'Number one',
         true, true, 'Nelson', 1, 'Nelson', 'Home',
         '111-111-1111', '321 fishy st', 'Wexford', 'PA', '15122',
         'I would like fluffy to be returned in the morning - Nelson')
@@ -45,7 +45,7 @@ export class PetCaseService {
       new Pet(1, 'Tyson', 'Male', 'Dog', 'Pitbull', 'Black',
         '50', '1/1/1988', '1/22/98', '2:00PM', '10'
       ),
-      new PetCremationDetails('Blue Crems', 'Waiting', 'Package', 'Evergreen',
+      new PetCremationDetails('Blue Crems', 'Waiting', 'Package', 'Evergreen Pets',
         true, true, 'Nelson', 1, 'Nelson', 'Home',
         '111-111-1111', '321 fishy st', 'Wexford', 'PA', '15122',
         'I would like fluffy to be returned in the morning - Nelson')

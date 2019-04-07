@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 
 
@@ -10,23 +10,12 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 })
 export class AppComponent implements OnInit {
   title = 'Pet-Pickup';
-  display = 'none';
+
 
   ngOnInit(): void {
   }
 
-  openModal() {
 
-    this.display = 'block';
-  }
-
-  onCloseHandled() {
-
-
-    this.display = 'none';
-
-
-  }
 
 }
 

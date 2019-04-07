@@ -1,5 +1,5 @@
 import {Component,  OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatDialogRef} from '@angular/material';
 import {Person} from '../shared/person.model';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Pet} from '../shared/pet.model';
@@ -19,9 +19,10 @@ export class HeaderComponent implements OnInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(NewCaseDialogComponent, {
+     this.dialog.open(NewCaseDialogComponent, {
       height: '90%',
       width: '90%',
+      disableClose: true
     });
   }
 
@@ -37,13 +38,13 @@ export class NewCaseDialogComponent implements OnInit {
   caseForm: FormGroup;
   ownerForm = this.fb.group({
     'firstname': new FormControl('', Validators.required),
-    'pre': new FormControl(''),
+    'pre': new FormControl('-1'),
     'mid': new FormControl(''),
     'last': new FormControl('', Validators.required),
-    'suf': new FormControl(''),
+    'suf': new FormControl('-1'),
     'address': new FormControl('', Validators.required),
     'city': new FormControl('', Validators.required),
-    'state': new FormControl('', Validators.required),
+    'state': new FormControl('-1', Validators.required),
     'zip': new FormControl('', Validators.required),
     'email': new FormControl(''),
     'home': new FormControl('', Validators.required),
@@ -63,23 +64,36 @@ export class NewCaseDialogComponent implements OnInit {
     'petage': new FormControl('')
   });
   detailsForm = new FormGroup({
-    'crematory': new FormControl('', Validators.required),
-    'status': new FormControl('', Validators.required),
-    'cremationtype': new FormControl('', Validators.required),
-    'vetclinic': new FormControl('', Validators.required),
+    'crematory': new FormControl('-1', Validators.required),
+    'status': new FormControl('-1', Validators.required),
+    'cremationtype': new FormControl('-1', Validators.required),
+    'vetclinic': new FormControl('-1', Validators.required),
     'print': new FormControl(''),
     'fur': new FormControl(''),
     'returnperson': new FormControl(''),
     'returnplace': new FormControl(''),
     'returnaddress': new FormControl(''),
     'returncity': new FormControl(''),
-    'returnstate': new FormControl(''),
+    'returnstate': new FormControl('-1'),
     'returnphone': new FormControl(''),
     'returnzip': new FormControl(''),
     'notes': new FormControl('')
   });
+  states = [
+    'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN',
+    'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV',
+    'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN',
+    'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
+  ];
+  suffix = ['Jr.', 'Sr.', 'II', 'III', 'IV'];
+  prefix = ['Dr.', 'Miss', 'Mr.', 'Mrs.', 'Ms.'];
+  showOwner = true;
+  showPet = false;
+  showDetails = false;
 
-  constructor(public petCaseService: PetCaseService, private fb: FormBuilder) {}
+  constructor(public petCaseService: PetCaseService,
+              private fb: FormBuilder,
+              private dialogRef: MatDialogRef<NewCaseDialogComponent>) {}
 
   ngOnInit(): void {
     this.caseForm = this.fb.group({
@@ -157,12 +171,14 @@ export class NewCaseDialogComponent implements OnInit {
         returnzip: owner.zip
       });
     } else {
+      if (this.caseForm.get('owner').get('state').value !== -1) {
+          this.detailsForm.patchValue({returnstate: this.caseForm.get('owner').get('state').value});
+        }
       this.detailsForm.patchValue({
         returnperson: this.caseForm.get('owner').get('firstname').value,
         returnplace: this.caseForm.get('owner').get('address').value,
         returnaddress: this.caseForm.get('owner').get('address').value,
         returncity: this.caseForm.get('owner').get('city').value,
-        returnstate: this.caseForm.get('owner').get('state').value,
         returnphone: this.caseForm.get('owner').get('home').value,
         returnzip: this.caseForm.get('owner').get('zip').value
       });
@@ -203,6 +219,42 @@ export class NewCaseDialogComponent implements OnInit {
       returnzip: ''
     });
   }
+  toggleShowOwner() {
+    if (this.ownerForm.valid) {
+      this.showOwner = true;
+      this.showPet = false;
+      this.showDetails = false;
+    }
+
+  }
+  toggleShowPet(event) {
+    console.log(event);
+    if (this.ownerForm.valid && event.srcElement.name === 'ownerTab') {
+      console.log('here');
+      this.showOwner = false;
+      this.showPet = true;
+      this.showDetails = false;
+    } else if (this.ownerForm.valid) {
+      this.showOwner = false;
+      this.showPet = true;
+      this.showDetails = false;
+    }
+  }
+  toggleShowDetails(event) {
+    if (this.petForm.valid && event.srcElement.name === 'petTab') {
+      this.showOwner = false;
+      this.showPet = false;
+      this.showDetails = true;
+    } else if (this.petForm.valid) {
+      this.showOwner = false;
+      this.showPet = false;
+      this.showDetails = true;
+    }
+  }
+  closeDialog() {
+    this.dialogRef.close();
+  }
+
 
 
 

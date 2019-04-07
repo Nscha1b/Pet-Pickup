@@ -1,392 +1,434 @@
-<mat-tab-group mat-align-tabs="center" animationDuration="0ms">
-  <mat-tab color="accent" label="OWNER">
-    <mat-card>
-      <div>
-        <form [formGroup]="caseForm" (ngSubmit)="onSubmit()">
-          <div formGroupName="owner">
-          <p class="font-weight-bold">Name</p>
-            <div class="row">
-              <mat-form-field class="col-md-1">
-                <input
-                  id="pre"
-                  name="pre"
-                  matInput
-                  formControlName="pre"
-                  placeholder="Pre">
-              </mat-form-field>
-              <mat-form-field class="col-md-3">
-                <input
-                  id="firstname"
-                  name="firstname"
-                  formControlName="firstname"
-                  matInput
-                  placeholder="First Name">
-              </mat-form-field>
-              <mat-form-field class="col-md-3">
-                <input
-                  id="mid"
-                  name="mid"
-                  formControlName="mid"
-                  matInput
-                  placeholder="Middle Name">
-              </mat-form-field>
-              <mat-form-field class="col-md-3">
-                <input
-                  id="last"
-                  name="last"
-                  formControlName="last"
-                  matInput
-                  placeholder="Last Name">
-              </mat-form-field>
-              <mat-form-field class="col-md-1">
-                <input
-                  id="suf"
-                  name="suf"
-                  formControlName="suf"
-                  matInput
-                  placeholder="Suf">
-              </mat-form-field>
-            </div>
-            <p class="font-weight-bold">Address</p>
-            <div class="row">
-              <mat-form-field class="col-md-12">
-                <input
-                  id="address"
-                  name="address"
-                  matInput
-                  formControlName="address"
-                  placeholder="Address"
-                  type="text">
-              </mat-form-field>
-              <mat-form-field class="col-md-8">
-                <input
-                  id="city"
-                  name="city"
-                  matInput
-                  formControlName="city"
-                  placeholder="City"
-                  type="text">
-              </mat-form-field>
-              <mat-form-field class="col-md-2">
-                <input
-                  id="state"
-                  name="state"
-                  matInput
-                  formControlName="state"
-                  placeholder="State"
-                  type="text">
-              </mat-form-field>
-              <mat-form-field class="col-md-2">
-                <input
-                  id="zip"
-                  name="zip"
-                  matInput
-                  placeholder="Zip"
-                  formControlName="zip"
-                  type="text">
-              </mat-form-field>
-            </div>
-            <p class="font-weight-bold">Contact Info</p>
-            <div class="row">
-              <mat-form-field class="col-md-12">
-                <input
-                  id="email"
-                  name="email"
-                  formControlName="email"
-                  matInput
-                  placeholder="Email"
-                  type="email">
-              </mat-form-field>
-              <mat-form-field class="col-md-4">
-                <input
-                  id="home"
-                  name="home"
-                  formControlName="home"
-                  matInput
-                  placeholder="Home Phone"
-                  type="phone">
-              </mat-form-field>
-              <mat-form-field class="col-md-4">
-                <input
-                  id="work"
-                  name="work"
-                  formControlName="work"
-                  matInput
-                  placeholder="Work Phone"
-                  type="phone">
-              </mat-form-field>
-              <mat-form-field class="col-md-4">
-                <input
-                  id="mobile"
-                  name="mobile"
-                  formControlName="mobile"
-                  matInput
-                  placeholder="Mobile Phone"
-                  type="Phone">
-              </mat-form-field>
-            </div>
-          </div>
-        </form>
+<div class="container">
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="d-none d-md-flex col-md-8 text-center shadow-sm modal-background justify-content-center">
+      <a class="col-4"
+         (click)="toggleShowOwner($event)"
+         [class.activeTab]="showOwner"
+      >Owner</a>
+      <a class="col-4"
+         (click)="toggleShowPet($event);"
+         [class.activeTab]="showPet"
+         [class.disabledLink]="!this.ownerForm.valid"
+      >Pet</a>
+      <a class="col-4"
+         (click)="toggleShowDetails($event)"
+         [class.activeTab]="showDetails"
+         [class.disabledLink]="!this.petForm.valid"
+      >Details</a>
+    </div>
+    <div class="col-md-2 d-flex justify-content-end">
+      <mat-icon style="color: red; cursor: pointer;" (click)="closeDialog()">close</mat-icon>
+    </div>
+  </div>
+</div>
+
+<div class="mt-3 container modal-background">
+  <form [formGroup]="caseForm" (ngSubmit)="onSubmit()">
+    <!--Owner Form-->
+    <div *ngIf="showOwner" formGroupName="owner">
+      <p class="pt-4 font-weight-bold">Name</p>
+      <div class="row">
+        <mat-form-field class="col-md-1">
+          <mat-select
+            id="pre"
+            name="pre"
+            formControlName="pre"
+            placeholder="Pre">
+            <mat-option value=""></mat-option>
+            <mat-option *ngFor="let pre of prefix" [value]="pre">{{ pre }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-md-3">
+          <input
+            id="firstname"
+            name="firstname"
+            formControlName="firstname"
+            matInput
+            placeholder="First Name">
+        </mat-form-field>
+        <mat-form-field class="col-md-3">
+          <input
+            id="mid"
+            name="mid"
+            formControlName="mid"
+            matInput
+            placeholder="Middle Name">
+        </mat-form-field>
+        <mat-form-field class="col-md-3">
+          <input
+            id="last"
+            name="last"
+            formControlName="last"
+            matInput
+            placeholder="Last Name">
+        </mat-form-field>
+        <mat-form-field class="col-md-1">
+          <mat-select
+            id="suf"
+            name="suf"
+            formControlName="suf"
+            placeholder="Suf">
+            <mat-option value=""></mat-option>
+            <mat-option *ngFor="let suf of suffix" [value]="suf">{{ suf }}</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
-    </mat-card>
-  </mat-tab>
-  <mat-tab label="PET">
-    <mat-card>
-      <div>
-        <form [formGroup]="caseForm" (ngSubmit)="onSubmit()">
-          <div formGroupName="pet">
-          <p class="font-weight-bold">Name</p>
-          <div class="row">
-            <mat-form-field class="col-md-9">
-              <input
-                id="petname"
-                name="petname"
-                formControlName="petname"
-                matInput
-                placeholder="Pet Name">
-            </mat-form-field>
-          </div>
-          <p class="font-weight-bold">Details</p>
-          <div class="row">
-            <mat-form-field class="col-md-4">
-              <input
-                id="sex"
-                name="sex"
-                formControlName="sex"
-                matInput
-                placeholder="Sex"
-                type="text">
-            </mat-form-field>
-            <mat-form-field class="col-md-4">
-              <input
-                id="pettype"
-                name="pettype"
-                formControlName="pettype"
-                matInput
-                placeholder="Pet Type"
-                type="text">
-            </mat-form-field>
-            <mat-form-field class="col-md-4">
-              <input
-                id="breed"
-                name="breed"
-                formControlName="petbreed"
-                matInput
-                placeholder="breed"
-                type="text">
-            </mat-form-field>
-          </div>
-          <div class="row">
-            <mat-form-field class="col-md-4">
-              <input
-                id="color"
-                name="color"
-                formControlName="petcolor"
-                matInput
-                placeholder="Color"
-                type="text">
-            </mat-form-field>
-            <mat-form-field class="col-md-4">
-              <input
-                id="weight"
-                name="weight"
-                matInput
-                formControlName="petweight"
-                placeholder="Weight"
-                type="text">
-            </mat-form-field>
-          </div>
-          <p class="font-weight-bold">Age</p>
-          <div class="row">
-            <mat-form-field class="col-md-4">
-              <input
-                id="dob"
-                name="dob"
-                formControlName="petage"
-                matInput
-                placeholder="Date of Birth"
-                type="text">
-            </mat-form-field>
-            <mat-form-field class="col-md-4">
-              <input
-                id="dod"
-                name="dod"
-                formControlName="petdod"
-                matInput
-                placeholder="Date of Death"
-                type="text">
-            </mat-form-field>
-            <mat-form-field class="col-md-4">
-              <input
-                id="tod"
-                name="tod"
-                formControlName="pettod"
-                matInput
-                placeholder="Time of Death"
-                type="text">
-            </mat-form-field>
-          </div>
-          <div class="row">
-            <mat-form-field class="col-md-4">
-              <input
-                id="age"
-                name="age"
-                formControlName="petage"
-                matInput
-                placeholder="Age"
-                type="number">
-            </mat-form-field>
-          </div>
-          </div>
-        </form>
+      <p class="font-weight-bold">Address</p>
+      <div class="row">
+        <mat-form-field class="col-md-12">
+          <input
+            id="address"
+            name="address"
+            matInput
+            formControlName="address"
+            placeholder="Address"
+            type="text">
+        </mat-form-field>
+        <mat-form-field class="col-md-8">
+          <input
+            id="city"
+            name="city"
+            matInput
+            formControlName="city"
+            placeholder="City"
+            type="text">
+        </mat-form-field>
+        <mat-form-field class="col-md-2">
+          <mat-select
+            placeholder="State"
+            id="state"
+            name="state"
+            formControlName="state">
+            <mat-option value=""></mat-option>
+            <mat-option *ngFor="let state of states" [value]="state">{{ state }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-md-2">
+          <input
+            id="zip"
+            name="zip"
+            matInput
+            placeholder="Zip"
+            formControlName="zip"
+            type="text">
+        </mat-form-field>
       </div>
-    </mat-card>
-  </mat-tab>
-  <mat-tab label="DETAILS">
-    <mat-card>
-      <div>
-        <form [formGroup]="caseForm" (ngSubmit)="onSubmit()">
-          <div formGroupName="details">
-          <p class="font-weight-bold">Cremation Details</p>
-          <div class="row">
-            <mat-form-field class="col-md-6">
-              <mat-select
-                placeholder="Crematory"
-                id="crematory"
-                name="crematory"
-                formControlName="crematory">
-                <mat-option value=""></mat-option>
-                <mat-option value="Thompson Sons">Thompson Sons</mat-option>
-                <mat-option value="SunnySide">SunnySide</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field class="col-md-6">
-              <mat-select
-                placeholder="Status"
-                id="status"
-                name="status"
-                formControlName="status">
-                <mat-option value=""></mat-option>
-                <mat-option value="Pending Cremation">Pending Cremation</mat-option>
-                <mat-option value="In Retort">In Retort</mat-option>
-                <mat-option value="Ready for Pickup">Ready for Pickup</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="row">
-            <mat-form-field class="col-md-6">
-              <mat-select
-                placeholder="Cremation Type"
-                id="cremationtype"
-                name="cremationtype"
-                formControlName="cremationtype">
-                <mat-option value=""></mat-option>
-                <mat-option value="Private">Private</mat-option>
-                <mat-option value="Communal">Communal</mat-option>
-                <mat-option value="Segregated">Segregated</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field class="col-md-6">
-              <mat-select
-                placeholder="Vet Clinic"
-                id="vetclinic"
-                name="vetclinic"
-                formControlName="vetclinic">
-                <mat-option value=""></mat-option>
-                <mat-option value="Number One Vet Clinic">Number one Vet Clinic</mat-option>
-                <mat-option value="Evergreen Pets">Evergreen Pets</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="row">
-            <mat-checkbox
-              formControlName="print"
-              class="col-md-3"
-              id="printrequest"
-              name="printrequest"
-              matInput>
-              Paw print requested
-            </mat-checkbox>
-            <mat-checkbox
-              formControlName="fur"
-              class="col-md-3"
-              id="furrequest"
-              name="furrequest"
-              matInput>
-              Lock of fur requested
-            </mat-checkbox>
-          </div>
-          <p class="font-weight-bold">Return Information</p>
-          <div class="row">
-            <div class="col-md-3">
-              <button type="button" (click)="writeVetInfo()" class="m-1 col-3 btn btn-sm btn-secondary">Vet</button>
-              <button type="button" (click)="writeOwnerInfo()" class="m-1 col-3 btn btn-sm btn-secondary">Owner</button>
-              <button type="button" (click)="clearReturnInfo()" class="m-1 col-3 btn btn-sm btn-secondary">None</button>
-            </div>
-            <mat-form-field class="col-md-4">
-              <input
-                id="returnperson"
-                name="returnperson"
-                formControlName="returnperson"
-                matInput
-                placeholder="Return Person">
-            </mat-form-field>
-            <mat-form-field class="col-md-5">
-              <input
-                id="returnplace"
-                name="returnplace"
-                formControlName="returnplace"
-                matInput
-                placeholder="Return Place">
-            </mat-form-field>
-          </div>
-          <div class="row">
-            <mat-form-field class="col-md-5">
-              <input
-                id="returnphone"
-                formControlName="returnphone"
-                name="returnphone"
-                matInput
-                placeholder="Return Phone">
-            </mat-form-field>
-            <mat-form-field class="col-md-7">
-              <input
-                id="returnaddress"
-                formControlName="returnaddress"
-                name="returnaddress"
-                matInput
-                placeholder="Return Address">
-            </mat-form-field>
-          </div>
-          <div class="row">
-            <mat-form-field class="col-md-7">
-              <input
-                id="returncity"
-                formControlName="returncity"
-                name="returncity"
-                matInput
-                placeholder="Return City">
-            </mat-form-field>
-            <mat-form-field class="col-md-2">
-              <input
-                id="returnstate"
-                name="returnstate"
-                formControlName="returnstate"
-                matInput
-                placeholder="Return State">
-            </mat-form-field>
-            <mat-form-field class="col-md-3">
-              <input
-                id="returnzip"
-                name="returnzip"
-                formControlName="returnzip"
-                matInput
-                placeholder="Return Zip">
-            </mat-form-field>
-          </div>
-          <p class="font-weight-bold">Notes</p>
-          <div class="row">
-            <mat-form-field class="col-md-12">
+      <p class="font-weight-bold">Contact Info</p>
+      <div class="row">
+        <mat-form-field class="col-md-12">
+          <input
+            id="email"
+            name="email"
+            formControlName="email"
+            matInput
+            placeholder="Email"
+            type="email">
+        </mat-form-field>
+        <mat-form-field class="col-md-4">
+          <input
+            id="home"
+            name="home"
+            formControlName="home"
+            matInput
+            placeholder="Home Phone"
+            type="phone">
+        </mat-form-field>
+        <mat-form-field class="col-md-4">
+          <input
+            id="work"
+            name="work"
+            formControlName="work"
+            matInput
+            placeholder="Work Phone"
+            type="phone">
+        </mat-form-field>
+        <mat-form-field class="col-md-4">
+          <input
+            id="mobile"
+            name="mobile"
+            formControlName="mobile"
+            matInput
+            placeholder="Mobile Phone"
+            type="Phone">
+        </mat-form-field>
+      </div>
+      <div class="col-md-12 pb-2 d-flex justify-content-end">
+        <button
+          name="ownerTab"
+          class="d-none d-md-flex btn btn-primary"
+          type="button"
+          (click)="toggleShowPet($event)">
+          Next
+        </button>
+      </div>
+    </div>
+    <!--Pet Form-->
+    <div *ngIf="showPet" formGroupName="pet">
+      <p class="font-weight-bold">Name</p>
+      <div class="row">
+        <mat-form-field class="col-md-9">
+          <input
+            id="petname"
+            name="petname"
+            formControlName="petname"
+            matInput
+            placeholder="Pet Name">
+        </mat-form-field>
+      </div>
+      <p class="font-weight-bold">Details</p>
+      <div class="row">
+        <mat-form-field class="col-md-4">
+          <input
+            id="sex"
+            name="sex"
+            formControlName="sex"
+            matInput
+            placeholder="Sex"
+            type="text">
+        </mat-form-field>
+        <mat-form-field class="col-md-4">
+          <input
+            id="pettype"
+            name="pettype"
+            formControlName="pettype"
+            matInput
+            placeholder="Pet Type"
+            type="text">
+        </mat-form-field>
+        <mat-form-field class="col-md-4">
+          <input
+            id="breed"
+            name="breed"
+            formControlName="petbreed"
+            matInput
+            placeholder="breed"
+            type="text">
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="col-md-4">
+          <input
+            id="color"
+            name="color"
+            formControlName="petcolor"
+            matInput
+            placeholder="Color"
+            type="text">
+        </mat-form-field>
+        <mat-form-field class="col-md-4">
+          <input
+            id="weight"
+            name="weight"
+            matInput
+            formControlName="petweight"
+            placeholder="Weight"
+            type="number">
+          <span style="color: #787878;" matSuffix>lbs.</span>
+        </mat-form-field>
+      </div>
+      <p class="font-weight-bold">Age</p>
+      <div class="row">
+        <mat-form-field class="col-md-4">
+          <input
+            [matDatepicker]="dobDate"
+            id="dob"
+            name="dob"
+            formControlName="petdob"
+            matInput
+            placeholder="Date of Birth">
+          <mat-datepicker-toggle matSuffix [for]="dobDate"></mat-datepicker-toggle>
+          <mat-datepicker #dobDate></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="col-md-4">
+          <input
+            [matDatepicker]="dodDate"
+            id="dod"
+            name="dod"
+            formControlName="petdod"
+            matInput
+            placeholder="Date of Death">
+          <mat-datepicker-toggle matSuffix [for]="dodDate"></mat-datepicker-toggle>
+          <mat-datepicker #dodDate></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="col-md-4">
+          <input
+            id="tod"
+            name="tod"
+            formControlName="pettod"
+            matInput
+            placeholder="Time of Death"
+            type="text">
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="col-md-4">
+          <input
+            id="age"
+            name="age"
+            formControlName="petage"
+            matInput
+            placeholder="Age"
+            type="number">
+          <span style="color: #787878;" matSuffix>Years</span>
+        </mat-form-field>
+      </div>
+      <div class="col-md-12 pb-2 d-flex justify-content-end">
+        <button
+          class="d-none d-md-flex btn btn-primary"
+          type="button"
+          name="petTab"
+          (click)="toggleShowDetails($event)">
+          Next
+        </button>
+      </div>
+    </div>
+    <!--Details Form-->
+    <div *ngIf="showDetails" formGroupName="details">
+      <p class="font-weight-bold">Cremation Details</p>
+      <div class="row">
+        <mat-form-field class="col-md-6">
+          <mat-select
+            placeholder="Crematory"
+            id="crematory"
+            name="crematory"
+            formControlName="crematory">
+            <mat-option value=""></mat-option>
+            <mat-option value="Thompson Sons">Thompson Sons</mat-option>
+            <mat-option value="SunnySide">SunnySide</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-md-6">
+          <mat-select
+            placeholder="Status"
+            id="status"
+            name="status"
+            formControlName="status">
+            <mat-option value=""></mat-option>
+            <mat-option value="Pending Cremation">Pending Cremation</mat-option>
+            <mat-option value="In Retort">In Retort</mat-option>
+            <mat-option value="Ready for Pickup">Ready for Pickup</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="col-md-6">
+          <mat-select
+            placeholder="Cremation Type"
+            id="cremationtype"
+            name="cremationtype"
+            formControlName="cremationtype">
+            <mat-option value=""></mat-option>
+            <mat-option value="Private">Private</mat-option>
+            <mat-option value="Communal">Communal</mat-option>
+            <mat-option value="Segregated">Segregated</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-md-6">
+          <mat-select
+            placeholder="Vet Clinic"
+            id="vetclinic"
+            name="vetclinic"
+            formControlName="vetclinic">
+            <mat-option value=""></mat-option>
+            <mat-option value="Number One Vet Clinic">Number one Vet Clinic</mat-option>
+            <mat-option value="Evergreen Pets">Evergreen Pets</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-checkbox
+          color="primary"
+          formControlName="print"
+          class="col-md-3"
+          id="printrequest"
+          name="printrequest"
+          matInput>
+          Paw print requested
+        </mat-checkbox>
+        <mat-checkbox
+          color="primary"
+          formControlName="fur"
+          class="col-md-3"
+          id="furrequest"
+          name="furrequest"
+          matInput>
+          Lock of fur requested
+        </mat-checkbox>
+      </div>
+      <p class="font-weight-bold">Return Information</p>
+      <div class="row">
+        <div class="col-md-3">
+          <button type="button" (click)="writeVetInfo()" class="m-1 col-3 btn btn-sm btn-secondary">Vet</button>
+          <button type="button" (click)="writeOwnerInfo()" class="m-1 col-3 btn btn-sm btn-secondary">Owner</button>
+          <button type="button" (click)="clearReturnInfo()" class="m-1 col-3 btn btn-sm btn-secondary">None</button>
+        </div>
+        <mat-form-field class="col-md-4">
+          <input
+            id="returnperson"
+            name="returnperson"
+            formControlName="returnperson"
+            matInput
+            placeholder="Return Person">
+        </mat-form-field>
+        <mat-form-field class="col-md-5">
+          <input
+            id="returnplace"
+            name="returnplace"
+            formControlName="returnplace"
+            matInput
+            placeholder="Return Place">
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="col-md-5">
+          <input
+            id="returnphone"
+            formControlName="returnphone"
+            name="returnphone"
+            matInput
+            placeholder="Return Phone">
+        </mat-form-field>
+        <mat-form-field class="col-md-7">
+          <input
+            id="returnaddress"
+            formControlName="returnaddress"
+            name="returnaddress"
+            matInput
+            placeholder="Return Address">
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="col-md-7">
+          <input
+            id="returncity"
+            formControlName="returncity"
+            name="returncity"
+            matInput
+            placeholder="Return City">
+        </mat-form-field>
+        <mat-form-field class="col-md-2">
+          <mat-select
+            placeholder="Return State"
+            id="returnstate"
+            name="returnstate"
+            formControlName="returnstate">
+            <mat-option value=""></mat-option>
+            <mat-option *ngFor="let state of states" [value]="state">{{ state }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-md-3">
+          <input
+            id="returnzip"
+            name="returnzip"
+            formControlName="returnzip"
+            matInput
+            placeholder="Return Zip">
+        </mat-form-field>
+      </div>
+      <p class="font-weight-bold">Notes</p>
+      <div class="row">
+        <mat-form-field class="col-md-12">
               <textarea
                 formControlName="notes"
                 id="notes"
@@ -394,14 +436,13 @@
                 matInput
                 placeholder="Notes">
               </textarea>
-            </mat-form-field>
-          </div>
-          <div class="row d-flex justify-content-end">
-            <button class="btn btn-primary mr-3" type="submit" mat-button>Save</button>
-          </div>
-          </div>
-        </form>
+        </mat-form-field>
       </div>
-    </mat-card>
-  </mat-tab>
-</mat-tab-group>
+      <div class="row d-flex justify-content-end">
+        <button (click)="closeDialog()" class="btn btn-primary mr-3" type="submit" mat-button>Save</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+
