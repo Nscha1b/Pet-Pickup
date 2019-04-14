@@ -1,26 +1,22 @@
 const express = require('express');
 const bodyParser = require('body-Parser');
 
-
 const mountRoutes = require('./routes');
 
-
 const app = express();
+
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  //app.use(bodyParser.json());
+  next();
+});
+
 mountRoutes(app);
 
 
-
-app.use(bodyParser.json());
-
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers',
-  'Origin, X-Requested-WIth, Content-Type, Accept'
-  );
-  res.setHeader('Access-Control-Allow-Methods',
-  'GET, POST, PATCH, PUT, OPTIONS, DELETE');
-  next();
-});
 
 
 

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Person } from './person.model';
 import { Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,7 @@ export class PersonService {
       'NelsonJenson@gmail.com', '411-654-3323', '411-656-0098', '345-554-7685')
   ];
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getPeople() {
     return this.people.slice();
@@ -32,4 +34,15 @@ export class PersonService {
     this.peopleChanged.next(this.people.slice());
     console.log('Person Added');
   }
+
+  /*
+  getNewPeople() {
+    this.http
+    .get<{people: any}>('http://localhost:3000/', {responseType: 'json'})
+    .subscribe((people) => {
+      console.log(people);
+    });
+  }
+
+  */
 }

@@ -9,6 +9,8 @@ const client = new Client({
   ssl: true
 });
 
+
+
 client.connect()
   .then(() => {
     console.log('Connected to Database!!!')

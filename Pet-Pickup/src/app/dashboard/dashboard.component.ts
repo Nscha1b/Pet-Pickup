@@ -26,6 +26,7 @@ export class DashboardComponent implements AfterViewInit {
   });
 
   ngAfterViewInit() {
+    this.petCaseService.getPetCases();
     this.getNestedProps();
     this.refresh();
     this.dataSource.paginator = this.paginator;

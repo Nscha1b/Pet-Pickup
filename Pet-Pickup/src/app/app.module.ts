@@ -21,11 +21,13 @@ import {
   MatSortModule,
   MatPaginatorModule,
   MatOptionModule,
-  MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatIconModule,
+  MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatIconModule
 } from '@angular/material';
 import {HeaderComponent, NewCaseDialogComponent} from './header/header.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 
@@ -61,7 +63,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     FormsModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatIconModule
+    MatIconModule,
+    HttpClientModule
   ],
   entryComponents: [
     NewCaseDialogComponent

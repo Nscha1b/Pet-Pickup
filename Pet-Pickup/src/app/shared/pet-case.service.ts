@@ -6,6 +6,9 @@ import { Pet } from './pet.model';
 import {PersonService} from './person.service';
 import {PetService} from './pet.service';
 import {PetCremationDetails} from './pet-cremation.details';
+import { HttpClient } from '@angular/common/http';
+import {map} from 'rxjs/operators';
+import { CaseQuery } from './case-query.model';
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +54,8 @@ export class PetCaseService {
         'I would like fluffy to be returned in the morning - Nelson')
     ),
   ];
+  posts: any;
+  postsUpdate: any;
 
   getOwner(id) {
     return this.personService.getPerson(id);
@@ -83,5 +88,35 @@ export class PetCaseService {
 
   constructor(
     private personService: PersonService,
-    private petService: PetService) { }
+    private petService: PetService,
+    private http: HttpClient) { }
+
+    getPetCases() {
+      const newCases: PetCase[] = [];
+      this.http
+      .get('http://localhost:3000/')
+      .subscribe((data: CaseQuery[]) => {
+        data.forEach(i => {
+          const newCase =  new PetCase(
+            new Person(i.personid, i.personfirstname, i.pre, i.middlename, i.lastname,
+              i.suf, i.personaddress, i.personcity, i.personstate,
+              +i.personzip, i.email, i.personhome, i.personwork, i.personmobile),
+            new Pet(i.petid, i.petname, i.petsex, i.pettype, i.petbreed,
+              i.petcolor, i.petweight, i.petdob,
+              i.petdod, i.pettod, i.petage),
+            new PetCremationDetails(i.crematory, i.status, i.pettype, i.clinic,
+              i.print, i.fur, i.returnto, i.returntoid,
+              i.returnperson, i.returnplace, i.returnphone,
+              i.returnaddress, i.returncity, i.returnstate,
+              i.returnzip, i.note)
+            );
+        newCases.push(newCase);
+        this.petCases = newCases;
+        return this.casesChanged.next(this.petCases.slice());
+        });
+        console.log(newCases);
+      });
+    }
+
+
 }
