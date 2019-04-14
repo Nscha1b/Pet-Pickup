@@ -24,15 +24,45 @@ router.get('/', async (req, res, next) => {
       'inner join cremationdetails cd on pc.detailsid = cd.id'
       )
     .then((result) => {
-      console.log(result.rows);
+    //  console.log(result.rows);
       res.send(result.rows);
     })
   }
   catch(e) {
-    console.log(`Something wrong happened! ${e}`);
+    console.log(`Unable to get Cases! ${e}`);
   }
   finally {
-    await db.end();
-    console.log('Client Disconnected!');
+    console.log('Request Completed');
   }
 });
+
+
+
+router.post('/', async (req, res, next) => {
+  try {
+    console.log(req.body);
+     const query = insertPerson(req.body);
+     await db.query(query.sql, query.values)
+     .then((result) => {
+      console.log('Person Added!');
+     })
+  }
+  catch(e) {
+   // console.log(`Unable to post! ${e}`);
+  }
+  finally {
+    console.log('Request Completed');
+  }
+});
+
+function insertPerson(body) {
+  const query = {
+    sql:'INSERT INTO person( ' +
+    '  firstname, pre, middlename, lastname, suf, address, city, state, zip, email, homephone, workphone, mobilephone ) ' +
+    ' VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13); ',
+    values: [body.firstname, body.pre, body.middlename,
+      body.lastname, body.suf, body.address, body.city,
+      body.state, body.zip, body.email, body.home, body.work, body.mobile]
+  }
+  return query;
+}

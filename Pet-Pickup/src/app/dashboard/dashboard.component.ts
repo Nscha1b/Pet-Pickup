@@ -16,7 +16,7 @@ export class DashboardComponent implements AfterViewInit {
   columnsToDisplay = [
     'id', 'firstname', 'pet', 'sex', 'weight', 'crematory',
     'type', 'clinic', 'status'];
-  dataSource = new MatTableDataSource(this.petCaseService.getCases());
+  dataSource = new MatTableDataSource(this.petCaseService.loadCases());
    @ViewChild(MatPaginator) paginator: MatPaginator;
    @ViewChild(MatSort) sort: MatSort;
 
@@ -26,10 +26,10 @@ export class DashboardComponent implements AfterViewInit {
   });
 
   ngAfterViewInit() {
-    this.petCaseService.getPetCases();
-    this.getNestedProps();
-    this.refresh();
-    this.dataSource.paginator = this.paginator;
+     this.petCaseService.getCases();
+     this.getNestedProps();
+     this.refresh();
+     this.dataSource.paginator = this.paginator;
   }
 
   filterVetClinic(clinicDD) {
@@ -43,7 +43,7 @@ export class DashboardComponent implements AfterViewInit {
 
   refresh() {
     this.petCaseService.casesChanged.subscribe(() => {
-      this.dataSource = new MatTableDataSource(this.petCaseService.getCases());
+      this.dataSource = new MatTableDataSource(this.petCaseService.loadCases());
       this.getNestedProps();
       this.dataSource.paginator = this.paginator;
     });
@@ -55,7 +55,7 @@ export class DashboardComponent implements AfterViewInit {
   getNestedProps() {
       this.dataSource.sortingDataAccessor = (item, property) => {
         switch (property) {
-          case 'id': return item.person.id
+          case 'id': return item.person.id;
           case 'firstname': return item.person.firstname;
           case 'pet': return item.pet.petname;
           case 'sex': return item.pet.sex;
