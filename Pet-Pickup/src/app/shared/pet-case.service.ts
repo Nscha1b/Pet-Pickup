@@ -51,17 +51,19 @@ export class PetCaseService {
     this.casesChanged.next(this.petCases.slice());
     this.personService.addPerson(person);
     this.petService.addPet(pet);
+    this.addDetails(details);
   }
 
   constructor(
     private personService: PersonService,
     private petService: PetService,
-    private http: HttpClient) { }
+    private http: HttpClient
+    ) { }
 
     getCases() {
       const newCases: PetCase[] = [];
       this.http
-      .get('http://localhost:3000/')
+      .get('http://localhost:3000/api/get/cases')
       .subscribe((data: CaseQuery[]) => {
         data.forEach(i => {
           const newCase =  new PetCase(
@@ -82,6 +84,19 @@ export class PetCaseService {
         this.casesChanged.next(this.petCases.slice());
         });
       });
+    }
+
+    addDetails(d: PetCremationDetails) {
+      const newDetails = {crematory: d.crematory, status: d.status, type: d.type, clinic: d.clinic,
+        print: d.print, fur: d.fur, returnto: d.returnTo, returntoid: d.returnToID, returnperson: d.returnPerson,
+        returnplace: d.returnPlace, returnphone: d.returnPhone, returnaddress: d.returnAddress,
+        returncity: d.returnCity, returnstate: d.returnState, returnzip: d.returnState,
+        note: d.notes, ownerid: '', petid: ''};
+
+      this.http.post('http://localhost:3000/api/post/details', newDetails)
+        .subscribe((res) => {
+          console.log(res);
+        });
     }
 
 

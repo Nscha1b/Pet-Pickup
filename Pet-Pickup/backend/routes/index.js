@@ -1,7 +1,7 @@
-const root = require('./root');
-const users = require('./users');
+
+const api = require('./api');
 
 module.exports = (app) => {
-  app.use('/users', users);
-  app.use('/', root);
+  app.use('/api', api);
+
 }

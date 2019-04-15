@@ -38,11 +38,11 @@ export class PersonService {
   */
 
  addPerson(p: Person) {
-  // tslint:disable-next-line:max-line-length
-  const newPerson = {firstname: p.firstname, pre: p.pre, middlename: p.mid, lastname: p.last, suf: p.suf, address: p.address, city: p.city, state: p.state, zip: p.zip, email: p.email, home: p.home, work: p.work, mobile: p.mobile};
-// tslint:disable-next-line: max-line-length
-// <{firstname, pre, middlename, lastname, suf, address, city, state, zip, email, home, work, mobile}>
-     this.http.post('http://localhost:3000/', newPerson)
+  const newPerson = {firstname: p.firstname, pre: p.pre, middlename: p.mid,
+    lastname: p.last, suf: p.suf, address: p.address, city: p.city, state: p.state,
+    zip: p.zip, email: p.email, home: p.home, work: p.work, mobile: p.mobile};
+
+     this.http.post('http://localhost:3000/api/post/person', newPerson)
      .subscribe((res) => {
       console.log(res);
      });
@@ -55,9 +55,6 @@ export class PersonService {
         this.postsUpdate.next([...this.posts]);
       }); */
 
-
-
-      console.log('this is running');
 }
 
 
