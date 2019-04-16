@@ -49,9 +49,10 @@ export class PetCaseService {
       )
     );
     this.casesChanged.next(this.petCases.slice());
-    this.personService.addPerson(person);
-    this.petService.addPet(pet);
-    this.addDetails(details);
+    //this.personService.addPerson(person);
+    //this.petService.addPet(pet);
+    //this.addDetails(details);
+    this.addPetCase(person, pet, details);
   }
 
   constructor(
@@ -94,6 +95,25 @@ export class PetCaseService {
         note: d.notes, ownerid: '', petid: ''};
 
       this.http.post('http://localhost:3000/api/post/details', newDetails)
+        .subscribe((res) => {
+          console.log(res);
+        });
+    }
+
+    addPetCase(p: Person, pe: Pet, d: PetCremationDetails) {
+      const newPetCase = {firstname: p.firstname, pre: p.pre, middlename: p.mid,
+        lastname: p.last, suf: p.suf, address: p.address, city: p.city, state: p.state,
+        zip: p.zip, email: p.email, home: p.home, work: p.work, mobile: p.mobile,
+        name: pe.petname, sex: pe.sex, type: pe.pettype,
+        breed: pe.petbreed, color: pe.petcolor, weight: pe.petweight,
+        dateofbirth: pe.petdob, dateofdeath: pe.petdod, timeofdeath: pe.pettod, age: pe.pettod,
+        crematory: d.crematory, status: d.status, detailstype: d.type, clinic: d.clinic,
+        print: d.print, fur: d.fur, returnto: d.returnTo, returntoid: d.returnToID, returnperson: d.returnPerson,
+        returnplace: d.returnPlace, returnphone: d.returnPhone, returnaddress: d.returnAddress,
+        returncity: d.returnCity, returnstate: d.returnState, returnzip: d.returnState,
+        note: d.notes, ownerid: '', petid: ''};
+
+      this.http.post('http://localhost:3000/api/post/petcase', newPetCase)
         .subscribe((res) => {
           console.log(res);
         });
