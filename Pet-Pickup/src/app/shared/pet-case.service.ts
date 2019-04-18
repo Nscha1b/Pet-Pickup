@@ -9,16 +9,17 @@ import {PetCremationDetails} from './pet-cremation.details';
 import { HttpClient } from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import { CaseQuery } from './case-query.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PetCaseService {
   casesChanged = new Subject<PetCase[]>();
-
   private petCases: PetCase[] = [];
   posts: any;
   postsUpdate: any;
+  isLoading = false;
 
   getOwner(id) {
     return this.personService.getPerson(id);
@@ -58,7 +59,8 @@ export class PetCaseService {
   constructor(
     private personService: PersonService,
     private petService: PetService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
     ) { }
 
     getCases() {
@@ -118,6 +120,8 @@ export class PetCaseService {
           console.log(res);
         });
     }
+
+
 
 
 }

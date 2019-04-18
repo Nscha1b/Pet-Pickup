@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ViewChild, OnInit, ChangeDetectorRef} from '@angular/core';
 import { PetCaseService } from '../shared/pet-case.service';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -20,10 +20,11 @@ export class DashboardComponent implements AfterViewInit {
    @ViewChild(MatPaginator) paginator: MatPaginator;
    @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private petCaseService: PetCaseService) {}
+  constructor(private petCaseService: PetCaseService, private cd: ChangeDetectorRef) {}
   clinics = new FormGroup({
     'clinicDD': new FormControl('All Clinics')
   });
+
 
   ngAfterViewInit() {
      this.petCaseService.getCases();

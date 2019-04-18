@@ -1,57 +1,60 @@
-<div class="title ml-3 mr-3 mt-2 d-flex justify-content-center">
-  <h3 class="text-dark align-self-center">DASHBOARD</h3>
+<div>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <div *ngIf="!isLoading">
+    <div class="title ml-3 mr-3 mt-2 d-flex justify-content-center">
+      <h3 class="text-dark align-self-center">DASHBOARD</h3>
+    </div>
+    <mat-card class="ml-3 mr-3">
+      <form [formGroup]="clinics" class="col-4">
+        <mat-form-field>
+          <mat-select (selectionChange)="filterVetClinic($event.value)" placeholder="Vet Clinic">
+            <mat-option value="">All Clinics</mat-option>
+            <mat-option value="Number one">Number one Vet Clinic</mat-option>
+            <mat-option value="Evergreen Pets">Evergreen Pets</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+      <table class="col-md-12" mat-table matSort [dataSource]="dataSource">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let owner">{{ owner.person.id }}</td>
+        </ng-container>
+        <ng-container id="owner" matColumnDef="firstname">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef>owner</th>
+          <td mat-cell *matCellDef="let owner">{{ owner.person.firstname }}</td>
+        </ng-container>
+        <ng-container matColumnDef="pet">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef>Pet</th>
+          <td mat-cell *matCellDef="let pet">{{ pet.pet.petname }}</td>
+        </ng-container>
+        <ng-container matColumnDef="sex">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef>Sex</th>
+          <td mat-cell *matCellDef="let pet">{{ pet.pet.sex }}</td>
+        </ng-container>
+        <ng-container matColumnDef="weight">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef>Weight</th>
+          <td mat-cell *matCellDef="let pet">{{ pet.pet.petweight }}</td>
+        </ng-container>
+        <ng-container matColumnDef="crematory">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef>Crematory</th>
+          <td mat-cell *matCellDef="let pet">{{ pet.cremationDetails.crematory }}</td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef>Type</th>
+          <td mat-cell *matCellDef="let pet">{{ pet.cremationDetails.type }}</td>
+        </ng-container>
+        <ng-container matColumnDef="clinic">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef>Clinic</th>
+          <td mat-cell *matCellDef="let pet">{{ pet.cremationDetails.clinic }}</td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let pet">{{ pet.cremationDetails.status }}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]=[1,5,10]></mat-paginator>
+    </mat-card>
+  </div>
 </div>
-<mat-card class="ml-3 mr-3">
-  <form [formGroup]="clinics" class="col-4">
-    <mat-form-field>
-      <mat-select (selectionChange)="filterVetClinic($event.value)" placeholder="Vet Clinic">
-        <mat-option value="">All Clinics</mat-option>
-        <mat-option value="Number one">Number one Vet Clinic</mat-option>
-        <mat-option value="Evergreen Pets">Evergreen Pets</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </form>
-  <table class="col-md-12" mat-table matSort [dataSource]="dataSource">
-    <ng-container matColumnDef="id">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>ID</th>
-      <td mat-cell *matCellDef="let owner">{{ owner.person.id }}</td>
-    </ng-container>
-    <ng-container id="owner" matColumnDef="firstname">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>owner</th>
-      <td mat-cell *matCellDef="let owner">{{ owner.person.firstname }}</td>
-    </ng-container>
-    <ng-container matColumnDef="pet">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Pet</th>
-      <td mat-cell *matCellDef="let pet">{{ pet.pet.petname }}</td>
-    </ng-container>
-    <ng-container matColumnDef="sex">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Sex</th>
-      <td mat-cell *matCellDef="let pet">{{ pet.pet.sex }}</td>
-    </ng-container>
-    <ng-container matColumnDef="weight">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Weight</th>
-      <td mat-cell *matCellDef="let pet">{{ pet.pet.petweight }}</td>
-    </ng-container>
-    <ng-container matColumnDef="crematory">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Crematory</th>
-      <td mat-cell *matCellDef="let pet">{{ pet.cremationDetails.crematory }}</td>
-    </ng-container>
-    <ng-container matColumnDef="type">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Type</th>
-      <td mat-cell *matCellDef="let pet">{{ pet.cremationDetails.type }}</td>
-    </ng-container>
-    <ng-container matColumnDef="clinic">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Clinic</th>
-      <td mat-cell *matCellDef="let pet">{{ pet.cremationDetails.clinic }}</td>
-    </ng-container>
-    <ng-container matColumnDef="status">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>Status</th>
-      <td mat-cell *matCellDef="let pet">{{ pet.cremationDetails.status }}</td>
-    </ng-container>
-      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-      <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
-  </table>
-  <mat-paginator [pageSizeOptions]=[1,5,10]></mat-paginator>
-</mat-card>
-
-
