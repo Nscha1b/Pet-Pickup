@@ -1,5 +1,6 @@
 const Router = require("express-promise-router");
 const db = require("../db");
+const bcrypt = require("bcrypt");
 
 const router = new Router();
 
@@ -112,8 +113,60 @@ router.post("/post/petcase", async (req, res, next) => {
   }
 });
 
+router.post("/signup", async (req, res, next) => {
+  try {
+    let username = req.body.username;
+    let password;
+    bcrypt.hash(req.body.password, 2)
+      .then(hash => {
+      password = hash;
+    })
+    await db.query("BEGIN");
+    await db.query(
+      ' INSERT INTO users( username, password ) ' +
+      ' VALUES ( $1, $2 ) ;'
+      , [username, password])
+    await db.query("COMMIT");
+  } catch (e) {
+    console.log(`Failed to execute ${e}`);
+    await db.query("ROLLBACK");
+  } finally {
+    console.log("connection closed");
+  }
+});
 
 
+
+/*
+
+      .then((res) => {
+        res.status(201).json({
+          message: 'User Created!',
+          result: result
+      })
+
+    });
+    /*
+
+/*
+
+let username = req.body.username;
+let password;
+bcrypt.hash(req.body.password, 10)
+.then(hash => {
+  password = hash;
+})
+  db.query(
+    ' INSERT INTO users( username, password ) ' +
+    ' VALUES ( $1, $2 ) ;'
+    , [username, password])
+    .then((res) => {
+      res.status(201).json({
+        message: 'User Created!',
+        result: result
+    })
+    .catch(e => console.error(e.stack))
+    */
 
 
 
