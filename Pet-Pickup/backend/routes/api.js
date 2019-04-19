@@ -125,10 +125,19 @@ router.post("/signup", async (req, res, next) => {
     await db.query(
       ' INSERT INTO users( username, password ) ' +
       ' VALUES ( $1, $2 ) ;'
-      , [username, password])
-    await db.query("COMMIT");
+      , [username, password]).then(result => {
+        res.status(201).json({
+          message: 'User Created!',
+          result: result
+        })
+      })
+    await db.query("COMMIT")
   } catch (e) {
-    console.log(`Failed to execute ${e}`);
+    console.log(`Failed to create new user... ${e}`);
+    res.status(409).json({
+      message: 'Unable to create username, please try again!',
+      result: `${e}`
+    })
     await db.query("ROLLBACK");
   } finally {
     console.log("connection closed");
@@ -136,37 +145,6 @@ router.post("/signup", async (req, res, next) => {
 });
 
 
-
-/*
-
-      .then((res) => {
-        res.status(201).json({
-          message: 'User Created!',
-          result: result
-      })
-
-    });
-    /*
-
-/*
-
-let username = req.body.username;
-let password;
-bcrypt.hash(req.body.password, 10)
-.then(hash => {
-  password = hash;
-})
-  db.query(
-    ' INSERT INTO users( username, password ) ' +
-    ' VALUES ( $1, $2 ) ;'
-    , [username, password])
-    .then((res) => {
-      res.status(201).json({
-        message: 'User Created!',
-        result: result
-    })
-    .catch(e => console.error(e.stack))
-    */
 
 
 

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from './auth.service';
+import { Observable } from 'rxjs';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -9,6 +11,10 @@ import { AuthService } from './auth.service';
 })
 export class LoginComponent implements OnInit {
   hide = true;
+  login = true;
+  toast = false;
+  toastText;
+  private timer: Observable<any>;
 
   constructor(public authService: AuthService) {
 
@@ -26,6 +32,21 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.authService.createUser(form.value.unInput, form.value.pwInput);
+    this.showToast();
   }
+
+  changeForm() {
+    this.login = !this.login;
+  }
+
+  public showToast() {
+    this.toast = true;
+    this.timer = timer(2000);
+    console.log(this.toastText);
+    this.timer.subscribe(() => {
+        this.toast = false;
+    });
+  }
+
 
 }
