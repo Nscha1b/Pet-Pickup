@@ -7,6 +7,7 @@ import { User } from '../shared/user.model';
 })
 export class AuthService {
   private response;
+  private token: string;
   constructor(private http: HttpClient) { }
 
  createUser(username: string, password: string) {
@@ -28,14 +29,17 @@ export class AuthService {
       password: password
     };
 
-    this.http.post('http://localhost:3000/api/login', user)
+    this.http.post<{token: string}>('http://localhost:3000/api/login', user)
         .subscribe((res) => {
+          const token = res.token;
+          this.token = token;
           console.log(res);
-          this.response = res;
         });
   }
 
-
+getToken() {
+  return this.token;
+}
 
 
 

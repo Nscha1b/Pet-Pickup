@@ -26,10 +26,9 @@ import {
 import {HeaderComponent, NewCaseDialogComponent} from './header/header.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
-
-
+import {AuthInterceptor} from './login/auth-interceptor';
 
 
 @NgModule({
@@ -72,7 +71,7 @@ import { LoginComponent } from './login/login.component';
   entryComponents: [
     NewCaseDialogComponent
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

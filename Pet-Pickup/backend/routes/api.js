@@ -2,6 +2,7 @@ const Router = require("express-promise-router");
 const db = require("../db");
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
+const checkAuth = require('../middleware/check-auth');
 
 const router = new Router();
 
@@ -74,7 +75,7 @@ router.post("/post/details", async (req, res, next) => {
   }
 });
 
-router.post("/post/petcase", async (req, res, next) => {
+router.post("/post/petcase", checkAuth, async (req, res, next) => {
   try {
     await db.query("BEGIN");
     //console.log(req.body);
