@@ -22,6 +22,20 @@ export class AuthService {
         });
   }
 
+  login(username: string, password: string) {
+    const user: User = {
+      username: username,
+      password: password
+    };
+
+    this.http.post('http://localhost:3000/api/login', user)
+        .subscribe((res) => {
+          console.log(res);
+          this.response = res;
+        });
+  }
+
+
 
 
 

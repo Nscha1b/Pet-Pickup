@@ -1,6 +1,7 @@
 const Router = require("express-promise-router");
 const db = require("../db");
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
 
 const router = new Router();
 
@@ -145,6 +146,47 @@ router.post("/signup", async (req, res, next) => {
 });
 
 
+router.post("/login", async (req, res, next) => {
+    let user;
+    let token;
+    await db.query("select * from users where username = ($1) limit 1", [req.body.username])
+    .then(result => {
+      user = result.rows[0]
+    });
+
+    if (user === undefined) {
+      // no username match
+       return res.status(401).json({
+        message: 'Login Failed. Please check your username, and password.',
+      });
+    } else {
+      // check password
+      try {
+        const match = bcrypt.compare(req.body.password, user.password);
+        if(match) {
+          //login
+          token = jwt.sign({username: user.username, userid: user.id},
+          'secret_should_beLonger', { expiresIn: '1h' });
+          res.status(200).json({
+            message: 'Login successful!',
+            token: token
+          });
+      }
+    } catch (e) {
+        console.log(`Failed to login... ${e}`);
+        return res.status(401).json({
+          message: 'Login Failed. Please check your username, and password. Please try again!',
+          result: `${e}`
+        })
+
+      }
+    }
+
+
+
+});
+
+
 
 
 
@@ -210,3 +252,14 @@ function insertPerson(body) {
     });
     return replaced;
   }
+
+
+  function findUser(username) {
+     db.query("select * from users where username = ($1) limit 1", [username])
+    .then(result => {
+      return result.rows[0]
+    });
+  }
+
+
+
