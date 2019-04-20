@@ -1,8 +1,8 @@
 const Router = require("express-promise-router");
 const db = require("../db");
 const bcrypt = require("bcrypt");
-const jwt = require('jsonwebtoken');
-const checkAuth = require('../middleware/check-auth');
+const jwt = require("jsonwebtoken");
+const checkAuth = require("../middleware/check-auth");
 
 const router = new Router();
 
@@ -116,151 +116,203 @@ router.post("/post/petcase", checkAuth, async (req, res, next) => {
 });
 
 router.post("/signup", async (req, res, next) => {
-  try {
-    let username = req.body.username;
-    let password;
-    bcrypt.hash(req.body.password, 2)
-      .then(hash => {
-      password = hash;
-    })
-    await db.query("BEGIN");
-    await db.query(
-      ' INSERT INTO users( username, password ) ' +
-      ' VALUES ( $1, $2 ) ;'
-      , [username, password]).then(result => {
-        res.status(201).json({
-          message: 'User Created!',
-          result: result
-        })
-      })
-    await db.query("COMMIT")
-  } catch (e) {
-    console.log(`Failed to create new user... ${e}`);
-    res.status(409).json({
-      message: 'Unable to create username, please try again!',
-      result: `${e}`
-    })
-    await db.query("ROLLBACK");
-  } finally {
-    console.log("connection closed");
+  let username = req.body.username;
+  let password;
+  let user;
+  await db
+    .query("select * from users where username = ($1) limit 1", [username])
+    .then(result => {
+      user = result.rows[0];
+    });
+  if (user !== undefined) {
+    // someone already has that username send error
+    return res.status(206).json({
+      message: "Username taken, please try again!",
+      result: ``,
+      accountCreated: false
+    });
+  } else {
+    // username is available
+    try {
+      bcrypt.hash(req.body.password, 2).then(hash => {
+        password = hash;
+      });
+      await db.query("BEGIN");
+      await db
+        .query(
+          " INSERT INTO users( username, password ) " + " VALUES ( $1, $2 ) ;",
+          [username, password]
+        )
+        .then(result => {
+          res.status(201).json({
+            message: "User Created!",
+            result: result,
+            accountCreated: true
+          });
+        });
+      await db.query("COMMIT");
+    } catch (e) {
+      console.log(`Failed to create new user... ${e}`);
+      await db.query("ROLLBACK");
+      return res.status(409).json({
+        message: "Unable to create username, please try again!",
+        result: `${e}`,
+        accountCreated: false
+      });
+    }
   }
 });
 
-
 router.post("/login", async (req, res, next) => {
-    let user;
-    let token;
-    await db.query("select * from users where username = ($1) limit 1", [req.body.username])
+  let user;
+  let token;
+  await db
+    .query("select * from users where username = ($1) limit 1", [
+      req.body.username
+    ])
     .then(result => {
-      user = result.rows[0]
+      user = result.rows[0];
     });
 
-    if (user === undefined) {
-      // no username match
-       return res.status(401).json({
-        message: 'Login Failed. Please check your username, and password.',
-      });
-    } else {
-      // check password
-      try {
-        const match = bcrypt.compare(req.body.password, user.password);
-        if(match) {
-          //login
-          token = jwt.sign({username: user.username, userid: user.id},
-          'secret_should_beLonger', { expiresIn: '1h' });
-          res.status(200).json({
-            message: 'Login successful!',
-            token: token
-          });
+  if (user === undefined) {
+    // no username match
+    return res.status(401).json({
+      message: "Login Failed. Please check your username, and password."
+    });
+  } else {
+    // check password
+    try {
+      const match = bcrypt.compare(req.body.password, user.password);
+      if (match) {
+        //login
+        token = jwt.sign(
+          { username: user.username, userid: user.id },
+          "secret_should_beLonger",
+          { expiresIn: "1h" }
+        );
+        res.status(200).json({
+          message: "Login successful!",
+          token: token
+        });
       }
     } catch (e) {
-        console.log(`Failed to login... ${e}`);
-        return res.status(401).json({
-          message: 'Login Failed. Please check your username, and password. Please try again!',
-          result: `${e}`
-        })
-
-      }
+      console.log(`Failed to login... ${e}`);
+      return res.status(401).json({
+        message:
+          "Login Failed. Please check your username, and password. Please try again!",
+        result: `${e}`
+      });
     }
-
-
-
+  }
 });
-
-
-
-
-
 
 function insertPerson(body) {
   const query = {
-    sql:'INSERT INTO person( ' +
-    '  firstname, pre, middlename, lastname, suf, address, city, state, zip, email, homephone, workphone, mobilephone ) ' +
-    ' VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING id ; ',
-    values: [body.firstname, body.pre, body.middlename,
-      body.lastname, body.suf, body.address, body.city,
-      body.state, body.zip, body.email, body.home, body.work, body.mobile]
-  }
+    sql:
+      "INSERT INTO person( " +
+      "  firstname, pre, middlename, lastname, suf, address, city, state, zip, email, homephone, workphone, mobilephone ) " +
+      " VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING id ; ",
+    values: [
+      body.firstname,
+      body.pre,
+      body.middlename,
+      body.lastname,
+      body.suf,
+      body.address,
+      body.city,
+      body.state,
+      body.zip,
+      body.email,
+      body.home,
+      body.work,
+      body.mobile
+    ]
+  };
   query.values = blankToNull(query.values);
   return query;
 }
 
-  function insertPet(body) {
-    const query = {
-      sql:'INSERT INTO pet( ' +
-      '   name, sex, type, breed, color, weight, dateofbirth, dateofdeath, timeofdeath, age) ' +
-      ' VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id ; ',
-      values: [body.name, body.sex, body.type, body.breed, body.color, body.weight,
-        body.dateofbirth, body.dateofdeath, body.timeofdeath, body.age]
+function insertPet(body) {
+  const query = {
+    sql:
+      "INSERT INTO pet( " +
+      "   name, sex, type, breed, color, weight, dateofbirth, dateofdeath, timeofdeath, age) " +
+      " VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id ; ",
+    values: [
+      body.name,
+      body.sex,
+      body.type,
+      body.breed,
+      body.color,
+      body.weight,
+      body.dateofbirth,
+      body.dateofdeath,
+      body.timeofdeath,
+      body.age
+    ]
+  };
+  query.values = blankToNull(query.values);
+  return query;
+}
+
+function insertDetails(body) {
+  const query = {
+    sql:
+      "INSERT INTO cremationdetails( " +
+      "   crematory, status, type, clinic, print, fur, returnto, returntoid, returnperson, " +
+      "   returnplace, returnphone, returnaddress, returncity, returnstate, returnzip, note, ownerid, petid) " +
+      " VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18) RETURNING id; ",
+    values: [
+      body.crematory,
+      body.status,
+      body.detailstype,
+      body.clinic,
+      body.print,
+      body.fur,
+      body.returnto,
+      body.returntoid,
+      body.returnperson,
+      body.returnplace,
+      body.returnphone,
+      body.returnaddress,
+      body.returncity,
+      body.returnstate,
+      body.returnzip,
+      body.note,
+      body.ownerid,
+      body.petid
+    ]
+  };
+  query.values = blankToNull(query.values);
+  return query;
+}
+
+function updateDetailsIDs(personid, petid, detailsid) {
+  const query = {
+    sql:
+      "UPDATE cremationdetails SET ownerid=($1), petid=($2) WHERE id=($3) VALUES($1, $2, $3)",
+    values: [personid, petid, detailsid]
+  };
+  query.values = blankToNull(query.values);
+  return query;
+}
+
+function blankToNull(valueArr) {
+  const replaced = valueArr.map(e => {
+    if (e == "" || e == "-1") {
+      e = null;
+      return e;
+    } else {
+      return e;
     }
-    query.values = blankToNull(query.values);
-    return query;
-  }
+  });
+  return replaced;
+}
 
-  function insertDetails(body) {
-    const query = {
-      sql:'INSERT INTO cremationdetails( ' +
-      '   crematory, status, type, clinic, print, fur, returnto, returntoid, returnperson, ' +
-      '   returnplace, returnphone, returnaddress, returncity, returnstate, returnzip, note, ownerid, petid) ' +
-      ' VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18) RETURNING id; ',
-      values: [body.crematory, body.status, body.detailstype, body.clinic, body.print, body.fur, body.returnto,
-        body.returntoid, body.returnperson, body.returnplace, body.returnphone, body.returnaddress, body.returncity,
-        body.returnstate, body.returnzip, body.note, body.ownerid, body.petid]
-    }
-    query.values = blankToNull(query.values);
-    return query;
-  }
-
-  function updateDetailsIDs(personid, petid, detailsid) {
-    const query = {
-      sql:'UPDATE cremationdetails SET ownerid=($1), petid=($2) WHERE id=($3) VALUES($1, $2, $3)',
-      values: [personid, petid, detailsid]
-    }
-    query.values = blankToNull(query.values);
-    return query;
-  }
-
-
-
-  function blankToNull(valueArr) {
-    const replaced = valueArr.map((e) => {
-      if (e == "" || e == '-1') {
-        e = null;
-        return e;
-      } else {
-        return e;
-      }
-    });
-    return replaced;
-  }
-
-
-  function findUser(username) {
-     db.query("select * from users where username = ($1) limit 1", [username])
-    .then(result => {
-      return result.rows[0]
-    });
-  }
-
-
-
+function findUser(username) {
+  db.query("select * from users where username = ($1) limit 1", [
+    username
+  ]).then(result => {
+    return result.rows[0];
+  });
+}

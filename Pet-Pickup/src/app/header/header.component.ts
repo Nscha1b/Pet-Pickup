@@ -1,10 +1,12 @@
-import {Component,  OnInit} from '@angular/core';
+import {Component,  OnInit, OnDestroy} from '@angular/core';
 import {MatDialog, MatDialogRef} from '@angular/material';
 import {Person} from '../shared/person.model';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Pet} from '../shared/pet.model';
 import {PetCaseService} from '../shared/pet-case.service';
 import {PetCremationDetails} from '../shared/pet-cremation.details';
+import { AuthService } from '../login/auth.service';
+import { Subject, Subscription } from 'rxjs';
 
 
 
@@ -13,10 +15,28 @@ import {PetCremationDetails} from '../shared/pet-cremation.details';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
-  constructor(public dialog: MatDialog) { }
+
+export class HeaderComponent implements OnInit, OnDestroy {
+
+  constructor(public dialog: MatDialog, private authService: AuthService) { }
+  private authListenerSubs: Subscription;
+  userIsAuthenticated = false;
+
   ngOnInit() {
+    this.authListenerSubs = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
+      this.userIsAuthenticated = isAuthenticated;
+    });
   }
+
+  ngOnDestroy() {
+   this.authListenerSubs.unsubscribe();
+  }
+
+  onLogout() {
+    this.authService.logout();
+  }
+
+
 
   openDialog(): void {
      this.dialog.open(NewCaseDialogComponent, {

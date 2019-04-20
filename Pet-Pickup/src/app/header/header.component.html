@@ -3,6 +3,7 @@
     <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px">
       <span class="text-white">Pet-Pickup</span>
       <button
+        *ngIf="userIsAuthenticated"
         class="mat-raised-button bg-primary text-white"
         ngClass.xs= "mat-small"
         (click)="openDialog()">
@@ -11,6 +12,7 @@
     </div>
     <span class="push-right"></span>
     <button
+      *ngIf="userIsAuthenticated"
       mat-button
       [disableRipple]="true"
       [matMenuTriggerFor]="menu">
@@ -19,7 +21,8 @@
       <i class="fa fa-angle-down text-white"></i>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>Log Out</button>
+      <button
+      (click)="onLogout()" mat-menu-item>Log Out</button>
     </mat-menu>
   </mat-toolbar-row>
 </mat-toolbar>

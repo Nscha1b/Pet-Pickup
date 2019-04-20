@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from './auth.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { timer } from 'rxjs';
 
 @Component({
@@ -13,14 +13,25 @@ export class LoginComponent implements OnInit {
   hide = true;
   login = true;
   toast = false;
-  toastText;
+  toastText: string;
   private timer: Observable<any>;
+  accountCreated = null;
+  private accountCreatedSub: Subscription;
 
   constructor(public authService: AuthService) {
 
   }
 
   ngOnInit() {
+    this.accountCreatedSub = this.authService.getAccountCreatedListener().subscribe(userCreated => {
+      this.accountCreated = userCreated;
+      if (this.accountCreated) {
+        this.changeForm();
+        this.showToast('Account created! Please login.');
+      } else if (this.accountCreated === false) {
+        this.showToast('Unable to create account, please try again.');
+      }
+    });
   }
 
   onLogIn(form: NgForm) {
@@ -36,17 +47,16 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.authService.createUser(form.value.unInput, form.value.pwInput);
-    this.showToast();
   }
 
   changeForm() {
     this.login = !this.login;
   }
 
-  public showToast() {
+  public showToast(message: string) {
     this.toast = true;
     this.timer = timer(2000);
-    console.log(this.toastText);
+    this.toastText = message;
     this.timer.subscribe(() => {
         this.toast = false;
     });

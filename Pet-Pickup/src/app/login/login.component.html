@@ -1,6 +1,6 @@
 <div class="loginForm">
   <div class="card">
-    <div class=card-header>
+    <div class="card-header">
       <h6 *ngIf="login">LOGIN</h6>
       <h6 *ngIf="!login">CREATE AN ACCOUNT</h6>
     </div>
@@ -9,82 +9,129 @@
       <form *ngIf="login" #loginForm="ngForm">
         <mat-form-field appearance="outline" style="width: 100%;">
           <mat-label>USERNAME</mat-label>
-          <input matInput type="text" name="unInput" ngModel #unInput="ngModel" required>
-          <mat-error *ngIf="unInput.invalid">Please enter a valid username.</mat-error>
+          <input
+            matInput
+            type="text"
+            name="unInput"
+            ngModel
+            #unInput="ngModel"
+            required
+          />
+          <mat-error *ngIf="unInput.invalid"
+            >Please enter a valid username.</mat-error
+          >
         </mat-form-field>
 
         <mat-form-field appearance="outline" style="width: 100%;">
           <mat-label>PASSWORD</mat-label>
-          <input matInput type="text" [type]="hide ? 'password' : 'text'" name="pwInput" ngModel #pwInput="ngModel" required>
-          <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-          <mat-error *ngIf="pwInput.invalid">Please enter a valid password.</mat-error>
+          <input
+            matInput
+            type="text"
+            [type]="hide ? 'password' : 'text'"
+            name="pwInput"
+            ngModel
+            #pwInput="ngModel"
+            required
+          />
+          <mat-icon matSuffix (click)="hide = !hide">{{
+            hide ? "visibility_off" : "visibility"
+          }}</mat-icon>
+          <mat-error *ngIf="pwInput.invalid"
+            >Please enter a valid password.</mat-error
+          >
         </mat-form-field>
 
-        <mat-checkbox name="rememberMe" ngModel #rememberMe="ngModel">Remember me?</mat-checkbox>
-        <br>
+        <mat-checkbox name="rememberMe" ngModel #rememberMe="ngModel"
+          >Remember me?</mat-checkbox
+        >
+        <br />
 
         <button
           (click)="onLogIn(loginForm)"
-          [routerLink]="['/dashboard']"
           mat-raised-button
           color="primary"
-          type="button">Login
+          class="mb-3"
+          type="button"
+        >
+          Login
         </button>
       </form>
 
       <!--SIGN UP FORM-->
       <form *ngIf="!login" #signUpForm="ngForm">
-          <label style="color: #007BFF;">Create a username!</label>
-          <mat-form-field appearance="outline" style="width: 100%;">
-            <mat-label>USERNAME</mat-label>
-            <input matInput type="text" name="unInput" ngModel #unInput="ngModel" required>
-            <mat-error *ngIf="unInput.invalid">Please enter a valid username.</mat-error>
-          </mat-form-field>
+        <label style="color: #007BFF;">Create a username!</label>
+        <mat-form-field appearance="outline" style="width: 100%;">
+          <mat-label>USERNAME</mat-label>
+          <input
+            matInput
+            type="text"
+            name="unInput"
+            ngModel
+            #unInput="ngModel"
+            required
+          />
+          <mat-error *ngIf="unInput.invalid"
+            >Please enter a valid username.</mat-error
+          >
+        </mat-form-field>
 
-          <label style="color: #007BFF;">Create a password!</label>
-          <mat-form-field appearance="outline" style="width: 100%;">
-            <mat-label>PASSWORD</mat-label>
-            <input matInput type="text" [type]="hide ? 'password' : 'text'" name="pwInput" ngModel #pwInput="ngModel" required>
-            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            <mat-error *ngIf="pwInput.invalid">Please enter a valid password.</mat-error>
-          </mat-form-field>
+        <label style="color: #007BFF;">Create a password!</label>
+        <mat-form-field appearance="outline" style="width: 100%;">
+          <mat-label>PASSWORD</mat-label>
+          <input
+            matInput
+            type="text"
+            [type]="hide ? 'password' : 'text'"
+            name="pwInput"
+            ngModel
+            #pwInput="ngModel"
+            required
+          />
+          <mat-icon matSuffix (click)="hide = !hide">{{
+            hide ? "visibility_off" : "visibility"
+          }}</mat-icon>
+          <mat-error *ngIf="pwInput.invalid"
+            >Please enter a valid password.</mat-error
+          >
+        </mat-form-field>
 
-          <br>
+        <br />
 
-          <button
-            (click)="onSignUp(signUpForm)"
-            mat-raised-button
-            color="primary"
-            type="button">Create Account
-          </button>
-        </form>
+        <button
+          (click)="onSignUp(signUpForm)"
+          mat-raised-button
+          color="primary"
+          class="mb-3"
+          type="button"
+        >
+          Create Account
+        </button>
+      </form>
 
-        <div *ngIf="toast" class="mt-2 alert alert-success" role="alert">
-            <strong>Well done!</strong> You successfully read this
-            important alert message.
-        </div>
+      <div
+        *ngIf="toast"
+        [class.alert-danger]="!accountCreated"
+        [class.alert-success]="accountCreated"
+        class="alert p-3"
+        role="alert"
+        role="alert"
+      >
+        {{ toastText }}
+      </div>
     </div>
     <div class="card-footer footer">
       <div *ngIf="login">
-          <div>Don't have an account?</div>
-          <div
-           class="pointer"
-           style="color: #007BFF;"
-           (click)="changeForm()"
-           >Click here to register.
+        <div>Don't have an account?</div>
+        <div class="pointer" style="color: #007BFF;" (click)="changeForm()">
+          Click here to register.
         </div>
       </div>
       <div *ngIf="!login">
         <div>Have an account?</div>
-        <div
-         class="pointer"
-         style="color: #007BFF;"
-         (click)="changeForm()"
-         >Click here to sign in.
+        <div class="pointer" style="color: #007BFF;" (click)="changeForm()">
+          Click here to sign in.
+        </div>
       </div>
     </div>
   </div>
 </div>
-</div>
-
-
