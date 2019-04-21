@@ -8,7 +8,7 @@ const router = new Router();
 
 module.exports = router;
 
-router.get("/get/cases", async (req, res, next) => {
+router.get("/get/cases", checkAuth, async (req, res, next) => {
   try {
     await db
       .query(
@@ -37,7 +37,7 @@ router.get("/get/cases", async (req, res, next) => {
   }
 });
 
-router.post("/post/person", async (req, res, next) => {
+router.post("/post/person", checkAuth, async (req, res, next) => {
   try {
     let query = insertPerson(req.body);
     await db.query(query.sql, query.values).then(result => {});
@@ -48,7 +48,7 @@ router.post("/post/person", async (req, res, next) => {
   }
 });
 
-router.post("/post/pet", async (req, res, next) => {
+router.post("/post/pet", checkAuth, async (req, res, next) => {
   try {
     let query = insertPet(req.body);
     await db.query(query.sql, query.values).then(result => {
@@ -61,7 +61,7 @@ router.post("/post/pet", async (req, res, next) => {
   }
 });
 
-router.post("/post/details", async (req, res, next) => {
+router.post("/post/details", checkAuth, async (req, res, next) => {
   try {
     let query = insertDetails(req.body);
     await db.query(query.sql, query.values).then(result => {
@@ -192,7 +192,8 @@ router.post("/login", async (req, res, next) => {
         );
         res.status(200).json({
           message: "Login successful!",
-          token: token
+          token: token,
+          expiresIn: 3600
         });
       }
     } catch (e) {

@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import { AuthService } from './login/auth.service';
 
 
 
@@ -10,9 +11,10 @@ import {Component, OnInit} from '@angular/core';
 })
 export class AppComponent implements OnInit {
   title = 'Pet-Pickup';
-
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
+    this.authService.autoAuthUser();
   }
 
 
