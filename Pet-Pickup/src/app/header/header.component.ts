@@ -125,7 +125,7 @@ export class NewCaseDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    this.petCaseService.addCase(
+    this.petCaseService.addPetCase(
       new Person(
         1,
         this.caseForm.get('owner').get('firstname').value,
@@ -175,8 +175,6 @@ export class NewCaseDialogComponent implements OnInit {
         this.caseForm.get('details').get('notes').value,
       )
     );
-    // console.log(this.petCaseService.getCases());
-    console.log(this.petCaseService.getOwner(0));
   }
   writeOwnerInfo(id?: number) {
     if (id) {

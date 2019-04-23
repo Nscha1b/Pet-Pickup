@@ -29,6 +29,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import {AuthInterceptor} from './login/auth-interceptor';
+import { PaginatorComponent } from './shared/paginator/paginator.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import {AuthInterceptor} from './login/auth-interceptor';
     HeaderComponent,
     NewCaseDialogComponent,
     DashboardComponent,
-    LoginComponent
+    LoginComponent,
+    PaginatorComponent
   ],
   imports: [
     BrowserModule,

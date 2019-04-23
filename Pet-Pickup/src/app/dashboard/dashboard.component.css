@@ -9,3 +9,16 @@ mat-spinner {
   margin: auto;
 
 }
+
+td {
+  line-height: 40px;
+}
+
+.disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+li {
+  cursor: pointer;
+}

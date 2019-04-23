@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  private tokenTimer: NodeJS.Timer;
+  private tokenTimer: any;
   private token: string;
   accountCreated = false;
   isAuthenticated = false;

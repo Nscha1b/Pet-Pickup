@@ -24,11 +24,14 @@ router.get("/get/cases", checkAuth, async (req, res, next) => {
           "from petcase pc " +
           "inner join person p on pc.personid = p.id " +
           "inner join pet on pc.petid = pet.id " +
-          "inner join cremationdetails cd on pc.detailsid = cd.id"
+          "inner join cremationdetails cd on pc.detailsid = cd.id " +
+          "order by ($1) " +
+          "limit ($2) " +
+          "offset ($3) ", [req.query.orderBy, req.query.howMany, req.query.offset]
       )
       .then(result => {
-        //  console.log(result.rows);
-        res.send(result.rows);
+        const data = {rows: result.rows, caseCount: 22};
+        res.send(data);
       });
   } catch (e) {
     console.log(`Unable to get Cases! ${e}`);
@@ -78,7 +81,6 @@ router.post("/post/details", checkAuth, async (req, res, next) => {
 router.post("/post/petcase", checkAuth, async (req, res, next) => {
   try {
     await db.query("BEGIN");
-    //console.log(req.body);
     let person = insertPerson(req.body);
     let pet = insertPet(req.body);
     let details = insertDetails(req.body);
@@ -102,6 +104,11 @@ router.post("/post/petcase", checkAuth, async (req, res, next) => {
           [newPersonID, newPetID, detailsID]
         ).then(() => {
           console.log("We Made it!!!");
+          res.status(201).json({
+            message: "Case Added!",
+            result: result,
+            caseCreated: true
+          });
         });
       });
     });
