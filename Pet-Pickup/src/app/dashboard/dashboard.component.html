@@ -2,12 +2,43 @@
   <mat-spinner *ngIf="isLoading"></mat-spinner>
   <div *ngIf="!isLoading">
     <div class="title ml-3 mr-3 mt-2 d-flex justify-content-center">
-      <h3 class="text-dark align-self-center">DASHBOARD</h3>
+      <h3 class=" align-self-center">DASHBOARD</h3>
     </div>
     <mat-card class="ml-3 mr-3">
       <div class="row">
-
+        <form class="col-md-3">
+          <mat-form-field class="col-md-12">
+            <mat-select
+              [(value)]="filter"
+              (selectionChange)="getCases()"
+              placeholder="Vet Clinic"
+            >
+              <mat-option value="">All Clinics</mat-option>
+              <mat-option value="Number One Vet Clinic"
+                >Number one Vet Clinic</mat-option
+              >
+              <mat-option value="Evergreen Pets">Evergreen Pets</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </form>
+        <form class="col-md-9">
+          <div class="d-flex justify-content-end col-md-12">
+            <div class="d-flex align-items-center">Show</div>
+            <mat-form-field class="col-md-2">
+              <mat-select
+                [(value)]="showHowMany"
+                (selectionChange)="getCases()"
+              >
+                <mat-option value="1">1</mat-option>
+                <mat-option value="5">5</mat-option>
+                <mat-option value="10">10</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div class="d-flex align-items-center">entries</div>
+          </div>
+        </form>
       </div>
+
       <table *ngIf="!isLoading" class="table table-sm">
         <thead class="">
           <tr>
@@ -17,7 +48,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let case of petCases let i = index">
+          <tr *ngFor="let case of petCases; let i = index">
             <td>{{ petCases[i].person.id }}</td>
             <td>{{ petCases[i].person.firstname }}</td>
             <td>{{ petCases[i].pet.petname }}</td>
@@ -30,23 +61,41 @@
           </tr>
         </tbody>
       </table>
-      <div class="d-flex justify-content-end">
-          <nav>
-              <ul *ngIf="!isLoading" class="pagination">
-                <li (click)="prevPage()"
-                [ngClass]="prevDisabled() ? 'disabled': '' "
-                class="page-item"><a class="page-link" >Previous</a></li>
+      <div  class="row col-12 d-flex">
+        <div class="d-flex justify-content-start col-3">
+          <div style="font-size: 12px;">Showing {{ offset + 1 }} - {{ showHowMany }} ({{ totalCases }} total)</div>
+        </div>
+      <div class="d-flex justify-content-end col-9">
+        <nav>
+          <ul *ngIf="!isLoading" class="pagination pagination-sm">
+            <li
+              (click)="prevPage()"
+              [ngClass]="prevDisabled() ? 'disabled' : ''"
+              class="page-item"
+            >
+              <a class="page-link">Previous</a>
+            </li>
 
-                <li (click)="changePage(i)"
-                *ngFor="let item of pages; let i = index;"
-                class="page-item"><a class="page-link">{{ i + 1}}</a></li>
+            <li
+              (click)="changePage(i)"
+              *ngFor="let item of pages; let i = index"
+              [ngClass]="currentPage() == i ? 'active' : ''"
+              class="page-item"
+            >
+              <a class="page-link">{{ i + 1 }}</a>
+            </li>
 
-                <li (click)="nextPage()"
-                [ngClass]="nextDisabled() ? 'disabled': '' "
-                 class="page-item"><a class="page-link" >Next</a></li>
-              </ul>
-            </nav>
+            <li
+              (click)="nextPage()"
+              [ngClass]="nextDisabled() ? 'disabled' : ''"
+              class="page-item"
+            >
+              <a class="page-link">Next</a>
+            </li>
+          </ul>
+        </nav>
       </div>
+    </div>
     </mat-card>
   </div>
 </div>

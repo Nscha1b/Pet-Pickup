@@ -1,8 +1,6 @@
 import { AfterViewInit, OnInit, Component } from '@angular/core';
 import { PetCaseService } from '../shared/pet-case.service';
-import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { PetCase } from '../shared/pet-case.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,61 +20,57 @@ export class DashboardComponent implements AfterViewInit, OnInit {
     'clinic',
     'status'
   ];
+  filter = '';
   isLoading = false;
   private loadingSub: Subscription;
   totalCases = null;
   orderBy = 'ownerID';
-  showHowMany = 5;
+  showHowMany = '5';
   offset = 0;
   pages = [];
 
   constructor(private petCaseService: PetCaseService) {}
-
-  clinics = new FormGroup({
-    clinicDD: new FormControl('All Clinics')
-  });
-
   ngOnInit() {
     this.loadingSub = this.petCaseService
       .getLoadingListener()
       .subscribe(checkLoad => {
         this.isLoading = checkLoad;
       });
-    this.petCaseService.getCases(this.orderBy, this.showHowMany, this.offset);
+      this.getCases();
   }
 
   ngAfterViewInit() {
     this.petCaseService.casesChanged.subscribe(() => {
       this.petCases = this.petCaseService.loadCases();
-      this.totalCases = this.petCaseService.getCaseCount();
+      this.getCaseCount();
       this.nextDisabled();
       this.getPageCount();
     });
   }
 
 
-  filterVetClinic(clinicDD) {
-    /*
-    // data is the table column, removes white space, and set to lowercase.
-    // filter is what we're selecting from the clinicDD we do the same to find a match
-    this.dataSource.filterPredicate = (data, filter) =>
-      data.cremationDetails.clinic
-        .trim()
-        .toLowerCase()
-        .indexOf(filter.trim().toLowerCase()) !== -1;
-    this.dataSource.filter = clinicDD; */
+  getCases() {
+    this.petCaseService.getCases(this.filter, +this.showHowMany, this.offset, this.orderBy);
+    this.getCaseCount();
+  }
+
+  getCaseCount() {
+    this.totalCases = this.petCaseService.getCaseCount();
+    setTimeout(() => {
+      this.totalCases = this.petCaseService.getCaseCount();
+    });
   }
 
   nextPage() {
-    this.offset = this.offset + this.showHowMany;
-    this.petCaseService.getCases(this.orderBy, this.showHowMany, this.offset);
-    this.totalCases = this.petCaseService.getCaseCount();
-    this.prevDisabled();
+    this.offset = this.offset + +this.showHowMany;
+    this.getCases();
   }
 
   nextDisabled() {
     if (this.totalCases === null) {
       // initally make the button clickable
+      return false;
+    } else if (+this.showHowMany === 1 && this.offset < this.totalCases - 1) {
       return false;
     } else if (this.offset + this.showHowMany >= this.totalCases) {
       return true;
@@ -85,31 +79,31 @@ export class DashboardComponent implements AfterViewInit, OnInit {
   }
 
   prevPage() {
-    this.offset = this.offset - this.showHowMany;
-    this.petCaseService.getCases(this.orderBy, this.showHowMany, this.offset);
-    this.totalCases = this.petCaseService.getCaseCount();
-    this.prevDisabled();
+    this.offset = this.offset - +this.showHowMany;
+    this.getCases();
   }
 
   prevDisabled() {
-    if (this.offset - this.showHowMany < 0) {
+    if (this.offset - +this.showHowMany < 0) {
       return true;
     }
     return false;
   }
 
   changePage(pageNumber) {
-
-      this.offset = this.showHowMany;
-
+    this.offset = +this.showHowMany;
     this.offset = this.offset * pageNumber;
-    this.petCaseService.getCases(this.orderBy, this.showHowMany, this.offset);
+    this.getCases();
   }
 
   getPageCount() {
     setTimeout(() => {
-      const pageAmount = Math.ceil(this.petCaseService.getCaseCount() / this.showHowMany);
+      const pageAmount = Math.ceil(this.petCaseService.getCaseCount() / +this.showHowMany);
       this.pages = new Array(pageAmount);
     });
+  }
+
+  currentPage() {
+    return this.offset / +this.showHowMany;
   }
 }

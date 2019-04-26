@@ -29,14 +29,14 @@ export class PetCaseService {
     private router: Router
   ) {}
 
-  getCases(orderBy, howMany, offset) {
+  getCases(filter, howMany, offset, orderBy) {
     const newCases: PetCase[] = [];
     this.isLoading = true;
     this.loadingListener.next(true);
     this.http
       .get('http://localhost:3000/api/get/cases', {
         params: {
-          orderBy: orderBy, howMany: howMany, offset: offset
+          filter: filter, howMany: howMany, offset: offset, orderBy: orderBy
         }
       })
       .subscribe((data: any) => {
@@ -149,7 +149,7 @@ export class PetCaseService {
       .post('http://localhost:3000/api/post/petcase', newPetCase)
       .subscribe(res => {
         console.log(res);
-        this.getCases('ownerid', 5, 5);
+        this.getCases('', 5, 5, 'ownerid');
       });
   }
 

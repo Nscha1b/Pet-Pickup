@@ -10,6 +10,22 @@ module.exports = router;
 
 router.get("/get/cases", checkAuth, async (req, res, next) => {
   try {
+    let caseCount = 0;
+    await db
+      .query(
+        "select count(*) " +
+          "from petcase pc " +
+          "inner join person p on pc.personid = p.id " +
+          "inner join pet on pc.petid = pet.id " +
+          "inner join cremationdetails cd on pc.detailsid = cd.id " +
+          "where cd.clinic like $1 " +
+          "limit ($2) "
+, ['%'+req.query.filter+'%', req.query.howMany]
+      ).then(result => {
+        caseCount = result.rows[0].count;
+      });
+
+
     await db
       .query(
         "select p.id as Personid, p.firstname as Personfirstname, p.pre, p.middlename, p.lastname, p.suf, " +
@@ -25,12 +41,13 @@ router.get("/get/cases", checkAuth, async (req, res, next) => {
           "inner join person p on pc.personid = p.id " +
           "inner join pet on pc.petid = pet.id " +
           "inner join cremationdetails cd on pc.detailsid = cd.id " +
-          "order by ($1) " +
-          "limit ($2) " +
-          "offset ($3) ", [req.query.orderBy, req.query.howMany, req.query.offset]
+          "where cd.clinic like $1 " +
+          "order by ($2) " +
+          "limit ($3) " +
+          "offset ($4) ", ['%'+req.query.filter+'%', req.query.orderBy, req.query.howMany, req.query.offset]
       )
       .then(result => {
-        const data = {rows: result.rows, caseCount: 22};
+        const data = {rows: result.rows, caseCount: +caseCount};
         res.send(data);
       });
   } catch (e) {

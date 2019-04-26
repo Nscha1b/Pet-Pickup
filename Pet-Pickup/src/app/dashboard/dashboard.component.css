@@ -1,8 +1,9 @@
 .title {
-  background-color: #e6e6e6;
-  height: 8%;
+  background-color: #e2e2e2;
+  height: 55px;
   border-radius: 2px;
   border-bottom: 1px solid #0d0d0c;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 mat-spinner {
