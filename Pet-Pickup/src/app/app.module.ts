@@ -30,6 +30,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import {AuthInterceptor} from './login/auth-interceptor';
 import { PaginatorComponent } from './shared/paginator/paginator.component';
+import { SearchComponent } from './header/search/search.component';
+import { DropdownDirective } from './shared/dropdown.directive';
 
 
 @NgModule({
@@ -39,7 +41,9 @@ import { PaginatorComponent } from './shared/paginator/paginator.component';
     NewCaseDialogComponent,
     DashboardComponent,
     LoginComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    SearchComponent,
+    DropdownDirective
   ],
   imports: [
     BrowserModule,

@@ -42,21 +42,21 @@
       <table *ngIf="!isLoading" class="table table-sm">
         <thead class="">
           <tr>
-            <th scope="col" *ngFor="let col of columnsToDisplay">
+            <th scope="col" *ngFor="let col of columnsToDisplay" [ngClass]="columnsToHide.includes(col) ? 'd-none d-md-table-cell' : ''">
               {{ col }}
             </th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let case of petCases; let i = index">
-            <td>{{ petCases[i].person.id }}</td>
-            <td>{{ petCases[i].person.firstname }}</td>
+            <td class="d-none d-md-table-cell">{{ petCases[i].person.id }}</td>
+            <td>{{ petCases[i].person.firstname }} {{ petCases[i].person.last }}</td>
             <td>{{ petCases[i].pet.petname }}</td>
-            <td>{{ petCases[i].pet.sex }}</td>
-            <td>{{ petCases[i].pet.petweight }}</td>
-            <td>{{ petCases[i].cremationDetails.crematory }}</td>
-            <td>{{ petCases[i].pet.pettype }}</td>
-            <td>{{ petCases[i].cremationDetails.clinic }}</td>
+            <td class="d-none d-md-table-cell">{{ petCases[i].pet.sex }}</td>
+            <td class="d-none d-md-table-cell">{{ petCases[i].pet.petweight }}</td>
+            <td class="d-none d-md-table-cell">{{ petCases[i].cremationDetails.crematory }}</td>
+            <td class="d-none d-md-table-cell">{{ petCases[i].pet.pettype }}</td>
+            <td class="d-none d-md-table-cell">{{ petCases[i].cremationDetails.clinic }}</td>
             <td>{{ petCases[i].cremationDetails.status }}</td>
           </tr>
         </tbody>

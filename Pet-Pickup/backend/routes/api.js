@@ -24,8 +24,6 @@ router.get("/get/cases", checkAuth, async (req, res, next) => {
       ).then(result => {
         caseCount = result.rows[0].count;
       });
-
-
     await db
       .query(
         "select p.id as Personid, p.firstname as Personfirstname, p.pre, p.middlename, p.lastname, p.suf, " +
@@ -56,6 +54,104 @@ router.get("/get/cases", checkAuth, async (req, res, next) => {
     console.log("Get CasesRequest Completed");
   }
 });
+
+
+
+
+
+router.get("/get/people", checkAuth, async (req, res, next) => {
+  try {
+    let peopleCount = 0;
+    if(req.query.filter == '') {
+      res.send();
+    }
+    await db
+      .query(
+        "select count(*) " +
+          "from person p " +
+          "where LOWER(p.firstname) like $1 " +
+          "or " +
+          "LOWER(p.lastname) like $1 "
+        //  "limit ($2) "
+, ['%'+req.query.filter+'%']
+      ).then(result => {
+        peopleCount = result.rows[0].count;
+      });
+    await db
+      .query(
+        "select p.id as Personid, p.firstname as Personfirstname, p.pre, p.middlename, p.lastname, p.suf, " +
+          "p.address as personaddress, p.city as personcity, p.state as personstate, p.zip as personzip, p.email, " +
+          "p.homephone as personhome, p.workphone as personwork, p.mobilephone as personmobile " +
+          "from person p " +
+          "where LOWER(p.firstname) like $1 " +
+          "or " +
+          "LOWER(p.lastname) like $1 " +
+        //  "order by ($2) " +
+          "limit ($2) "
+        //  "offset ($4) "
+        , ['%'+req.query.filter+'%', req.query.howMany]
+      )
+      .then(result => {
+        const data = {rows: result.rows, peopleCount: +peopleCount};
+        res.send(data);
+      });
+  } catch (e) {
+    console.log(`Unable to get People! ${e}`);
+  } finally {
+    console.log("Get PeopleRequest Completed");
+  }
+});
+
+
+router.get("/get/pets", checkAuth, async (req, res, next) => {
+  try {
+    let petCount = 0;
+    if(req.query.filter == '') {
+      res.send();
+    }
+    await db
+      .query(
+        "select count(*) " +
+          "from pet p " +
+          "where LOWER(p.name) like $1 "
+        //  "limit ($2) "
+, ['%'+req.query.filter+'%']
+      ).then(result => {
+        petCount = result.rows[0].count;
+      });
+    await db
+      .query(
+        "select pet.id as petid, pet.name as petname, pet.sex as petsex, pet.type as pettype, pet.breed as petbreed, " +
+        "pet.color as petcolor, pet.weight as petweight, pet.dateofbirth as petdob, pet.dateofdeath as petdod, " +
+        "pet.timeofdeath as pettod, pet.age as petage " +
+          "from pet  " +
+          "where LOWER(pet.name) like $1 " +
+        //  "order by ($2) " +
+          "limit ($2) "
+        //  "offset ($4) "
+        , ['%'+req.query.filter+'%', req.query.howMany]
+      )
+      .then(result => {
+        const data = {rows: result.rows, petCount: +petCount};
+        res.send(data);
+      });
+  } catch (e) {
+    console.log(`Unable to get Pets! ${e}`);
+  } finally {
+    console.log("Get PetsRequest Completed");
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
 
 router.post("/post/person", checkAuth, async (req, res, next) => {
   try {

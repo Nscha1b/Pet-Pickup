@@ -20,6 +20,14 @@ export class DashboardComponent implements AfterViewInit, OnInit {
     'clinic',
     'status'
   ];
+  columnsToHide = [
+    'id',
+    'sex',
+    'weight',
+    'crematory',
+    'type',
+    'clinic'
+  ];
   filter = '';
   isLoading = false;
   private loadingSub: Subscription;
@@ -106,4 +114,5 @@ export class DashboardComponent implements AfterViewInit, OnInit {
   currentPage() {
     return this.offset / +this.showHowMany;
   }
+
 }

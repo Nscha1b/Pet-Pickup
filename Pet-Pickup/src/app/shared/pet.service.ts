@@ -9,11 +9,11 @@ import { HttpClient } from '@angular/common/http';
 export class PetService {
   petChanged = new Subject<Pet[]>();
 
-  private pets: Pet[] = [
+  private pets: Pet[] = [];
 
-  ];
+  constructor(private http: HttpClient) { }
 
-  getPets() {
+  loadPets() {
     return this.pets.slice();
   }
 
@@ -39,5 +39,37 @@ export class PetService {
       });
   }
 
-  constructor(private http: HttpClient) { }
+  getPets(filter, howMany, offset, orderBy) {
+    this.pets = [];
+    this.http.get('http://localhost:3000/api/get/pets', {
+      params: {
+        filter: filter,
+        howMany: howMany,
+        offset: offset,
+        orderBy: orderBy
+      }
+    }).subscribe((data: any) => {
+      console.log(data);
+      data.rows.forEach(i => {
+        const newPet =
+        new Pet(
+          i.petid,
+          i.petname,
+          i.petsex,
+          i.pettype,
+          i.petbreed,
+          i.petcolor,
+          i.petweight,
+          i.petdob,
+          i.petdod,
+          i.pettod,
+          i.petage
+        );
+        this.pets.push(newPet);
+      });
+      this.petChanged.next();
+    });
+  }
+
+
 }
