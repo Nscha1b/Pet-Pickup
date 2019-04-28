@@ -55,6 +55,36 @@ router.get("/get/cases", checkAuth, async (req, res, next) => {
   }
 });
 
+router.get("/get/loadCase", checkAuth, async (req, res, next) => {
+  try {
+    await db
+      .query(
+        "select p.id as Personid, p.firstname as Personfirstname, p.pre, p.middlename, p.lastname, p.suf, " +
+          "p.address as personaddress, p.city as personcity, p.state as personstate, p.zip as personzip, p.email, " +
+          "p.homephone as personhome, p.workphone as personwork, p.mobilephone as personmobile, " +
+          "pet.id as petid, pet.name as petname, pet.sex as petsex, pet.type as pettype, pet.breed as petbreed, " +
+          "pet.color as petcolor, pet.weight as petweight, pet.dateofbirth as petdob, pet.dateofdeath as petdod, " +
+          "pet.timeofdeath as pettod, pet.age as petage, " +
+          "cd.id as detailsid, cd.crematory, cd.status, cd.type as detailstype, cd.clinic, cd.print, cd.fur, cd.returnto, " +
+          "cd.returntoid, cd.returnperson, cd.returnplace, cd.returnphone, cd.returnaddress, cd.returncity, " +
+          "cd.returnstate, cd.returnzip, cd.note, cd.ownerid as detailsownid, cd.petid as detailspetid " +
+          "from petcase pc " +
+          "inner join person p on pc.personid = p.id " +
+          "inner join pet on pc.petid = pet.id " +
+          "inner join cremationdetails cd on pc.detailsid = cd.id " +
+          "where p.id = $1 " , [+req.query.filter]
+      )
+      .then(result => {
+        const data = {rows: result.rows};
+        res.send(data);
+      });
+  } catch (e) {
+    console.log(`Unable to get Case! ${e}`);
+  } finally {
+    console.log("Get CaseRequest Completed");
+  }
+});
+
 
 
 
@@ -148,11 +178,6 @@ router.get("/get/pets", checkAuth, async (req, res, next) => {
 
 
 
-
-
-
-
-
 router.post("/post/person", checkAuth, async (req, res, next) => {
   try {
     let query = insertPerson(req.body);
@@ -190,6 +215,52 @@ router.post("/post/details", checkAuth, async (req, res, next) => {
     console.log("Details Request Completed");
   }
 });
+
+router.post("/post/updatePetCase", checkAuth, async (req, res, next) => {
+  try {
+    let detailsID;
+    await db
+    .query(
+      "SELECT detailsid from petcase where personid = $1 and petid = $2 "
+, [req.body.ownerid, req.body.petid]
+    ).then(result => {
+      detailsID = result.rows[0].detailsid;
+    });
+
+    await db.query("BEGIN");
+    let person = updatePerson(req.body);
+    let pet = updatePet(req.body);
+    let details = updateDetails(req.body, detailsID);
+
+    await db.query(person.sql, person.values).then(result => {
+    // console.log(result);
+    });
+    await db.query(pet.sql, pet.values).then(result => {
+    // console.log(result);
+    });
+    await db.query(details.sql, details.values).then(result => {
+    // console.log(result);
+      console.log(details.values);
+    })
+    .then((result) => {
+          console.log("We Made it!!!");
+          res.status(201).json({
+            message: "Case Updated!",
+            result: result,
+            caseCreated: true
+          });
+        });
+
+    await db.query("COMMIT");
+  } catch (e) {
+    console.log(`Failed to execute ${e}`);
+    await db.query("ROLLBACK");
+  } finally {
+    console.log("connection closed");
+  }
+});
+
+
 
 router.post("/post/petcase", checkAuth, async (req, res, next) => {
   try {
@@ -234,6 +305,9 @@ router.post("/post/petcase", checkAuth, async (req, res, next) => {
     console.log("connection closed");
   }
 });
+
+
+
 
 router.post("/signup", async (req, res, next) => {
   let username = req.body.username;
@@ -353,6 +427,34 @@ function insertPerson(body) {
   return query;
 }
 
+function updatePerson(body) {
+  const query = {
+    sql:
+      "UPDATE person SET " +
+      "firstname = $1, pre = $2, middlename = $3, lastname = $4, suf = $5, address = $6, city = $7, " +
+      "state = $8, zip = $9, email = $10, homephone = $11, workphone = $12, mobilephone = $13 " +
+      "where person.id = $14",
+    values: [
+      body.firstname,
+      body.pre,
+      body.middlename,
+      body.lastname,
+      body.suf,
+      body.address,
+      body.city,
+      body.state,
+      body.zip,
+      body.email,
+      body.home,
+      body.work,
+      body.mobile,
+      body.ownerid
+    ]
+  };
+  query.values = blankToNull(query.values);
+  return query;
+}
+
 function insertPet(body) {
   const query = {
     sql:
@@ -370,6 +472,31 @@ function insertPet(body) {
       body.dateofdeath,
       body.timeofdeath,
       body.age
+    ]
+  };
+  query.values = blankToNull(query.values);
+  return query;
+}
+
+function updatePet(body) {
+  const query = {
+    sql:
+      "UPDATE pet SET " +
+      "name = $1, sex = $2, type = $3, breed = $4, color = $5, " +
+      "weight = $6, dateofbirth = $7, dateofdeath = $8, timeofdeath = $9, age = $10 " +
+      "where pet.id = $11 ",
+    values: [
+      body.name,
+      body.sex,
+      body.type,
+      body.breed,
+      body.color,
+      body.weight,
+      body.dateofbirth,
+      body.dateofdeath,
+      body.timeofdeath,
+      +body.age,
+      body.petid
     ]
   };
   query.values = blankToNull(query.values);
@@ -408,15 +535,41 @@ function insertDetails(body) {
   return query;
 }
 
-function updateDetailsIDs(personid, petid, detailsid) {
+function updateDetails(body, detailsID) {
   const query = {
     sql:
-      "UPDATE cremationdetails SET ownerid=($1), petid=($2) WHERE id=($3) VALUES($1, $2, $3)",
-    values: [personid, petid, detailsid]
+      "UPDATE cremationdetails SET " +
+      "crematory = $1, status = $2, type = $3, clinic = $4, print = $5, fur = $6, " +
+      "returnto = $7, returntoid = $8, returnperson = $9, returnplace = $10, returnphone = $11, returnaddress = $12, " +
+      "returncity = $13, returnstate = $14, returnzip = $15, note = $16, ownerid = $17, petid = $18 " +
+      "WHERE cremationdetails.id = $19 ",
+    values: [
+      body.crematory,
+      body.status,
+      body.detailstype,
+      body.clinic,
+      body.print,
+      body.fur,
+      body.returnto,
+      body.returntoid,
+      body.returnperson,
+      body.returnplace,
+      body.returnphone,
+      body.returnaddress,
+      body.returncity,
+      body.returnstate,
+      body.returnzip,
+      body.note,
+      body.ownerid,
+      body.petid,
+      detailsID
+    ]
   };
   query.values = blankToNull(query.values);
   return query;
 }
+
+
 
 function blankToNull(valueArr) {
   const replaced = valueArr.map(e => {
@@ -430,10 +583,4 @@ function blankToNull(valueArr) {
   return replaced;
 }
 
-function findUser(username) {
-  db.query("select * from users where username = ($1) limit 1", [
-    username
-  ]).then(result => {
-    return result.rows[0];
-  });
-}
+

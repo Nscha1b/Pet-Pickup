@@ -1,4 +1,4 @@
-import { AfterViewInit, OnInit, Component } from '@angular/core';
+import { AfterViewInit, OnInit, Component, Output, EventEmitter } from '@angular/core';
 import { PetCaseService } from '../shared/pet-case.service';
 import { Subscription } from 'rxjs';
 
@@ -31,6 +31,7 @@ export class DashboardComponent implements AfterViewInit, OnInit {
   filter = '';
   isLoading = false;
   private loadingSub: Subscription;
+  @Output() openCase = new EventEmitter();
   totalCases = null;
   orderBy = 'ownerID';
   showHowMany = '5';
@@ -54,6 +55,10 @@ export class DashboardComponent implements AfterViewInit, OnInit {
       this.nextDisabled();
       this.getPageCount();
     });
+  }
+
+  loadCase($event) {
+      this.petCaseService.getCase($event.target.id);
   }
 
 

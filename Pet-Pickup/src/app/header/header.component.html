@@ -6,13 +6,13 @@
         *ngIf="userIsAuthenticated"
         class="mat-raised-button bg-primary text-white"
         ngClass.xs= "mat-small"
-        (click)="openDialog()">
+        (click)="newCase()">
         New Case
       </button>
     </div>
     <div>
       <div class="pl-4">
-          <app-search *ngIf="userIsAuthenticated"></app-search>
+          <app-search (openCase)="loadInfo($event)" *ngIf="userIsAuthenticated"></app-search>
       </div>
     </div>
     <span class="push-right"></span>

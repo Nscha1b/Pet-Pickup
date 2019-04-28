@@ -9,11 +9,11 @@ export class Pet {
   public petdob: string;
   public petdod: string;
   public pettod: string;
-  public petage: string;
+  public petage: number;
 
   constructor(id: number, petname: string, sex: string, pettype: string, petbreed: string,
               petcolor: string, petweight: number, petdob: string,
-              petdod: string, pettod: string, petage: string) {
+              petdod: string, pettod: string, petage: number) {
     this.id = id;
     this.petname = petname;
     this.sex = sex;

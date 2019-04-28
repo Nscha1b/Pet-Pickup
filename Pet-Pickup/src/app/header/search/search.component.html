@@ -13,7 +13,7 @@
 
 <div *ngIf="searchResult.length >= 1" class="box card">
   <ul *ngFor="let result of searchResult; let i = index">
-    <li>{{ searchResult[i].petname }}{{ searchResult[i].firstname }} {{ searchResult[i].last }}</li>
+    <li [id]="searchResult[i].id" (click)="loadCase($event)">{{ searchResult[i].petname }}{{ searchResult[i].firstname }} {{ searchResult[i].last }}</li>
   </ul>
 </div>
 

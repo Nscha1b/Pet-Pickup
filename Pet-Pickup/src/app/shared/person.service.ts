@@ -22,16 +22,7 @@ export class PersonService {
     return this.people.slice();
   }
 
-  /*
-  addPerson(person: Person) {
-    this.people.push(new Person(person.id, person.firstname, person.pre, person.mid,
-      person.last, person.suf, person.address, person.city, person.state,
-      person.zip, person.email, person.home, person.work, person.mobile
-    ));
-    this.peopleChanged.next(this.people.slice());
-    console.log('Person Added');
-  }
-  */
+
 
   addPerson(p: Person) {
     const newPerson = {
@@ -55,14 +46,7 @@ export class PersonService {
       .subscribe(res => {
         console.log(res);
       });
-    /*
-    .subscribe((responseData) => {
-        console.log(responseData.message);
-        const ID = responseData.postID;
-        post.id = ID;
-        this.posts.push(post);
-        this.postsUpdate.next([...this.posts]);
-      }); */
+
   }
 
   getPeople(filter, howMany, offset, orderBy) {
@@ -75,7 +59,6 @@ export class PersonService {
         orderBy: orderBy
       }
     }).subscribe((data: any) => {
-      console.log(data);
       data.rows.forEach(i => {
         const newPerson =
           new Person(

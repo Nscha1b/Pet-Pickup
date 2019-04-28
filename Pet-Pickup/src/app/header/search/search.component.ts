@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer, Renderer2 } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { PersonService } from 'src/app/shared/person.service';
-import { Person } from 'src/app/shared/person.model';
 import { PetService } from 'src/app/shared/pet.service';
 
 @Component({
@@ -11,6 +10,9 @@ import { PetService } from 'src/app/shared/pet.service';
 export class SearchComponent implements OnInit {
   searchResult = [];
   searchBy: String = 'Owner Name';
+  lastKeypress = 0;
+  selected;
+  @Output() openCase = new EventEmitter();
 
   constructor(private person: PersonService, private pets: PetService) { }
 
@@ -18,24 +20,33 @@ export class SearchComponent implements OnInit {
   ngOnInit() {
     this.person.peopleChanged.subscribe(() => {
       this.searchResult = this.person.loadPeople();
-      console.log(this.searchResult);
     });
     this.pets.petChanged.subscribe(() => {
       this.searchResult = this.pets.loadPets();
-      console.log(this.searchResult);
     });
   }
 
   search($event) {
-    if ($event.target.value === '') {
-      this.searchResult = [];
-      return;
-    } else if (this.searchBy === 'Owner Name') {
-      this.person.getPeople($event.target.value, 4, 0, 0);
-      console.log($event.target.value);
-    } else if (this.searchBy === 'Pet Name') {
-      this.pets.getPets($event.target.value, 4, 0, 0);
-      console.log($event.target.value);
+    if ($event.timeStamp - this.lastKeypress > 200) {
+      if ($event.target.value === '') {
+        this.searchResult = [];
+        return;
+      } else if (this.searchBy === 'Owner Name') {
+        this.person.getPeople($event.target.value, 4, 0, 0);
+      } else if (this.searchBy === 'Pet Name') {
+        this.pets.getPets($event.target.value, 4, 0, 0);
+      }
+    }
+    this.lastKeypress = $event.timeStamp;
+  }
+
+  loadCase($event) {
+    if (this.searchBy === 'Owner Name') {
+      this.selected = { ID: $event.target.id, type: 'Person' };
+      this.openCase.emit(this.selected);
+    } else {
+      this.selected = { ID: $event.target.id, type: 'Pet' };
+      this.openCase.emit(this.selected);
     }
   }
 
