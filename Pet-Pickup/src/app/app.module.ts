@@ -32,6 +32,7 @@ import {AuthInterceptor} from './login/auth-interceptor';
 import { PaginatorComponent } from './shared/paginator/paginator.component';
 import { SearchComponent } from './header/search/search.component';
 import { DropdownDirective } from './shared/dropdown.directive';
+import { SearchTableComponent } from './search-table/search-table.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { DropdownDirective } from './shared/dropdown.directive';
     LoginComponent,
     PaginatorComponent,
     SearchComponent,
-    DropdownDirective
+    DropdownDirective,
+    SearchTableComponent
   ],
   imports: [
     BrowserModule,

@@ -55,6 +55,62 @@ router.get("/get/cases", checkAuth, async (req, res, next) => {
   }
 });
 
+router.get("/get/searchCases", checkAuth, async (req, res, next) => {
+  let where = '';
+  try {
+    if(req.query.searchBy === 'Owner Name') {
+      where = "where LOWER(p.firstname) like $1 " +
+              "or " +
+              "LOWER(p.lastname) like $1 ";
+    } else{
+      //search by pet
+      where = "where LOWER(pet.name) like $1 "
+    }
+    let caseCount = 0;
+    await db
+      .query(
+        "select count(*) " +
+          "from petcase pc " +
+          "inner join person p on pc.personid = p.id " +
+          "inner join pet on pc.petid = pet.id " +
+          "inner join cremationdetails cd on pc.detailsid = cd.id " +
+          where +
+          "limit ALL "
+, [req.query.filter+'%']
+      ).then(result => {
+        caseCount = result.rows[0].count;
+      });
+    await db
+      .query(
+        "select p.id as Personid, p.firstname as Personfirstname, p.pre, p.middlename, p.lastname, p.suf, " +
+          "p.address as personaddress, p.city as personcity, p.state as personstate, p.zip as personzip, p.email, " +
+          "p.homephone as personhome, p.workphone as personwork, p.mobilephone as personmobile, " +
+          "pet.id as petid, pet.name as petname, pet.sex as petsex, pet.type as pettype, pet.breed as petbreed, " +
+          "pet.color as petcolor, pet.weight as petweight, pet.dateofbirth as petdob, pet.dateofdeath as petdod, " +
+          "pet.timeofdeath as pettod, pet.age as petage, " +
+          "cd.id as detailsid, cd.crematory, cd.status, cd.type as detailstype, cd.clinic, cd.print, cd.fur, cd.returnto, " +
+          "cd.returntoid, cd.returnperson, cd.returnplace, cd.returnphone, cd.returnaddress, cd.returncity, " +
+          "cd.returnstate, cd.returnzip, cd.note, cd.ownerid as detailsownid, cd.petid as detailspetid " +
+          "from petcase pc " +
+          "inner join person p on pc.personid = p.id " +
+          "inner join pet on pc.petid = pet.id " +
+          "inner join cremationdetails cd on pc.detailsid = cd.id " +
+          where +
+          "order by ($2) " +
+          "limit ($3) " +
+          "offset ($4) ", [req.query.filter+'%', req.query.orderBy, req.query.howMany, req.query.offset]
+      )
+      .then(result => {
+        const data = {rows: result.rows, caseCount: +caseCount};
+        res.send(data);
+      });
+  } catch (e) {
+    console.log(`Unable to get Cases! ${e}`);
+  } finally {
+    console.log("Get CasesRequest Completed");
+  }
+});
+
 router.get("/get/loadCase", checkAuth, async (req, res, next) => {
   try {
     await db
@@ -85,10 +141,6 @@ router.get("/get/loadCase", checkAuth, async (req, res, next) => {
   }
 });
 
-
-
-
-
 router.get("/get/people", checkAuth, async (req, res, next) => {
   try {
     let peopleCount = 0;
@@ -103,7 +155,7 @@ router.get("/get/people", checkAuth, async (req, res, next) => {
           "or " +
           "LOWER(p.lastname) like $1 "
         //  "limit ($2) "
-, ['%'+req.query.filter+'%']
+, [req.query.filter+'%']
       ).then(result => {
         peopleCount = result.rows[0].count;
       });
@@ -119,7 +171,7 @@ router.get("/get/people", checkAuth, async (req, res, next) => {
         //  "order by ($2) " +
           "limit ($2) "
         //  "offset ($4) "
-        , ['%'+req.query.filter+'%', req.query.howMany]
+        , [req.query.filter+'%', req.query.howMany]
       )
       .then(result => {
         const data = {rows: result.rows, peopleCount: +peopleCount};
@@ -131,7 +183,6 @@ router.get("/get/people", checkAuth, async (req, res, next) => {
     console.log("Get PeopleRequest Completed");
   }
 });
-
 
 router.get("/get/pets", checkAuth, async (req, res, next) => {
   try {
@@ -145,7 +196,7 @@ router.get("/get/pets", checkAuth, async (req, res, next) => {
           "from pet p " +
           "where LOWER(p.name) like $1 "
         //  "limit ($2) "
-, ['%'+req.query.filter+'%']
+, [req.query.filter+'%']
       ).then(result => {
         petCount = result.rows[0].count;
       });
@@ -159,7 +210,7 @@ router.get("/get/pets", checkAuth, async (req, res, next) => {
         //  "order by ($2) " +
           "limit ($2) "
         //  "offset ($4) "
-        , ['%'+req.query.filter+'%', req.query.howMany]
+        , [req.query.filter+'%', req.query.howMany]
       )
       .then(result => {
         const data = {rows: result.rows, petCount: +petCount};
@@ -171,12 +222,6 @@ router.get("/get/pets", checkAuth, async (req, res, next) => {
     console.log("Get PetsRequest Completed");
   }
 });
-
-
-
-
-
-
 
 router.post("/post/person", checkAuth, async (req, res, next) => {
   try {
@@ -260,8 +305,6 @@ router.post("/post/updatePetCase", checkAuth, async (req, res, next) => {
   }
 });
 
-
-
 router.post("/post/petcase", checkAuth, async (req, res, next) => {
   try {
     await db.query("BEGIN");
@@ -305,9 +348,6 @@ router.post("/post/petcase", checkAuth, async (req, res, next) => {
     console.log("connection closed");
   }
 });
-
-
-
 
 router.post("/signup", async (req, res, next) => {
   let username = req.body.username;
@@ -568,8 +608,6 @@ function updateDetails(body, detailsID) {
   query.values = blankToNull(query.values);
   return query;
 }
-
-
 
 function blankToNull(valueArr) {
   const replaced = valueArr.map(e => {

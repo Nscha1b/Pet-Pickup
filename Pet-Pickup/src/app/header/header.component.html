@@ -1,7 +1,7 @@
 <mat-toolbar class="bg-dark">
   <mat-toolbar-row>
     <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px">
-      <span class="text-white">Pet-Pickup</span>
+      <span style="cursor: pointer;" [routerLink]="['../dashboard']" class="text-white">Pet-Pickup</span>
       <button
         *ngIf="userIsAuthenticated"
         class="mat-raised-button bg-primary text-white"
@@ -12,7 +12,7 @@
     </div>
     <div>
       <div class="pl-4">
-          <app-search (openCase)="loadInfo($event)" *ngIf="userIsAuthenticated"></app-search>
+          <app-search *ngIf="userIsAuthenticated"></app-search>
       </div>
     </div>
     <span class="push-right"></span>

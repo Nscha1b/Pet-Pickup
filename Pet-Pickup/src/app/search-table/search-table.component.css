@@ -1,0 +1,25 @@
+.title {
+  background-color: #e2e2e2;
+  height: 55px;
+  border-radius: 2px;
+  border-bottom: 1px solid #0d0d0c;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+mat-spinner {
+  margin: auto;
+
+}
+
+td {
+  line-height: 40px;
+}
+
+.disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+li {
+  cursor: pointer;
+}

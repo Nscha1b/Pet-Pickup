@@ -7,13 +7,15 @@
     <button (click)="searchBy = 'Owner Name'" mat-menu-item>Owner Name</button>
     <button (click)="searchBy = 'Pet Name'" mat-menu-item>Pet Name</button>
   </mat-menu>
-  <input style="min-width: 200px;" placeholder="Search" #searchBox type="text" class="form-control" (keyup)="search($event)" />
+  <input style="min-width: 200px;" placeholder="Search" #searchBox type="text" class="form-control" (keyup)="search($event, searchBy)" />
+  <mat-icon [routerLink]="['../search']" class="searchIcon" matSuffix >search</mat-icon>
 </div>
 
 
-<div *ngIf="searchResult.length >= 1" class="box card">
+<div *ngIf="searchResult.length >= 1 && hide === false" class="box card">
   <ul *ngFor="let result of searchResult; let i = index">
-    <li [id]="searchResult[i].id" (click)="loadCase($event)">{{ searchResult[i].petname }}{{ searchResult[i].firstname }} {{ searchResult[i].last }}</li>
+    <li *ngIf="searchBy == 'Owner Name'" [id]="searchResult[i].person.id" (click)="loadCase($event)">{{ searchResult[i].person.firstname }} {{ searchResult[i].person.last }}</li>
+    <li *ngIf="searchBy == 'Pet Name'" [id]="searchResult[i].person.id" (click)="loadCase($event)">{{ searchResult[i].pet.petname }}</li>
   </ul>
 </div>
 

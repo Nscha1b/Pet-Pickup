@@ -23,6 +23,8 @@ export class PetCaseService {
   private loadingListener = new Subject<boolean>();
   loadedCase: PetCase;
   caseChanged = new Subject<PetCase>();
+  searchResults: PetCase[] = [];
+  searchChanged = new Subject<PetCase[]>();
 
   constructor(
     private personService: PersonService,
@@ -99,6 +101,72 @@ export class PetCaseService {
           this.loadingListener.next(false);
         });
         this.caseCount = +data.caseCount;
+      });
+  }
+
+  searchCases(filter, howMany, offset, orderBy, searchBy) {
+    const searchResults: PetCase[] = [];
+    this.http
+      .get('http://localhost:3000/api/get/searchCases', {
+        params: {
+          filter: filter, howMany: howMany, offset: offset, orderBy: orderBy, searchBy: searchBy
+        }
+      })
+      .subscribe((data: any) => {
+        data.rows.forEach(i => {
+          const result = new PetCase(
+            new Person(
+              i.personid,
+              i.personfirstname,
+              i.pre,
+              i.middlename,
+              i.lastname,
+              i.suf,
+              i.personaddress,
+              i.personcity,
+              i.personstate,
+              +i.personzip,
+              i.email,
+              i.personhome,
+              i.personwork,
+              i.personmobile
+            ),
+            new Pet(
+              i.petid,
+              i.petname,
+              i.petsex,
+              i.pettype,
+              i.petbreed,
+              i.petcolor,
+              i.petweight,
+              i.petdob,
+              i.petdod,
+              i.pettod,
+              i.petage
+            ),
+            new PetCremationDetails(
+              i.crematory,
+              i.status,
+              i.pettype,
+              i.clinic,
+              i.print,
+              i.fur,
+              i.returnto,
+              i.returntoid,
+              i.returnperson,
+              i.returnplace,
+              i.returnphone,
+              i.returnaddress,
+              i.returncity,
+              i.returnstate,
+              i.returnzip,
+              i.note
+            )
+          );
+          searchResults.push(result);
+          this.searchResults = searchResults;
+        });
+        this.searchChanged.next(this.searchResults.slice());
       });
   }
 
@@ -309,6 +377,12 @@ export class PetCaseService {
     return this.loadingListener.asObservable();
   }
 
+  clearSearchResults(clear: boolean) {
+    if (clear) {
+      this.searchResults = [];
+      this.searchChanged.next();
+    }
+  }
 
   getOwner(id) {
     return this.personService.getPerson(id);
@@ -320,6 +394,10 @@ export class PetCaseService {
 
   loadCase() {
     return this.loadedCase;
+  }
+
+  loadSearchResults() {
+    return this.searchResults.slice();
   }
 
   checkIsLoading() {

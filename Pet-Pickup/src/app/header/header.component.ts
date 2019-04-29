@@ -52,10 +52,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authService.logout();
   }
 
-  loadInfo($event) {
-    // $event.ID and $event.type EX 'Person', 'Pet'
-    this.petCaseService.getCase($event.ID);
-  }
 
   openDialog(): void {
     this.dialog.open(NewCaseDialogComponent, {
@@ -70,6 +66,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.openDialog();
   }
 }
+
+// TODO... Really need to split these into seperate files....
 
 @Component({
   selector: 'app-new-case-dialog',
@@ -403,7 +401,7 @@ return new Pet(
 );
   }
 
-getDetailsFormValues() {
+  getDetailsFormValues() {
 
 return new PetCremationDetails(
   this.caseForm.get('details').get('crematory').value,

@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { PersonService } from 'src/app/shared/person.service';
 import { PetService } from 'src/app/shared/pet.service';
+import { SearchService } from 'src/app/shared/search.service';
+import { PetCaseService } from 'src/app/shared/pet-case.service';
 
 @Component({
   selector: 'app-search',
@@ -9,44 +11,29 @@ import { PetService } from 'src/app/shared/pet.service';
 })
 export class SearchComponent implements OnInit {
   searchResult = [];
-  searchBy: String = 'Owner Name';
-  lastKeypress = 0;
-  selected;
-  @Output() openCase = new EventEmitter();
+  searchBy = 'Owner Name';
+  hide = false;
 
-  constructor(private person: PersonService, private pets: PetService) { }
+  constructor(private pcService: PetCaseService, private searchService: SearchService) { }
 
 
   ngOnInit() {
-    this.person.peopleChanged.subscribe(() => {
-      this.searchResult = this.person.loadPeople();
-    });
-    this.pets.petChanged.subscribe(() => {
-      this.searchResult = this.pets.loadPets();
+    this.pcService.searchChanged.subscribe(() => {
+      this.searchResult = this.pcService.loadSearchResults();
     });
   }
 
-  search($event) {
-    if ($event.timeStamp - this.lastKeypress > 200) {
-      if ($event.target.value === '') {
-        this.searchResult = [];
-        return;
-      } else if (this.searchBy === 'Owner Name') {
-        this.person.getPeople($event.target.value, 4, 0, 0);
-      } else if (this.searchBy === 'Pet Name') {
-        this.pets.getPets($event.target.value, 4, 0, 0);
-      }
-    }
-    this.lastKeypress = $event.timeStamp;
+  search($event, searchBy) {
+    window.location.href.includes('search') ? this.hide = true : this.hide = false;
+    this.searchService.search($event, searchBy);
   }
 
   loadCase($event) {
+    console.log($event);
     if (this.searchBy === 'Owner Name') {
-      this.selected = { ID: $event.target.id, type: 'Person' };
-      this.openCase.emit(this.selected);
+      this.searchService.getSelected($event.target.id, 'Owner Name');
     } else {
-      this.selected = { ID: $event.target.id, type: 'Pet' };
-      this.openCase.emit(this.selected);
+      this.searchService.getSelected($event.target.id, 'Pet Name');
     }
   }
 

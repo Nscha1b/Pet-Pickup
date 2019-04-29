@@ -17,16 +17,6 @@ export class PetService {
     return this.pets.slice();
   }
 
-  /*
-  addPet(pet: Pet) {
-    this.pets.push(new Pet(pet.id,
-      pet.petname, pet.sex, pet.pettype, pet.petbreed, pet.petcolor,
-      pet.petweight, pet.petdob, pet.petdod, pet.pettod, pet.petage
-    ));
-    this.petChanged.next(this.pets.slice());
-    console.log('Pet Added');
-  }
-  */
 
   addPet(p: Pet) {
     const newPet = {name: p.petname, sex: p.sex, type: p.pettype,
@@ -69,6 +59,13 @@ export class PetService {
       });
       this.petChanged.next();
     });
+  }
+
+  clearLocalPets(clear: boolean) {
+    if (clear) {
+      this.pets = [];
+      this.petChanged.next();
+    }
   }
 
 

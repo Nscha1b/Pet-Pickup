@@ -82,4 +82,12 @@ export class PersonService {
       this.peopleChanged.next();
     });
   }
+
+clearLocalPeople(clear: boolean) {
+  if (clear) {
+    this.people = [];
+    this.peopleChanged.next();
+  }
+}
+
 }
