@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
+  public LoggedInUser: string;
   private tokenTimer: any;
   private token: string;
   accountCreated = false;
@@ -30,7 +31,6 @@ export class AuthService {
       )
       .subscribe(res => {
         console.log(res);
-        console.log('test' + res.accountCreated);
         this.accountCreated = res.accountCreated;
         if (this.accountCreated) {
           this.accountCreatedListener.next(true);
@@ -67,7 +67,7 @@ export class AuthService {
           const expirationDate = new Date(
             now.getTime() + expiresInDuration * 1000
           );
-          this.saveAuthData(token, expirationDate);
+          this.saveAuthData(token, expirationDate, username);
           this.router.navigate(['/dashboard']);
         }
       });
@@ -101,14 +101,16 @@ export class AuthService {
     }, duration * 1000);
   }
 
-  private saveAuthData(token: string, expirationDate: Date) {
+  private saveAuthData(token: string, expirationDate: Date, name: string) {
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());
+    localStorage.setItem('name', name);
   }
 
   private clearAuthData() {
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
+    localStorage.removeItem('name');
   }
 
   getToken() {
@@ -133,6 +135,10 @@ export class AuthService {
       token: token,
       expirationDate: new Date(expirationDate)
     };
+  }
+
+  getUsername() {
+    return localStorage.getItem('name');
   }
 
 }

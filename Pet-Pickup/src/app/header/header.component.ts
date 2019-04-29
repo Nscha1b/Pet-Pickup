@@ -22,7 +22,7 @@ import { isUndefined } from 'util';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   loadedCase;
-
+  username: string;
   constructor(
     public dialog: MatDialog,
     private authService: AuthService,
@@ -33,6 +33,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.userIsAuthenticated = this.authService.getAuth();
+    this.username = this.authService.getUsername();
     this.authListenerSubs = this.authService
       .getAuthStatusListener()
       .subscribe(isAuthenticated => {
@@ -179,7 +180,7 @@ export class NewCaseDialogComponent implements OnInit {
   loadedCase = this.petCaseService.loadedCase;
 
   constructor(
-    public petCaseService: PetCaseService,
+    private petCaseService: PetCaseService,
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<NewCaseDialogComponent>
   ) {}

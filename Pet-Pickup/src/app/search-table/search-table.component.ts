@@ -28,9 +28,7 @@ export class SearchTableComponent implements OnInit, AfterViewInit {
     this.searchResults = this.pcService.loadSearchResults();
     this.pcService.searchChanged.subscribe(() => {
       this.searchResults = this.pcService.loadSearchResults();
-      console.log(this.searchResults);
     });
-    console.log(window.location.href);
   }
 
 
