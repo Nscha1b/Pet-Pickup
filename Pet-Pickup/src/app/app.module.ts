@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,9 +29,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import {AuthInterceptor} from './login/auth-interceptor';
-import { PaginatorComponent } from './shared/paginator/paginator.component';
 import { SearchComponent } from './header/search/search.component';
-import { DropdownDirective } from './shared/dropdown.directive';
 import { SearchTableComponent } from './search-table/search-table.component';
 
 
@@ -42,9 +40,7 @@ import { SearchTableComponent } from './search-table/search-table.component';
     NewCaseDialogComponent,
     DashboardComponent,
     LoginComponent,
-    PaginatorComponent,
     SearchComponent,
-    DropdownDirective,
     SearchTableComponent
   ],
   imports: [
@@ -74,7 +70,8 @@ import { SearchTableComponent } from './search-table/search-table.component';
     MatNativeDateModule,
     MatIconModule,
     HttpClientModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    ScrollingModule
   ],
   entryComponents: [
     NewCaseDialogComponent

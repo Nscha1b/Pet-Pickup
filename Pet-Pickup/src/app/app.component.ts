@@ -1,8 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from './login/auth.service';
-
-
-
 
 @Component({
   selector: 'app-root',
@@ -16,8 +13,6 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.authService.autoAuthUser();
   }
-
-
 
 }
 

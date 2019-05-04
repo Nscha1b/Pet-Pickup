@@ -62,7 +62,8 @@ export class DashboardComponent implements AfterViewInit, OnInit {
   }
 
 
-  getCases() {
+  getCases(filterChanged?) {
+    if(filterChanged) { this.offset = 0; }
     this.petCaseService.getCases(this.filter, +this.showHowMany, this.offset, this.orderBy);
     this.getCaseCount();
   }

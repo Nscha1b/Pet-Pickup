@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Person } from './person.model';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

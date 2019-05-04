@@ -23,3 +23,7 @@ td {
 li {
   cursor: pointer;
 }
+
+cdk-virtual-scroll-viewport {
+  height: 530px;
+}

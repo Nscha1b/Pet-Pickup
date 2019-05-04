@@ -258,7 +258,7 @@ export class PetCaseService {
       dateofbirth: pe.petdob,
       dateofdeath: pe.petdod,
       timeofdeath: pe.pettod,
-      age: pe.pettod,
+      age: pe.petage,
       crematory: d.crematory,
       status: d.status,
       detailstype: d.type,

@@ -7,8 +7,8 @@
     <button (click)="searchBy = 'Owner Name'" mat-menu-item>Owner Name</button>
     <button (click)="searchBy = 'Pet Name'" mat-menu-item>Pet Name</button>
   </mat-menu>
-  <input style="min-width: 200px;" placeholder="Search" #searchBox type="text" class="form-control" (keyup)="search($event, searchBy)" />
-  <mat-icon [routerLink]="['../search']" class="searchIcon" matSuffix >search</mat-icon>
+  <input style="min-width: 200px;" placeholder="Search" [(ngModel)]="searchText" type="text" class="form-control" (keyup)="search($event, searchBy)" />
+  <mat-icon (click)="searchButton = true; search($event, searchBy);" [routerLink]="['../search']" class="searchIcon" matSuffix >search</mat-icon>
 </div>
 
 

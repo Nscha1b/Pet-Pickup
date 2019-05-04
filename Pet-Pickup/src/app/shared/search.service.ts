@@ -12,12 +12,15 @@ export class SearchService {
   constructor(private person: PersonService, private pets: PetService, private pcService: PetCaseService) {}
 
   // they are typing... Search the database
-  search($event, searchBy) {
+  search($event, searchBy, button, searchText) {
     if ($event.timeStamp - this.lastKeypress > 200) {
-      if ($event.target.value === '') {
+      if (searchText === '') {
         this.pcService.clearSearchResults(true);
+      } else if (window.location.href.includes('search') || button === true) {
+        // if we're on the search page find more cases
+        this.pcService.searchCases(searchText, 500, 0, 0, searchBy);
       } else {
-        this.pcService.searchCases($event.target.value, 5, 0, 0, searchBy);
+        this.pcService.searchCases(searchText, 4, 0, 0, searchBy);
       }
     }
     this.lastKeypress = $event.timeStamp;
@@ -28,4 +31,7 @@ export class SearchService {
     console.log('we got the following ' + ID + ' ' + type);
      this.pcService.getCase(ID);
   }
+
+
+
 }
