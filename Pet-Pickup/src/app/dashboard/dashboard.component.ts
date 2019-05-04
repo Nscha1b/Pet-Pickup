@@ -63,7 +63,7 @@ export class DashboardComponent implements AfterViewInit, OnInit {
 
 
   getCases(filterChanged?) {
-    if(filterChanged) { this.offset = 0; }
+    if (filterChanged) { this.offset = 0; }
     this.petCaseService.getCases(this.filter, +this.showHowMany, this.offset, this.orderBy);
     this.getCaseCount();
   }
@@ -86,10 +86,10 @@ export class DashboardComponent implements AfterViewInit, OnInit {
       return false;
     } else if (+this.showHowMany === 1 && this.offset < this.totalCases - 1) {
       return false;
-    } else if (this.offset + this.showHowMany >= this.totalCases) {
+    } else if (this.offset + +this.showHowMany >= this.totalCases) {
       return true;
     }
-    return false;
+
   }
 
   prevPage() {

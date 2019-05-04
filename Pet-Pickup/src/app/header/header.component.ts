@@ -1,17 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Person } from '../shared/person.model';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators
-} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Pet } from '../shared/pet.model';
 import { PetCaseService } from '../shared/pet-case.service';
 import { PetCremationDetails } from '../shared/pet-cremation.details';
 import { AuthService } from '../login/auth.service';
-import { Subject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { PetCase } from '../shared/pet-case.model';
 import { isUndefined } from 'util';
 
@@ -23,13 +18,15 @@ import { isUndefined } from 'util';
 export class HeaderComponent implements OnInit, OnDestroy {
   loadedCase;
   username: string;
+  private authListenerSubs: Subscription;
+  userIsAuthenticated = false;
+
   constructor(
     public dialog: MatDialog,
     private authService: AuthService,
     private petCaseService: PetCaseService
   ) {}
-  private authListenerSubs: Subscription;
-  userIsAuthenticated = false;
+
 
   ngOnInit() {
     this.userIsAuthenticated = this.authService.getAuth();
@@ -91,7 +88,7 @@ export class NewCaseDialogComponent implements OnInit {
     home: new FormControl('', Validators.required),
     work: new FormControl(''),
     mobile: new FormControl('')
-  });
+  }, Validators.required);
   petForm = this.fb.group({
     petname: new FormControl('', Validators.required),
     sex: new FormControl(''),
@@ -192,22 +189,31 @@ export class NewCaseDialogComponent implements OnInit {
       details: this.detailsForm
     });
     this.caseForm.reset();
+    console.log(this.caseForm);
+    console.log(this.ownerForm);
     if (!isUndefined(this.loadedCase)) {
       this.fillFormInfo(this.loadedCase);
     }
   }
 
   onSubmit() {
-    if (isUndefined(this.loadedCase)) {
-      this.petCaseService.addPetCase(
-        this.getOwnerFormValues(), this.getPetFormValues(), this.getDetailsFormValues()
-      );
+    if (this.caseForm.valid) {
+      console.log('form submitted');
+      if (isUndefined(this.loadedCase)) {
+        this.petCaseService.addPetCase(
+          this.getOwnerFormValues(), this.getPetFormValues(), this.getDetailsFormValues()
+        );
+      } else {
+        // we are updating a case...
+        this.petCaseService.UpdatePetCase(
+          this.getOwnerFormValues(), this.getPetFormValues(), this.getDetailsFormValues()
+        );
+      }
+      this.closeDialog();
     } else {
-      // we are updating a case...
-      this.petCaseService.UpdatePetCase(
-        this.getOwnerFormValues(), this.getPetFormValues(), this.getDetailsFormValues()
-      );
+
     }
+
   }
 
   fillFormInfo(loadedCase: PetCase) {
@@ -422,6 +428,37 @@ return new PetCremationDetails(
   this.caseForm.get('details').get('returnzip').value,
   this.caseForm.get('details').get('notes').value
 );
+  }
+
+  validateForm($event) {
+    console.log($event.srcElement.name);
+    switch ($event.srcElement.name) {
+      case 'ownerTab': {
+        if (this.ownerForm.invalid) {
+          this.ownerForm.get('firstname').markAsTouched();
+          this.ownerForm.get('last').markAsTouched();
+          this.ownerForm.get('address').markAsTouched();
+          this.ownerForm.get('city').markAsTouched();
+          this.ownerForm.get('state').markAsTouched();
+          this.ownerForm.get('zip').markAsTouched();
+          this.ownerForm.get('home').markAsTouched();
+        }
+        break;
+      }
+      case 'petTab': {
+        if (this.petForm.invalid) {
+          this.petForm.get('petname').markAsTouched();
+          this.petForm.get('pettype').markAsTouched();
+        }
+        break;
+      }
+      default: {
+        // if it defaults, they are on the details page which will check everything
+        // since that button submits the form
+         break;
+      }
+   }
+
   }
 
 
