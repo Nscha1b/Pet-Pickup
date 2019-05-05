@@ -1,6 +1,6 @@
 const Router = require("express-promise-router");
 const db = require("../db");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const checkAuth = require("../middleware/check-auth");
 
