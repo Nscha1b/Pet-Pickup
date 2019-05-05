@@ -1,6 +1,6 @@
 const http = require('http'); // importing the http package
 const debug = require('debug')('node-angular');
-const app = require('./backend/app'); // the path to our express app
+const app = require('./app'); // the path to our express app
 
 const normalizePort = val => {
   var port = parseInt(val, 10);

@@ -1,0 +1,18 @@
+{
+  "name": "pet-pickup",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.18.3",
+    "bootstrap": "^4.3.1",
+    "core-js": "^2.5.4",
+    "express": "^4.16.4",
+    "express-promise-router": "^3.0.3",
+    "font-awesome": "^4.7.0",
+    "hammerjs": "^2.0.8",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^7.9.0",
+    "tslib": "^1.9.0"
+  }
+}
