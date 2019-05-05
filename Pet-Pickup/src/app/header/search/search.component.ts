@@ -27,7 +27,11 @@ export class SearchComponent implements OnInit {
 
   search($event, searchBy) {
     window.location.href.includes('search') ? (this.hide = true) : (this.hide = false);
-    this.searchService.search($event, searchBy, this.searchButton, this.searchText);
+    this.searchService.search($event, searchBy, this.searchButton, this.searchText.toLowerCase());
+    if ($event.keyCode === 13) {
+      // added this since keystrokes aren't detected right on mobile...
+      this.searchService.search($event, searchBy, this.searchButton, this.searchText.toLowerCase());
+    }
     if (this.searchButton === true) {
       this.hide = true;
     }

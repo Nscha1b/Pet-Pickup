@@ -27,3 +27,9 @@ li {
 cdk-virtual-scroll-viewport {
   height: 530px;
 }
+
+@media screen and (max-width: 767px) {
+  cdk-virtual-scroll-viewport {
+    height: 500px;
+  }
+}

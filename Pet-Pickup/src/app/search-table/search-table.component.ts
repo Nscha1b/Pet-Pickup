@@ -16,6 +16,7 @@ export class SearchTableComponent implements OnInit {
     'Vet Clinic'
   ];
 
+
   constructor(private pcService: PetCaseService) {}
   ngOnInit() {
     this.searchResults = this.pcService.loadSearchResults();
@@ -23,6 +24,7 @@ export class SearchTableComponent implements OnInit {
       this.searchResults = this.pcService.loadSearchResults();
     });
   }
+
 
   loadCase($event) {
     this.pcService.getCase($event.target.id);

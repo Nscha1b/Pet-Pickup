@@ -1,4 +1,4 @@
-import { AfterViewInit, OnInit, Component, Output, EventEmitter } from '@angular/core';
+import { AfterViewInit, OnInit, Component, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { PetCaseService } from '../shared/pet-case.service';
 import { Subscription } from 'rxjs';
 
@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements AfterViewInit, OnInit {
+export class DashboardComponent implements AfterViewInit, OnInit, OnDestroy {
   petCases = [];
   columnsToDisplay = [
     'id',
@@ -55,6 +55,10 @@ export class DashboardComponent implements AfterViewInit, OnInit {
       this.nextDisabled();
       this.getPageCount();
     });
+  }
+
+  ngOnDestroy(): void {
+    this.loadingSub.unsubscribe();
   }
 
   loadCase($event) {

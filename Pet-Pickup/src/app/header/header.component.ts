@@ -333,7 +333,7 @@ export class NewCaseDialogComponent implements OnInit {
       returnzip: ''
     });
   }
-  toggleShowOwner() {
+  toggleShowOwner(event) {
     if (this.ownerForm.valid) {
       this.showOwner = true;
       this.showPet = false;

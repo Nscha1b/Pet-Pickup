@@ -109,6 +109,8 @@ export class PetCaseService {
 
   searchCases(filter, howMany, offset, orderBy, searchBy) {
     const searchResults: PetCase[] = [];
+    this.isLoading = true;
+    this.loadingListener.next(true);
     this.http
       .get(BACKEND_URL + 'get/searchCases', {
         params: {
@@ -170,10 +172,14 @@ export class PetCaseService {
           this.searchResults = searchResults;
         });
         this.searchChanged.next(this.searchResults.slice());
+        this.isLoading = false;
+          this.loadingListener.next(false);
       });
   }
 
   getCase(filter) {
+    this.isLoading = true;
+    this.loadingListener.next(true);
     this.http
       .get(BACKEND_URL + 'get/loadCase', {
         params: {
@@ -233,6 +239,8 @@ export class PetCaseService {
           );
           this.loadedCase = openCase;
           this.caseChanged.next(this.loadedCase);
+          this.isLoading = false;
+          this.loadingListener.next(false);
         });
       });
   }
