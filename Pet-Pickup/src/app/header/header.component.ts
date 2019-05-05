@@ -35,6 +35,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .getAuthStatusListener()
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
+        setTimeout(() => {
+          this.username = this.authService.getUsername();
+        }, );
       });
     this.petCaseService.caseChanged.subscribe(() => {
       this.loadedCase = this.petCaseService.loadCase();
@@ -48,6 +51,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onLogout() {
     this.authService.logout();
+    this.username = '';
   }
 
 

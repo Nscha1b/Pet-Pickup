@@ -26,7 +26,7 @@ export class AuthService {
 
     this.http
       .post<{ accountCreated: boolean }>(
-        'http://localhost:3000/api/signup',
+        'http://localhost:3000/api/user/signup',
         newUser
       )
       .subscribe(res => {
@@ -52,7 +52,7 @@ export class AuthService {
 
     this.http
       .post<{ token: string; expiresIn: number }>(
-        'http://localhost:3000/api/login',
+        'http://localhost:3000/api/user/login',
         user
       )
       .subscribe(res => {
