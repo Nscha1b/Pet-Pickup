@@ -21,7 +21,7 @@ import {
   MatSortModule,
   MatPaginatorModule,
   MatOptionModule,
-  MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatIconModule, MatProgressSpinnerModule
+  MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatIconModule, MatProgressSpinnerModule, MatSidenavModule
 } from '@angular/material';
 import {HeaderComponent, NewCaseDialogComponent} from './header/header.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -71,7 +71,8 @@ import { SearchTableComponent } from './search-table/search-table.component';
     MatIconModule,
     HttpClientModule,
     MatProgressSpinnerModule,
-    ScrollingModule
+    ScrollingModule,
+    MatSidenavModule
   ],
   entryComponents: [
     NewCaseDialogComponent

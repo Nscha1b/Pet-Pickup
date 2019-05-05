@@ -16,11 +16,21 @@ mat-divider.headerSplit {
 .activeTab {
   width: 100%;
   border-bottom: 2px solid #007BFF;
+  cursor: pointer;
 }
+
 
 a.disabledLink {
   color: #c9c9c9;
   pointer-events: none;
+}
+
+.petIcon {
+  color: white;
+  cursor: pointer;
+}
+.cursor-pointer{
+  cursor: pointer;
 }
 
 

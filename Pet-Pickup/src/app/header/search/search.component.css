@@ -1,6 +1,6 @@
 .box {
   position: fixed;
-  left: 400px;
+  left: 405px;
   top: 53px;
   z-index: 100;
   width: 260px;
@@ -38,4 +38,15 @@ input {
   color: white;
   font-size: 30px;
   cursor: pointer;
+}
+
+.color-change {
+color: white;
+}
+
+@media screen and (max-width: 767px) {
+  /* CSS Code for when the screen size is 480px Screen size */
+  .color-change {
+    color: black
+    }
 }

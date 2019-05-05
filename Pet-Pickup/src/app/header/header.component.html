@@ -1,23 +1,27 @@
 <mat-toolbar class="bg-dark">
   <mat-toolbar-row>
     <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px">
-      <span style="cursor: pointer;" [routerLink]="['../dashboard']" class="text-white">Pet-Pickup</span>
+      <!--<span style="cursor: pointer;" [routerLink]="['../dashboard']" class="text-white">Pet-Pickup</span>-->
+      <span style="cursor: pointer;" [routerLink]="['../dashboard']" class="text-white">Pet <mat-icon class="petIcon">pets</mat-icon> Pickup</span>
       <button
         *ngIf="userIsAuthenticated"
-        class="mat-raised-button bg-primary text-white"
-        ngClass.xs= "mat-small"
+        class="mat-raised-button bg-primary text-white d-none d-md-table-cell"
         (click)="newCase()">
         New Case
       </button>
     </div>
-    <div>
-      <div class="pl-4">
+
+      <div class="pl-2 d-none d-md-table-cell">
           <app-search *ngIf="userIsAuthenticated"></app-search>
       </div>
-    </div>
+
     <span class="push-right"></span>
+    <mat-icon
+    [matMenuTriggerFor]="menu"
+     class="petIcon d-md-none">menu</mat-icon>
     <button
       *ngIf="userIsAuthenticated"
+      class="d-none d-md-table-cell"
       mat-button
       [disableRipple]="true"
       [matMenuTriggerFor]="menu">
@@ -27,7 +31,18 @@
     </button>
     <mat-menu #menu="matMenu">
       <button
-      (click)="onLogout()" mat-menu-item>Log Out</button>
+      class="d-md-none"
+      (click)="newCase()" mat-menu-item><mat-icon>add_circle</mat-icon>New Case
+    </button>
+    <mat-divider></mat-divider>
+    <button
+      class="d-md-none"
+      [routerLink]="['../search']" mat-menu-item><mat-icon>search</mat-icon>Search
+    </button>
+    <mat-divider></mat-divider>
+    <button
+      (click)="onLogout()" mat-menu-item><mat-icon>exit_to_app</mat-icon>Log Out
+    </button>
     </mat-menu>
   </mat-toolbar-row>
 </mat-toolbar>

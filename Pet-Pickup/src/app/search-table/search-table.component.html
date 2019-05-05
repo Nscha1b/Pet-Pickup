@@ -1,7 +1,8 @@
 <div>
   <div>
     <div class="title ml-3 mr-3 mt-2 d-flex justify-content-center">
-      <h3 class=" align-self-center">SEARCH RESULTS</h3>
+      <h3 class="d-none d-md-table-cell align-self-center">SEARCH RESULTS</h3>
+      <app-search class="d-md-none align-self-center"></app-search>
     </div>
     <mat-card class="ml-3 mr-3">
       <cdk-virtual-scroll-viewport itemSize="50" minBufferPx="200" maxBufferPx="400">
@@ -15,11 +16,11 @@
         </thead>
         <tbody>
           <tr (click)="loadCase($event)" *cdkVirtualFor="let result of searchResults; let i = index;">
-            <td [id]="searchResults[i].person.id" class="d-none d-md-table-cell">{{ searchResults[i].person.id }}</td>
-            <td [id]="searchResults[i].person.id" class="d-none d-md-table-cell">{{ searchResults[i].pet.petname }}</td>
-            <td [id]="searchResults[i].person.id" class="d-none d-md-table-cell">{{ searchResults[i].pet.petdod | date }}</td>
-            <td [id]="searchResults[i].person.id" class="d-none d-md-table-cell">{{ searchResults[i].person.firstname }} {{ searchResults[i].person.last }}</td>
-            <td [id]="searchResults[i].person.id" class="d-none d-md-table-cell">{{ searchResults[i].cremationDetails.clinic }}</td>
+            <td [id]="searchResults[i].person.id" class="">{{ searchResults[i].person.id }}</td>
+            <td [id]="searchResults[i].person.id" class="">{{ searchResults[i].pet.petname }}</td>
+            <td [id]="searchResults[i].person.id" class="">{{ searchResults[i].pet.petdod | date }}</td>
+            <td [id]="searchResults[i].person.id" class="">{{ searchResults[i].person.firstname }} {{ searchResults[i].person.last }}</td>
+            <td [id]="searchResults[i].person.id" class="">{{ searchResults[i].cremationDetails.clinic }}</td>
           </tr>
         </tbody>
       </table>

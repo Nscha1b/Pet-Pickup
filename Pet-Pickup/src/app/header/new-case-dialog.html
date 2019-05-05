@@ -1,24 +1,34 @@
 <div class="container">
   <div class="row">
     <div class="col-md-2"></div>
-    <div class="d-none d-md-flex col-md-8 text-center shadow-sm modal-background justify-content-center">
-      <a class="col-4"
-         (click)="toggleShowOwner($event)"
-         [class.activeTab]="showOwner"
-      >Owner</a>
-      <a class="col-4"
-         (click)="toggleShowPet($event);"
-         [class.activeTab]="showPet"
-         [class.disabledLink]="!this.ownerForm.valid"
-      >Pet</a>
-      <a class="col-4"
-         (click)="toggleShowDetails($event)"
-         [class.activeTab]="showDetails"
-         [class.disabledLink]="!this.petForm.valid"
-      >Details</a>
+    <div
+      class=" d-md-flex col-md-8 text-center shadow-sm modal-background justify-content-center"
+    >
+      <a
+        class="col-4 cursor-pointer"
+        (click)="toggleShowOwner($event)"
+        [class.activeTab]="showOwner"
+        >Owner</a
+      >
+      <a
+        class="col-4 cursor-pointer"
+        (click)="toggleShowPet($event)"
+        [class.activeTab]="showPet"
+        [class.disabledLink]="!this.ownerForm.valid"
+        >Pet</a
+      >
+      <a
+        class="col-4 cursor-pointer"
+        (click)="toggleShowDetails($event)"
+        [class.activeTab]="showDetails"
+        [class.disabledLink]="!this.petForm.valid"
+        >Details</a
+      >
     </div>
     <div class="col-md-2 d-flex justify-content-end">
-      <mat-icon style="color: red; cursor: pointer;" (click)="closeDialog()">close</mat-icon>
+      <mat-icon style="color: red; cursor: pointer;" (click)="closeDialog()"
+        >close</mat-icon
+      >
     </div>
   </div>
 </div>
@@ -34,9 +44,12 @@
             id="pre"
             name="pre"
             formControlName="pre"
-            placeholder="Pre">
+            placeholder="Pre"
+          >
             <mat-option value=""></mat-option>
-            <mat-option *ngFor="let pre of prefix" [value]="pre">{{ pre }}</mat-option>
+            <mat-option *ngFor="let pre of prefix" [value]="pre">{{
+              pre
+            }}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field class="col-md-3">
@@ -46,7 +59,8 @@
             formControlName="firstname"
             matInput
             required
-            placeholder="First Name">
+            placeholder="First Name"
+          />
         </mat-form-field>
         <mat-form-field class="col-md-3">
           <input
@@ -54,7 +68,8 @@
             name="mid"
             formControlName="mid"
             matInput
-            placeholder="Middle Name">
+            placeholder="Middle Name"
+          />
         </mat-form-field>
         <mat-form-field class="col-md-3">
           <input
@@ -63,16 +78,20 @@
             formControlName="last"
             matInput
             required
-            placeholder="Last Name">
+            placeholder="Last Name"
+          />
         </mat-form-field>
         <mat-form-field class="col-md-1">
           <mat-select
             id="suf"
             name="suf"
             formControlName="suf"
-            placeholder="Suf">
+            placeholder="Suf"
+          >
             <mat-option value=""></mat-option>
-            <mat-option *ngFor="let suf of suffix" [value]="suf">{{ suf }}</mat-option>
+            <mat-option *ngFor="let suf of suffix" [value]="suf">{{
+              suf
+            }}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -86,7 +105,8 @@
             required
             formControlName="address"
             placeholder="Address"
-            type="text">
+            type="text"
+          />
         </mat-form-field>
         <mat-form-field class="col-md-8">
           <input
@@ -96,7 +116,8 @@
             matInput
             formControlName="city"
             placeholder="City"
-            type="text">
+            type="text"
+          />
         </mat-form-field>
         <mat-form-field class="col-md-2">
           <mat-select
@@ -104,9 +125,12 @@
             id="state"
             name="state"
             required
-            formControlName="state">
+            formControlName="state"
+          >
             <mat-option value=""></mat-option>
-            <mat-option *ngFor="let state of states" [value]="state">{{ state }}</mat-option>
+            <mat-option *ngFor="let state of states" [value]="state">{{
+              state
+            }}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field class="col-md-2">
@@ -117,7 +141,8 @@
             required
             placeholder="Zip"
             formControlName="zip"
-            type="text">
+            type="text"
+          />
         </mat-form-field>
       </div>
       <p class="font-weight-bold">Contact Info</p>
@@ -129,7 +154,8 @@
             formControlName="email"
             matInput
             placeholder="Email"
-            type="email">
+            type="email"
+          />
         </mat-form-field>
         <mat-form-field class="col-md-4">
           <input
@@ -139,7 +165,8 @@
             matInput
             required
             placeholder="Home Phone"
-            type="phone">
+            type="phone"
+          />
         </mat-form-field>
         <mat-form-field class="col-md-4">
           <input
@@ -148,7 +175,8 @@
             formControlName="work"
             matInput
             placeholder="Work Phone"
-            type="phone">
+            type="phone"
+          />
         </mat-form-field>
         <mat-form-field class="col-md-4">
           <input
@@ -157,15 +185,17 @@
             formControlName="mobile"
             matInput
             placeholder="Mobile Phone"
-            type="Phone">
+            type="Phone"
+          />
         </mat-form-field>
       </div>
       <div class="col-md-12 pb-2 d-flex justify-content-end">
         <button
           name="ownerTab"
-          class="d-none d-md-flex btn btn-primary"
+          class="d-md-flex btn btn-primary"
           type="button"
-          (click)="validateForm($event); toggleShowPet($event);">
+          (click)="validateForm($event); toggleShowPet($event)"
+        >
           Next
         </button>
       </div>
@@ -181,7 +211,8 @@
             required
             formControlName="petname"
             matInput
-            placeholder="Pet Name">
+            placeholder="Pet Name"
+          />
         </mat-form-field>
       </div>
       <p class="font-weight-bold">Details</p>
@@ -193,7 +224,8 @@
             formControlName="sex"
             matInput
             placeholder="Sex"
-            type="text">
+            type="text"
+          />
         </mat-form-field>
         <mat-form-field class="col-md-4">
           <input
@@ -203,7 +235,8 @@
             formControlName="pettype"
             matInput
             placeholder="Pet Type"
-            type="text">
+            type="text"
+          />
         </mat-form-field>
         <mat-form-field class="col-md-4">
           <input
@@ -212,7 +245,8 @@
             formControlName="petbreed"
             matInput
             placeholder="breed"
-            type="text">
+            type="text"
+          />
         </mat-form-field>
       </div>
       <div class="row">
@@ -223,7 +257,8 @@
             formControlName="petcolor"
             matInput
             placeholder="Color"
-            type="text">
+            type="text"
+          />
         </mat-form-field>
         <mat-form-field class="col-md-4">
           <input
@@ -232,7 +267,8 @@
             matInput
             formControlName="petweight"
             placeholder="Weight"
-            type="number">
+            type="number"
+          />
           <span style="color: #787878;" matSuffix>lbs.</span>
         </mat-form-field>
       </div>
@@ -245,8 +281,12 @@
             name="dob"
             formControlName="petdob"
             matInput
-            placeholder="Date of Birth">
-          <mat-datepicker-toggle matSuffix [for]="dobDate"></mat-datepicker-toggle>
+            placeholder="Date of Birth"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="dobDate"
+          ></mat-datepicker-toggle>
           <mat-datepicker #dobDate></mat-datepicker>
         </mat-form-field>
         <mat-form-field class="col-md-4">
@@ -256,8 +296,12 @@
             name="dod"
             formControlName="petdod"
             matInput
-            placeholder="Date of Death">
-          <mat-datepicker-toggle matSuffix [for]="dodDate"></mat-datepicker-toggle>
+            placeholder="Date of Death"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="dodDate"
+          ></mat-datepicker-toggle>
           <mat-datepicker #dodDate></mat-datepicker>
         </mat-form-field>
         <mat-form-field class="col-md-4">
@@ -267,7 +311,8 @@
             formControlName="pettod"
             matInput
             placeholder="Time of Death"
-            type="text">
+            type="text"
+          />
         </mat-form-field>
       </div>
       <div class="row">
@@ -278,16 +323,18 @@
             formControlName="petage"
             matInput
             placeholder="Age"
-            type="number">
+            type="number"
+          />
           <span style="color: #787878;" matSuffix>Years</span>
         </mat-form-field>
       </div>
       <div class="col-md-12 pb-2 d-flex justify-content-end">
         <button
-          class="d-none d-md-flex btn btn-primary"
+          class="d-md-flex btn btn-primary"
           type="button"
           name="petTab"
-          (click)="validateForm($event); toggleShowDetails($event)">
+          (click)="validateForm($event); toggleShowDetails($event)"
+        >
           Next
         </button>
       </div>
@@ -302,7 +349,8 @@
             required
             id="crematory"
             name="crematory"
-            formControlName="crematory">
+            formControlName="crematory"
+          >
             <mat-option value=""></mat-option>
             <mat-option value="Thompson Sons">Thompson Sons</mat-option>
             <mat-option value="SunnySide">SunnySide</mat-option>
@@ -314,7 +362,8 @@
             id="status"
             name="status"
             required
-            formControlName="status">
+            formControlName="status"
+          >
             <mat-option value=""></mat-option>
             <mat-option value="Pending Cremation">Pending Cremation</mat-option>
             <mat-option value="In Retort">In Retort</mat-option>
@@ -329,7 +378,8 @@
             id="cremationtype"
             name="cremationtype"
             required
-            formControlName="cremationtype">
+            formControlName="cremationtype"
+          >
             <mat-option value=""></mat-option>
             <mat-option value="Private">Private</mat-option>
             <mat-option value="Communal">Communal</mat-option>
@@ -342,9 +392,12 @@
             id="vetclinic"
             name="vetclinic"
             required
-            formControlName="vetclinic">
+            formControlName="vetclinic"
+          >
             <mat-option value=""></mat-option>
-            <mat-option value="Number One Vet Clinic">Number one Vet Clinic</mat-option>
+            <mat-option value="Number One Vet Clinic"
+              >Number one Vet Clinic</mat-option
+            >
             <mat-option value="Evergreen Pets">Evergreen Pets</mat-option>
           </mat-select>
         </mat-form-field>
@@ -356,7 +409,8 @@
           class="col-md-3"
           id="printrequest"
           name="printrequest"
-          matInput>
+          matInput
+        >
           Paw print requested
         </mat-checkbox>
         <mat-checkbox
@@ -365,16 +419,35 @@
           class="col-md-3"
           id="furrequest"
           name="furrequest"
-          matInput>
+          matInput
+        >
           Lock of fur requested
         </mat-checkbox>
       </div>
       <p class="font-weight-bold">Return Information</p>
       <div class="row">
         <div class="col-md-3">
-          <button type="button" (click)="writeVetInfo()" class="m-1 col-3 btn btn-sm btn-secondary">Vet</button>
-          <button type="button" (click)="writeOwnerInfo()" class="m-1 col-3 btn btn-sm btn-secondary">Owner</button>
-          <button type="button" (click)="clearReturnInfo()" class="m-1 col-3 btn btn-sm btn-secondary">None</button>
+          <button
+            type="button"
+            (click)="writeVetInfo()"
+            class="m-1 col-3 btn btn-sm btn-secondary"
+          >
+            Vet
+          </button>
+          <button
+            type="button"
+            (click)="writeOwnerInfo()"
+            class="m-1 col-3 btn btn-sm btn-secondary"
+          >
+            Owner
+          </button>
+          <button
+            type="button"
+            (click)="clearReturnInfo()"
+            class="m-1 col-3 btn btn-sm btn-secondary"
+          >
+            None
+          </button>
         </div>
         <mat-form-field class="col-md-4">
           <input
@@ -382,7 +455,8 @@
             name="returnperson"
             formControlName="returnperson"
             matInput
-            placeholder="Return Person">
+            placeholder="Return Person"
+          />
         </mat-form-field>
         <mat-form-field class="col-md-5">
           <input
@@ -390,7 +464,8 @@
             name="returnplace"
             formControlName="returnplace"
             matInput
-            placeholder="Return Place">
+            placeholder="Return Place"
+          />
         </mat-form-field>
       </div>
       <div class="row">
@@ -400,7 +475,8 @@
             formControlName="returnphone"
             name="returnphone"
             matInput
-            placeholder="Return Phone">
+            placeholder="Return Phone"
+          />
         </mat-form-field>
         <mat-form-field class="col-md-7">
           <input
@@ -408,7 +484,8 @@
             formControlName="returnaddress"
             name="returnaddress"
             matInput
-            placeholder="Return Address">
+            placeholder="Return Address"
+          />
         </mat-form-field>
       </div>
       <div class="row">
@@ -418,16 +495,20 @@
             formControlName="returncity"
             name="returncity"
             matInput
-            placeholder="Return City">
+            placeholder="Return City"
+          />
         </mat-form-field>
         <mat-form-field class="col-md-2">
           <mat-select
             placeholder="Return State"
             id="returnstate"
             name="returnstate"
-            formControlName="returnstate">
+            formControlName="returnstate"
+          >
             <mat-option value=""></mat-option>
-            <mat-option *ngFor="let state of states" [value]="state">{{ state }}</mat-option>
+            <mat-option *ngFor="let state of states" [value]="state">{{
+              state
+            }}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field class="col-md-3">
@@ -436,26 +517,28 @@
             name="returnzip"
             formControlName="returnzip"
             matInput
-            placeholder="Return Zip">
+            placeholder="Return Zip"
+          />
         </mat-form-field>
       </div>
       <p class="font-weight-bold">Notes</p>
       <div class="row">
         <mat-form-field class="col-md-12">
-              <textarea
-                formControlName="notes"
-                id="notes"
-                name="notes"
-                matInput
-                placeholder="Notes">
-              </textarea>
+          <textarea
+            formControlName="notes"
+            id="notes"
+            name="notes"
+            matInput
+            placeholder="Notes"
+          >
+          </textarea>
         </mat-form-field>
       </div>
       <div class="row d-flex justify-content-end">
-        <button class="btn btn-primary mr-3" type="submit" mat-button>Save</button>
+        <button class="btn btn-primary mr-3 mb-2" type="submit" mat-button>
+          Save
+        </button>
       </div>
     </div>
   </form>
 </div>
-
-

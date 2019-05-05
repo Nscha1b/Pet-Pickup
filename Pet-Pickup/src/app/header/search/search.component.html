@@ -1,14 +1,14 @@
 <div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap="5px">
   <button mat-button [disableRipple]="true" [matMenuTriggerFor]="searchDD" style="width: 200px;">
-    <span class="text-white" style="padding: 5px;">{{ searchBy }}</span>
-    <i class="fa fa-angle-down text-white"></i>
+    <span class="color-change" style="padding: 5px;">{{ searchBy }}</span>
+    <i class="fa fa-angle-down color-change"></i>
   </button>
   <mat-menu #searchDD="matMenu">
     <button (click)="searchBy = 'Owner Name'" mat-menu-item>Owner Name</button>
     <button (click)="searchBy = 'Pet Name'" mat-menu-item>Pet Name</button>
   </mat-menu>
-  <input style="min-width: 200px;" placeholder="Search" [(ngModel)]="searchText" type="text" class="form-control" (keyup)="search($event, searchBy)" />
-  <mat-icon (click)="searchButton = true; search($event, searchBy);" [routerLink]="['../search']" class="searchIcon" matSuffix >search</mat-icon>
+  <input style="min-width: 190px;" placeholder="Search" [(ngModel)]="searchText" type="text" class="form-control" (keyup)="search($event, searchBy)" />
+  <mat-icon (click)="searchButton = true; search($event, searchBy);" [routerLink]="['../search']" class="searchIcon color-change" matSuffix >search</mat-icon>
 </div>
 
 
