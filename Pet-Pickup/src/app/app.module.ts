@@ -5,32 +5,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
-import {
-  MatButtonModule,
-  MatCheckboxModule,
-  MatToolbarModule,
-  MatMenuModule,
-  MatCardModule,
-  MatDialogModule,
-  MatFormFieldModule,
-  MatInputModule,
-  MatDividerModule,
-  MatTableModule,
-  MatTabsModule,
-  MatSortModule,
-  MatPaginatorModule,
-  MatOptionModule,
-  MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatIconModule, MatProgressSpinnerModule, MatSidenavModule
-} from '@angular/material';
-import {HeaderComponent, NewCaseDialogComponent} from './header/header.component';
+import { HeaderComponent, NewCaseDialogComponent } from './header/header.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { LoginComponent } from './login/login.component';
-import {AuthInterceptor} from './login/auth-interceptor';
+import { AuthInterceptor } from './login/auth-interceptor';
 import { SearchComponent } from './header/search/search.component';
 import { SearchTableComponent } from './search-table/search-table.component';
+import { AngularMaterialModule } from './angular-material.module';
+import { AuthModule } from './login/auth.module';
 
 
 @NgModule({
@@ -39,40 +22,20 @@ import { SearchTableComponent } from './search-table/search-table.component';
     HeaderComponent,
     NewCaseDialogComponent,
     DashboardComponent,
-    LoginComponent,
     SearchComponent,
     SearchTableComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MatButtonModule,
-    MatCheckboxModule,
-    MatToolbarModule,
-    MatMenuModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
-    MatCardModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDividerModule,
-    MatTableModule,
     ReactiveFormsModule,
-    MatTabsModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatOptionModule,
-    MatSortModule,
-    MatSelectModule,
     FormsModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatIconModule,
     HttpClientModule,
-    MatProgressSpinnerModule,
     ScrollingModule,
-    MatSidenavModule
+    AngularMaterialModule,
+    AuthModule
   ],
   entryComponents: [
     NewCaseDialogComponent

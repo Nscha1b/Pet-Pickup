@@ -9,6 +9,9 @@ import { PetCremationDetails } from './pet-cremation.details';
 import { HttpClient } from '@angular/common/http';
 import { CaseQuery } from './case-query.model';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
+
+const BACKEND_URL = environment.apiUrl;
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +41,7 @@ export class PetCaseService {
     this.isLoading = true;
     this.loadingListener.next(true);
     this.http
-      .get('http://localhost:3000/api/get/cases', {
+      .get(BACKEND_URL + 'get/cases', {
         params: {
           filter: filter, howMany: howMany, offset: offset, orderBy: orderBy
         }
@@ -107,7 +110,7 @@ export class PetCaseService {
   searchCases(filter, howMany, offset, orderBy, searchBy) {
     const searchResults: PetCase[] = [];
     this.http
-      .get('http://localhost:3000/api/get/searchCases', {
+      .get(BACKEND_URL + 'get/searchCases', {
         params: {
           filter: filter, howMany: howMany, offset: offset, orderBy: orderBy, searchBy: searchBy
         }
@@ -172,7 +175,7 @@ export class PetCaseService {
 
   getCase(filter) {
     this.http
-      .get('http://localhost:3000/api/get/loadCase', {
+      .get(BACKEND_URL + 'get/loadCase', {
         params: {
           filter: filter
         }
@@ -280,7 +283,7 @@ export class PetCaseService {
     };
 
     this.http
-      .post('http://localhost:3000/api/post/petcase', newPetCase)
+      .post(BACKEND_URL + 'post/petcase', newPetCase)
       .subscribe(res => {
         console.log(res);
         this.getCases('', 5, 0, 'ownerid');
@@ -333,7 +336,7 @@ export class PetCaseService {
     };
 
     this.http
-      .post('http://localhost:3000/api/post/updatePetCase', updatedCase)
+      .post(BACKEND_URL + 'post/updatePetCase', updatedCase)
       .subscribe(res => {
         console.log(res);
         this.getCases('', 5, 0, 'ownerid');
@@ -363,7 +366,7 @@ export class PetCaseService {
     };
 
     this.http
-      .post('http://localhost:3000/api/post/details', newDetails)
+      .post(BACKEND_URL + 'post/details', newDetails)
       .subscribe(res => {
         console.log(res);
       });
